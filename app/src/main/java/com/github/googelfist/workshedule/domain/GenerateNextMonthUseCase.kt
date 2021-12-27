@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 
 class GenerateNextMonthUseCase(private val repository: Repository) {
 
-    fun generateNextMonth(): LiveData<List<Int>> {
+    fun generateNextMonth(): LiveData<List<Day>> {
         return repository.generateNextMonth()
     }
 }

@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 
 class GenerateCurrentMonthUseCase(private val repository: Repository) {
 
-    fun generateCurrentMonth(): LiveData<List<Int>> {
+    fun generateCurrentMonth(): LiveData<List<Day>> {
         return repository.generateCurrentMonth()
     }
 }
