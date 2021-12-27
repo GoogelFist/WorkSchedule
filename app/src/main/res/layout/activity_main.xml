@@ -6,16 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".presentation.MainActivity">
 
-    <ImageView
-        android:id="@+id/iv_month_down"
+    <TextView
+        android:id="@+id/tv_year_month"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
-        android:contentDescription="@string/description_image_view_for_down_navigation"
-        android:src="@drawable/ic_baseline_expand_more_24"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="December 2021" />
 
     <ImageView
         android:id="@+id/iv_month_up"
@@ -27,16 +28,16 @@
         app:layout_constraintBottom_toBottomOf="@+id/iv_month_down"
         app:layout_constraintEnd_toStartOf="@+id/iv_month_down" />
 
-    <TextView
-        android:id="@+id/tv_year_month"
+    <ImageView
+        android:id="@+id/iv_month_down"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="December 2021" />
+        android:layout_marginEnd="32dp"
+        android:contentDescription="@string/description_image_view_for_down_navigation"
+        android:src="@drawable/ic_baseline_expand_more_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_day_list"
@@ -50,6 +51,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_year_month"
-        tools:listitem="@layout/calendar_cell" />
+        tools:listitem="@layout/active_day" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

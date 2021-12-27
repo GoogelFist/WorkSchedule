@@ -9,10 +9,13 @@
 
     <TextView
         android:id="@+id/tv_calendar_cell"
-        android:layout_width="wrap_content"
+        android:layout_width="22dp"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/darker_gray"
+        android:background="#77FF4444"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="1" />
