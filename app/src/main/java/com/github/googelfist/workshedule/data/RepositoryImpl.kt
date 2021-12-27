@@ -55,9 +55,10 @@ object RepositoryImpl : Repository {
                 Day(
                     value = startDaysPreviousMonth.dayOfMonth,
                     month = startDaysPreviousMonth.monthValue,
+                    isActive = isActive(startDaysPreviousMonth),
+                    isToday = isToday(startDaysPreviousMonth),
                     isWork = false,
-                    isWeekend = false,
-                    isActive = isActive(startDaysPreviousMonth)
+                    isWeekend = false
                 )
             )
             startDaysPreviousMonth = startDaysPreviousMonth.plusDays(ONE_VALUE)
@@ -67,5 +68,9 @@ object RepositoryImpl : Repository {
 
     private fun isActive(generateMonthDate: LocalDate): Boolean {
         return date.monthValue == generateMonthDate.monthValue
+    }
+
+    private fun isToday(generateMonthDate: LocalDate): Boolean {
+        return generateMonthDate == LocalDate.now()
     }
 }

@@ -3,7 +3,8 @@ package com.github.googelfist.workshedule.domain
 data class Day(
     val value: Int,
     val month: Int,
-    val isWork: Boolean,
+    val isActive: Boolean,
+    val isToday: Boolean,
     val isWeekend: Boolean,
-    val isActive: Boolean
+    val isWork: Boolean
 )
