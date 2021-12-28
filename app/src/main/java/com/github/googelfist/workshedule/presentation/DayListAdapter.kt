@@ -15,6 +15,7 @@ class DayListAdapter : RecyclerView.Adapter<DayViewHolder>() {
             // TODO: 26-Dec-21 replace this notify
         }
 
+    lateinit var onDayClickListener: ((Day) -> Unit)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DayViewHolder {
         val layout = when (viewType) {
@@ -41,6 +42,9 @@ class DayListAdapter : RecyclerView.Adapter<DayViewHolder>() {
     override fun onBindViewHolder(holder: DayViewHolder, position: Int) {
         val day = dayList[position]
         holder.day.text = day.value.toString()
+        holder.day.setOnClickListener {
+            onDayClickListener.invoke(day)
+        }
     }
 
     override fun getItemCount(): Int {
