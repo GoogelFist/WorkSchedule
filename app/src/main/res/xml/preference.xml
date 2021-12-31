@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent">
     <DropDownPreference
+        android:icon="@drawable/ic_baseline_calendar_view_day_24"
         android:entryValues="@array/preference_dropdown_items"
         android:key="dropDown"
         android:summary="Schedules presets"
@@ -11,6 +12,7 @@
         app:entries="@array/preference_dropdown_items"
         app:useSimpleSummaryProvider="true" />
     <Preference
+        android:icon="@drawable/ic_baseline_calendar_today_24"
         android:key="datePicker"
         android:summary="Choose start work date"
         android:title="Choose start work date"
