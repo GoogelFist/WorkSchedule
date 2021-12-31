@@ -1,6 +1,7 @@
 package com.github.googelfist.workshedule.presentation
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +9,7 @@ import androidx.core.view.GestureDetectorCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.github.googelfist.workshedule.databinding.ActivityMainBinding
+import com.github.googelfist.workshedule.presentation.settings.SettingsActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -36,7 +38,7 @@ class MainActivity : AppCompatActivity() {
 
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
-        setupNavigationButton()
+        setupButtons()
 
         viewModel.dayList.observe(this) { dayListAdapter.dayList = it }
         viewModel.date.observe(this) { binding.tvYearMonth.text = it }
@@ -48,9 +50,14 @@ class MainActivity : AppCompatActivity() {
         gestureListener.onSwipeLeft = { viewModel.getNextMonth() }
     }
 
-    private fun setupNavigationButton() {
+    private fun setupButtons() {
         binding.ivMonthUp.setOnClickListener { viewModel.getPreviousMonth() }
         binding.ivMonthDown.setOnClickListener { viewModel.getNextMonth() }
+        binding.bSettings.setOnClickListener { toSettings() }
+    }
+
+    private fun toSettings() {
+        startActivity(Intent(this, SettingsActivity::class.java))
     }
 
     @SuppressLint("ClickableViewAccessibility")
