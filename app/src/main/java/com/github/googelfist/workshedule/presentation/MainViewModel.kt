@@ -2,15 +2,12 @@ package com.github.googelfist.workshedule.presentation
 
 import androidx.lifecycle.ViewModel
 import com.github.googelfist.workshedule.data.RepositoryImpl
-import com.github.googelfist.workshedule.domain.GenerateCurrentMonthUseCase
-import com.github.googelfist.workshedule.domain.GenerateNextMonthUseCase
-import com.github.googelfist.workshedule.domain.GeneratePreviousMonthUseCase
-import com.github.googelfist.workshedule.domain.GetDateOfChosenMonthUseCase
+import com.github.googelfist.workshedule.domain.*
 
 class MainViewModel : ViewModel() {
 
     // TODO: 26-Dec-21 incorrect architecture
-    private val repository = RepositoryImpl
+    private val repository = RepositoryImpl()
 
     private val generateCurrentMonthUseCase = GenerateCurrentMonthUseCase(repository)
     private val generateNextMonthUseCase = GenerateNextMonthUseCase(repository)
