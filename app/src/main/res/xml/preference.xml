@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+    <DropDownPreference
+        android:entryValues="@array/preference_dropdown_items"
+        android:key="dropDown"
+        android:summary="Schedules presets"
+        android:title="Choose the schedule"
+        app:entries="@array/preference_dropdown_items"
+        app:useSimpleSummaryProvider="true" />
+    <Preference
+        android:key="datePicker"
+        android:summary="Choose start work date"
+        android:title="Choose start work date"
+        app:useSimpleSummaryProvider="true" />
+
+</PreferenceScreen>
