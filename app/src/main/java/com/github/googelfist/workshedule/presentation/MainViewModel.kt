@@ -2,7 +2,7 @@ package com.github.googelfist.workshedule.presentation
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.github.googelfist.workshedule.daygenerator.DaysGeneratorImpl
+import com.github.googelfist.workshedule.daysgenerator.DaysGeneratorImpl
 import com.github.googelfist.workshedule.domain.*
 import java.time.LocalDate
 
