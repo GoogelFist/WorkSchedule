@@ -1,11 +1,17 @@
-package com.github.googelfist.workshedule.data
+package com.github.googelfist.workshedule.daygenerator
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.github.googelfist.workshedule.domain.Day
+import com.github.googelfist.workshedule.domain.DaysGenerator
 import java.time.LocalDate
 
 class DaysGeneratorImpl : DaysGenerator {
 
-    override fun generateDays(date: LocalDate): List<Day> {
+    private val dayListLD = MutableLiveData<List<Day>>()
+
+    // TODO: 02-Jan-22 add step parameter
+    override fun generateDays(date: LocalDate): LiveData<List<Day>> {
         var firstDay = getFirstDay(date)
 
         val dayList = mutableListOf<Day>()
@@ -25,8 +31,8 @@ class DaysGeneratorImpl : DaysGenerator {
         }
         dayList.setActiveDays(date)
         dayList.setTodayDay()
-
-        return dayList
+        dayListLD.value = dayList
+        return dayListLD
     }
 
     override fun generateDays(date: LocalDate, startDay: LocalDate): List<Day> {

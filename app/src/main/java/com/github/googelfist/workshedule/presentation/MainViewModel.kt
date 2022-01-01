@@ -1,29 +1,43 @@
 package com.github.googelfist.workshedule.presentation
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.github.googelfist.workshedule.data.RepositoryImpl
+import com.github.googelfist.workshedule.daygenerator.DaysGeneratorImpl
 import com.github.googelfist.workshedule.domain.*
+import java.time.LocalDate
 
 class MainViewModel : ViewModel() {
 
     // TODO: 26-Dec-21 incorrect architecture
-    private val repository = RepositoryImpl()
+    private val daysGenerator = DaysGeneratorImpl()
 
-    private val generateCurrentMonthUseCase = GenerateCurrentMonthUseCase(repository)
-    private val generateNextMonthUseCase = GenerateNextMonthUseCase(repository)
-    private val generatePreviousMonthUseCase = GeneratePreviousMonthUseCase(repository)
-    private val getDateOfChosenMonthUseCase = GetDateOfChosenMonthUseCase(repository)
+    private val generateWorkDaysUseCase = GenerateWorkDaysUseCase(daysGenerator)
+    private val getDateOfChosenMonthUseCase = GetDateNowUseCase()
+    private val getDateNextMonthUseCase = GetDateNextMonthUseCase()
+    private val getDatePreviousMonthUseCase = GetDatePreviousMonthUseCase()
+    private val formatDateUseCase = FormatDateUseCase()
 
-    var dayList = generateCurrentMonthUseCase.generateCurrentMonth()
-    var date = getDateOfChosenMonthUseCase.getDateOfChosenMonth()
+    lateinit var formattedDateLD: LiveData<String>
+    lateinit var date: LocalDate
+    lateinit var dayListLD: LiveData<List<Day>>
+
+    fun generateCurrentMonth() {
+        date = getDateOfChosenMonthUseCase.getDateNow()
+        dayListLD = generateWorkDaysUseCase.generateWorkDays(date)
+        formattedDateLD = formatDateUseCase.formatDate(date)
+    }
 
     fun getNextMonth() {
-        dayList = generateNextMonthUseCase.generateNextMonth()
-        date = getDateOfChosenMonthUseCase.getDateOfChosenMonth()
+        val dateNext = getDateNextMonthUseCase.getDateNextMonth(date)
+        dayListLD = generateWorkDaysUseCase.generateWorkDays(dateNext)
+        formattedDateLD = formatDateUseCase.formatDate(dateNext)
+        date = dateNext
     }
 
     fun getPreviousMonth() {
-        dayList = generatePreviousMonthUseCase.generatePreviousMonth()
-        date = getDateOfChosenMonthUseCase.getDateOfChosenMonth()
+        val datePrevious = getDatePreviousMonthUseCase.getDatePreviousMonth(date)
+        dayListLD = generateWorkDaysUseCase.generateWorkDays(datePrevious)
+        formattedDateLD = formatDateUseCase.formatDate(datePrevious)
+        date = datePrevious
     }
 }

@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GestureDetectorCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import com.github.googelfist.workshedule.data.DateRepositoryImpl
 import com.github.googelfist.workshedule.databinding.ActivityMainBinding
 import com.github.googelfist.workshedule.presentation.settings.SettingsActivity
 
@@ -31,33 +32,23 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
 
         setupGestureListener()
-
         mDetector = GestureDetectorCompat(this, gestureListener)
 
         setupRecyclerView()
 
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
-        setupButtons()
+        viewModel.generateCurrentMonth()
+        viewModel.formattedDateLD.observe(this) { binding.tvYearMonth.text = it }
+        viewModel.dayListLD.observe(this) { dayListAdapter.dayList = it }
 
-        viewModel.dayList.observe(this) { dayListAdapter.dayList = it }
-        viewModel.date.observe(this) { binding.tvYearMonth.text = it }
+        setupButtons()
     }
 
     private fun setupGestureListener() {
         gestureListener = MainActivityGestureListener()
         gestureListener.onSwipeRight = { viewModel.getPreviousMonth() }
         gestureListener.onSwipeLeft = { viewModel.getNextMonth() }
-    }
-
-    private fun setupButtons() {
-        binding.ivMonthUp.setOnClickListener { viewModel.getPreviousMonth() }
-        binding.ivMonthDown.setOnClickListener { viewModel.getNextMonth() }
-        binding.bSettings.setOnClickListener { toSettings() }
-    }
-
-    private fun toSettings() {
-        startActivity(Intent(this, SettingsActivity::class.java))
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -72,6 +63,15 @@ class MainActivity : AppCompatActivity() {
 
         dayListAdapter.onDayClickListener = {
             Toast.makeText(this, "$it", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun setupButtons() {
+        binding.ivMonthUp.setOnClickListener { viewModel.getPreviousMonth() }
+        binding.ivMonthDown.setOnClickListener { viewModel.getNextMonth() }
+
+        binding.bSettings.setOnClickListener {
+            startActivity(Intent(this, SettingsActivity::class.java))
         }
     }
 
