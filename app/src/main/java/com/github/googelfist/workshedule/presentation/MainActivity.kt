@@ -8,8 +8,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GestureDetectorCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import com.github.googelfist.workshedule.data.DateRepositoryImpl
+import androidx.recyclerview.widget.RecyclerView
 import com.github.googelfist.workshedule.databinding.ActivityMainBinding
+import com.github.googelfist.workshedule.presentation.adapters.DayListAdapter
 import com.github.googelfist.workshedule.presentation.settings.SettingsActivity
 
 class MainActivity : AppCompatActivity() {
@@ -40,7 +41,7 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.generateCurrentMonth()
         viewModel.formattedDateLD.observe(this) { binding.tvYearMonth.text = it }
-        viewModel.dayListLD.observe(this) { dayListAdapter.dayList = it }
+        viewModel.dayListLD.observe(this) { dayListAdapter.submitList(it) }
 
         setupButtons()
     }
@@ -59,11 +60,28 @@ class MainActivity : AppCompatActivity() {
         dayListAdapter = DayListAdapter()
         rvDayList.adapter = dayListAdapter
 
+        setRecyclerViewPool(rvDayList)
+
         rvDayList.setOnTouchListener { _, motionEvent -> mDetector.onTouchEvent(motionEvent) }
 
         dayListAdapter.onDayClickListener = {
             Toast.makeText(this, "$it", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun setRecyclerViewPool(rvDayList: RecyclerView) {
+        rvDayList.recycledViewPool.setMaxRecycledViews(
+            DayListAdapter.ACTIVE_DAY_TYPE,
+            DayListAdapter.ACTIVE_DAY_POOL_SIZE
+        )
+        rvDayList.recycledViewPool.setMaxRecycledViews(
+            DayListAdapter.INACTIVE_DAY_TYPE,
+            DayListAdapter.INACTIVE_DAY_POOL_SIZE
+        )
+        rvDayList.recycledViewPool.setMaxRecycledViews(
+            DayListAdapter.TODAY_TYPE,
+            DayListAdapter.TODAY_DAY_POOL_SIZE
+        )
     }
 
     private fun setupButtons() {

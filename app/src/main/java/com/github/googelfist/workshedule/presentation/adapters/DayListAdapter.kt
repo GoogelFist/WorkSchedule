@@ -1,19 +1,14 @@
-package com.github.googelfist.workshedule.presentation
+package com.github.googelfist.workshedule.presentation.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.ListAdapter
 import com.github.googelfist.workshedule.R
+import com.github.googelfist.workshedule.databinding.TodayBinding
 import com.github.googelfist.workshedule.domain.Day
 
-class DayListAdapter : RecyclerView.Adapter<DayViewHolder>() {
-
-    var dayList = listOf<Day>()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-            // TODO: 26-Dec-21 replace this notify
-        }
+class DayListAdapter : ListAdapter<Day, DayViewHolder>(DayDiffCallback()) {
 
     lateinit var onDayClickListener: ((Day) -> Unit)
 
@@ -40,19 +35,15 @@ class DayListAdapter : RecyclerView.Adapter<DayViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: DayViewHolder, position: Int) {
-        val day = dayList[position]
+        val day = getItem(position)
         holder.day.text = day.value.toString()
         holder.day.setOnClickListener {
             onDayClickListener.invoke(day)
         }
     }
 
-    override fun getItemCount(): Int {
-        return dayList.size
-    }
-
     override fun getItemViewType(position: Int): Int {
-        val day = dayList[position]
+        val day = getItem(position)
 
         return when {
             day.isActive && day.isWork && day.isToday -> TODAY_WORK_TYPE
@@ -84,5 +75,9 @@ class DayListAdapter : RecyclerView.Adapter<DayViewHolder>() {
         const val TODAY_TYPE = 500
         const val TODAY_WEEKEND_TYPE = 501
         const val TODAY_WORK_TYPE = 502
+
+        const val ACTIVE_DAY_POOL_SIZE = 31
+        const val INACTIVE_DAY_POOL_SIZE = 14
+        const val TODAY_DAY_POOL_SIZE = 1
     }
 }
