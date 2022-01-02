@@ -1,11 +1,9 @@
 package com.github.googelfist.workshedule.presentation.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.github.googelfist.workshedule.R
-import com.github.googelfist.workshedule.databinding.TodayBinding
 import com.github.googelfist.workshedule.domain.Day
 
 class DayListAdapter : ListAdapter<Day, DayViewHolder>(DayDiffCallback()) {
