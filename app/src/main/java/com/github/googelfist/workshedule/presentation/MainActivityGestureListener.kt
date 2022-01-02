@@ -30,17 +30,17 @@ class MainActivityGestureListener : GestureDetector.SimpleOnGestureListener() {
 
         if (abs(velocityX) > abs(velocityY)) {
             if (velocityX >= 0) {
-                Log.i(DEBUG_TAG, "onSwipeRight");
+                Log.i(DEBUG_TAG, "onSwipeRight")
                 onSwipeRight.invoke()
             } else {
-                Log.i(DEBUG_TAG, "onSwipeLeft");
+                Log.i(DEBUG_TAG, "onSwipeLeft")
                 onSwipeLeft.invoke()
             }
         } else {
             if (velocityY >= 0) {
-                Log.i(DEBUG_TAG, "onSwipeDown");
+                Log.i(DEBUG_TAG, "onSwipeDown")
             } else {
-                Log.i(DEBUG_TAG, "onSwipeUp");
+                Log.i(DEBUG_TAG, "onSwipeUp")
             }
         }
         return true

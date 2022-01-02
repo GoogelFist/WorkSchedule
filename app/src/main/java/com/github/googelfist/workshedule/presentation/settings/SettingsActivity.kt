@@ -39,7 +39,7 @@ class SettingsActivity : AppCompatActivity() {
 
     private fun getPreference(settings: SharedPreferences): Preference {
         val schedule = settings.getString(DROP_DOWN_KEY, PREFERENCE_SCHEDULE_DEFAULT_VALUE)
-                ?: PREFERENCE_SCHEDULE_DEFAULT_VALUE
+            ?: PREFERENCE_SCHEDULE_DEFAULT_VALUE
 
         val date = settings.getString(DATE_PICKER_KEY, PREFERENCE_DATE_DEFAULT_VALUE)
             ?: PREFERENCE_DATE_DEFAULT_VALUE
