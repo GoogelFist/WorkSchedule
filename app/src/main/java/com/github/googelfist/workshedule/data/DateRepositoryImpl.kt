@@ -2,20 +2,22 @@ package com.github.googelfist.workshedule.data
 
 import android.util.Log
 import com.github.googelfist.workshedule.domain.DateRepository
-import com.github.googelfist.workshedule.presentation.settings.Preference
+import com.github.googelfist.workshedule.domain.models.DatePreference
+import com.github.googelfist.workshedule.domain.models.SchedulePreference
 import java.time.LocalDate
 
 class DateRepositoryImpl : DateRepository {
 
-    lateinit var preferenceRepo: Preference
-
     // TODO: 02-Jan-22 wrong architecture
-    override fun savePreference(preference: Preference) {
-        preferenceRepo = preference
-        Log.d("LOG", "$preference")
+    override fun saveDatePreference(datePreferenceModel: DatePreference) {
+        Log.d("LOG", "datePreference: $datePreferenceModel")
     }
 
-    override fun loadPreference(): Preference {
+    override fun saveSchedulePreference(schedulePreferenceModel: SchedulePreference) {
+        Log.d("LOG", "schedulePreference: $schedulePreferenceModel")
+    }
+
+    override fun loadPreference(): String{
         TODO()
     }
 

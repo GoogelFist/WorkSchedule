@@ -1,9 +1,12 @@
 package com.github.googelfist.workshedule.domain
 
-import com.github.googelfist.workshedule.presentation.settings.Preference
+import com.github.googelfist.workshedule.domain.models.DatePreference
+import com.github.googelfist.workshedule.domain.models.SchedulePreference
 
 interface DateRepository {
-    fun savePreference(preference: Preference)
+    fun saveDatePreference(datePreferenceModel: DatePreference)
 
-    fun loadPreference(): Preference
+    fun saveSchedulePreference(schedulePreferenceModel: SchedulePreference)
+
+    fun loadPreference(): String
 }

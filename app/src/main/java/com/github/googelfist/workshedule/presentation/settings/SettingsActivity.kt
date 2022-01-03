@@ -1,18 +1,22 @@
 package com.github.googelfist.workshedule.presentation.settings
 
-import android.content.SharedPreferences
+import android.app.DatePickerDialog
 import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.DatePicker
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import androidx.preference.PreferenceManager
+import com.github.googelfist.workshedule.R
 import com.github.googelfist.workshedule.databinding.ActivitySettingsBinding
 
-class SettingsActivity : AppCompatActivity() {
-    private lateinit var settings: SharedPreferences
+class SettingsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener,
+    DatePickerDialog.OnDateSetListener {
 
     private lateinit var binding: ActivitySettingsBinding
 
-    private lateinit var viewModel: SettingsViewModel
+    lateinit var settingsViewModel: SettingsViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,36 +25,49 @@ class SettingsActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        settings = PreferenceManager.getDefaultSharedPreferences(this)
+        settingsViewModel = ViewModelProvider(this)[SettingsViewModel::class.java]
 
-        viewModel = ViewModelProvider(this)[SettingsViewModel::class.java]
+        binding.tvDate.setOnClickListener { showDatePickerDialog() }
 
-        supportFragmentManager
-            .beginTransaction()
-            .replace(binding.flSettings.id, SettingsFragment())
-            .commit()
+        setupArrayAdapter()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        val preference = getPreference(settings)
-        viewModel.savePreference(preference)
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        this.saveSchedulePreference(parent?.adapter?.getItem(position).toString())
     }
 
-    private fun getPreference(settings: SharedPreferences): Preference {
-        val schedule = settings.getString(DROP_DOWN_KEY, PREFERENCE_SCHEDULE_DEFAULT_VALUE)
-            ?: PREFERENCE_SCHEDULE_DEFAULT_VALUE
+    override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+        val date = "$year-${month + 1}-$dayOfMonth"
+        this.saveDatePreference(date)
+    }
 
-        val date = settings.getString(DATE_PICKER_KEY, PREFERENCE_DATE_DEFAULT_VALUE)
-            ?: PREFERENCE_DATE_DEFAULT_VALUE
+    override fun onNothingSelected(parent: AdapterView<*>?) {}
 
-        return Preference(schedule, date)
+    private fun showDatePickerDialog() {
+        val newFragment = DatePickerFragment(this)
+        newFragment.show(supportFragmentManager, FRAGMENT_TAG)
+    }
+
+    private fun setupArrayAdapter() {
+        ArrayAdapter.createFromResource(
+            this,
+            R.array.preference_dropdown_items,
+            R.layout.support_simple_spinner_dropdown_item
+        ).also { arrayAdapter ->
+            binding.spinnerSchedule.adapter = arrayAdapter
+            binding.spinnerSchedule.onItemSelectedListener = this
+        }
+    }
+
+    private fun saveDatePreference(date: String) {
+        settingsViewModel.saveDatePreference(date)
+    }
+
+    private fun saveSchedulePreference(schedule: String) {
+        settingsViewModel.saveSchedulePreference(schedule)
     }
 
     companion object {
-        private const val DATE_PICKER_KEY = "datePicker"
-        private const val DROP_DOWN_KEY = "dropDown"
-        private const val PREFERENCE_SCHEDULE_DEFAULT_VALUE = "Schedule preference default value"
-        private const val PREFERENCE_DATE_DEFAULT_VALUE = "Date preference default value"
+        private const val FRAGMENT_TAG = "datePicker"
     }
 }
