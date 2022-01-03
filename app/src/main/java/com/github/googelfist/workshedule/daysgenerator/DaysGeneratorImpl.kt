@@ -2,8 +2,8 @@ package com.github.googelfist.workshedule.daysgenerator
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.github.googelfist.workshedule.domain.models.Day
 import com.github.googelfist.workshedule.domain.DaysGenerator
+import com.github.googelfist.workshedule.domain.models.Day
 import java.time.LocalDate
 
 class DaysGeneratorImpl : DaysGenerator {

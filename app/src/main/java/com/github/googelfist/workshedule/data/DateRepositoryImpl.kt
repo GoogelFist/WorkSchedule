@@ -17,7 +17,7 @@ class DateRepositoryImpl : DateRepository {
         Log.d("LOG", "schedulePreference: $schedulePreferenceModel")
     }
 
-    override fun loadPreference(): String{
+    override fun loadPreference(): String {
         TODO()
     }
 
