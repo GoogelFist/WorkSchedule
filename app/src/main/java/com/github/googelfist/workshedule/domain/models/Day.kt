@@ -1,4 +1,4 @@
-package com.github.googelfist.workshedule.domain
+package com.github.googelfist.workshedule.domain.models
 
 data class Day(
     val value: Int,

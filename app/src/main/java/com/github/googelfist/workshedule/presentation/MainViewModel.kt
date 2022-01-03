@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.github.googelfist.workshedule.daysgenerator.DaysGeneratorImpl
 import com.github.googelfist.workshedule.domain.*
+import com.github.googelfist.workshedule.domain.models.Day
 import java.time.LocalDate
 
 class MainViewModel : ViewModel() {
