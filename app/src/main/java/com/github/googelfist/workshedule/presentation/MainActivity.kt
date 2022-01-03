@@ -94,6 +94,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val SPAN_COUNT = 7
+        private const val SPAN_COUNT = 7
     }
 }
