@@ -44,6 +44,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.month.formattedDateLD.observe(this) {binding.tvYearMonth.text = it}
 
         setupButtons()
+
     }
 
     private fun setupGestureListener() {
