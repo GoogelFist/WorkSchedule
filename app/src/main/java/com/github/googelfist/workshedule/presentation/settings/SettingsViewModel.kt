@@ -2,8 +2,8 @@ package com.github.googelfist.workshedule.presentation.settings
 
 import androidx.lifecycle.ViewModel
 import com.github.googelfist.workshedule.data.DateRepositoryImpl
-import com.github.googelfist.workshedule.domain.SaveDatePreferenceUseCase
-import com.github.googelfist.workshedule.domain.SaveSchedulePreferenceUseCase
+import com.github.googelfist.workshedule.domain.usecase.SaveDatePreferenceUseCase
+import com.github.googelfist.workshedule.domain.usecase.SaveSchedulePreferenceUseCase
 
 class SettingsViewModel : ViewModel() {
     private val dateRepository = DateRepositoryImpl()

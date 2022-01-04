@@ -1,4 +1,4 @@
-package com.github.googelfist.workshedule.domain
+package com.github.googelfist.workshedule.domain.usecase
 
 import java.time.LocalDate
 

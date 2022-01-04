@@ -1,6 +1,7 @@
-package com.github.googelfist.workshedule.domain
+package com.github.googelfist.workshedule.domain.usecase
 
 import androidx.lifecycle.LiveData
+import com.github.googelfist.workshedule.domain.DaysGenerator
 import com.github.googelfist.workshedule.domain.models.Day
 import java.time.LocalDate
 
