@@ -1,11 +1,10 @@
 package com.github.googelfist.workshedule.data
 
-import com.github.googelfist.workshedule.domain.DateRepository
 import java.time.LocalDate
 
-class DateRepositoryImpl : DateRepository {
+class DateRepositoryImpl {
 
-    override fun loadPreference(): String {
+    fun loadPreference(): String {
         TODO()
     }
 
