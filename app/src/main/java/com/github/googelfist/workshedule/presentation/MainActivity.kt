@@ -40,8 +40,8 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
         viewModel.generateCurrentMonth()
-        viewModel.month.dayListLD.observe(this) {dayListAdapter.submitList(it)}
-        viewModel.month.formattedDateLD.observe(this) {binding.tvYearMonth.text = it}
+        viewModel.month.dayListLD.observe(this) { dayListAdapter.submitList(it) }
+        viewModel.month.formattedDateLD.observe(this) { binding.tvYearMonth.text = it }
 
         setupButtons()
 
