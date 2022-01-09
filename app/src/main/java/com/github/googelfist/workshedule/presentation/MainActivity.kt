@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GestureDetectorCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.googelfist.workshedule.databinding.ActivityMainBinding
 import com.github.googelfist.workshedule.presentation.adapters.DayListAdapter
@@ -49,6 +50,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupGestureListener() {
         gestureListener = MainActivityGestureListener()
+        gestureListener.onSwipeDown = { viewModel.generatePreviousMonth() }
+        gestureListener.onSwipeUp = { viewModel.generateNextMonth() }
         gestureListener.onSwipeRight = { viewModel.generatePreviousMonth() }
         gestureListener.onSwipeLeft = { viewModel.generateNextMonth() }
     }
@@ -57,7 +60,6 @@ class MainActivity : AppCompatActivity() {
     private fun setupRecyclerView() {
         val rvDayList = binding.rvDayList
 
-        rvDayList.layoutManager = GridLayoutManager(this, SPAN_COUNT)
         dayListAdapter = DayListAdapter()
         rvDayList.adapter = dayListAdapter
 
