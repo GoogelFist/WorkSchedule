@@ -1,4 +1,4 @@
-package com.github.googelfist.workshedule.daysgenerator
+package com.github.googelfist.workshedule.data.daysgenerator
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

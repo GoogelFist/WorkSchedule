@@ -1,8 +1,8 @@
 package com.github.googelfist.workshedule.presentation
 
 import androidx.lifecycle.ViewModel
-import com.github.googelfist.workshedule.daysgenerator.DaysGeneratorImpl
-import com.github.googelfist.workshedule.daysgenerator.SchedulesGeneratorImpl
+import com.github.googelfist.workshedule.data.daysgenerator.DaysGeneratorImpl
+import com.github.googelfist.workshedule.data.daysgenerator.SchedulesGeneratorImpl
 import com.github.googelfist.workshedule.domain.models.Month
 import com.github.googelfist.workshedule.domain.usecase.*
 import java.time.LocalDate
