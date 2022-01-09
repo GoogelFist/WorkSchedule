@@ -7,6 +7,8 @@ import kotlin.math.abs
 
 class MainActivityGestureListener : GestureDetector.SimpleOnGestureListener() {
 
+    lateinit var onSwipeUp: (() -> Unit)
+    lateinit var onSwipeDown: (() -> Unit)
     lateinit var onSwipeRight: (() -> Unit)
     lateinit var onSwipeLeft: (() -> Unit)
 
@@ -39,8 +41,10 @@ class MainActivityGestureListener : GestureDetector.SimpleOnGestureListener() {
         } else {
             if (velocityY >= 0) {
                 Log.i(DEBUG_TAG, "onSwipeDown")
+                onSwipeDown.invoke()
             } else {
                 Log.i(DEBUG_TAG, "onSwipeUp")
+                onSwipeUp.invoke()
             }
         }
         return true
