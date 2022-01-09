@@ -1,6 +1,6 @@
 package com.github.googelfist.workshedule.domain.usecase
 
-import com.github.googelfist.workshedule.domain.SchedulesGenerator
+import com.github.googelfist.workshedule.domain.schedulesgenerator.SchedulesGenerator
 import com.github.googelfist.workshedule.domain.models.Month
 import java.time.LocalDate
 

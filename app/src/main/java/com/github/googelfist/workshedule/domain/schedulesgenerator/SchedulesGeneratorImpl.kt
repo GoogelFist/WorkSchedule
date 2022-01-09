@@ -1,9 +1,9 @@
-package com.github.googelfist.workshedule.data.daysgenerator
+package com.github.googelfist.workshedule.domain.schedulesgenerator
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.github.googelfist.workshedule.domain.SchedulesGenerator
 import com.github.googelfist.workshedule.domain.models.Day
+import com.github.googelfist.workshedule.domain.schedulesgenerator.daysgenerator.DaysGenerator
 import java.time.LocalDate
 
 class SchedulesGeneratorImpl(private val daysGenerator: DaysGenerator) : SchedulesGenerator {
