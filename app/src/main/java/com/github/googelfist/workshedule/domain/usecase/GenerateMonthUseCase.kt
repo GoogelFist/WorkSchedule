@@ -1,7 +1,7 @@
 package com.github.googelfist.workshedule.domain.usecase
 
 import com.github.googelfist.workshedule.domain.schedulesgenerator.SchedulesGenerator
-import com.github.googelfist.workshedule.domain.models.Month
+import com.github.googelfist.workshedule.domain.models.MonthDTO
 import java.time.LocalDate
 
 class GenerateMonthUseCase(
@@ -9,10 +9,10 @@ class GenerateMonthUseCase(
     private val formatDateUseCase: FormatDateUseCase
 ) {
 
-    fun generate(date: LocalDate): Month {
+    fun generate(date: LocalDate): MonthDTO {
         val currentMonth = schedulesGenerator.generateScheduleDays(date)
         val formatCurrentDate = formatDateUseCase.formatDate(date)
 
-        return Month(formatCurrentDate, date, currentMonth)
+        return MonthDTO(formatCurrentDate, date, currentMonth)
     }
 }

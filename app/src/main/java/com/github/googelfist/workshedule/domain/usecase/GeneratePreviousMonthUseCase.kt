@@ -1,11 +1,11 @@
 package com.github.googelfist.workshedule.domain.usecase
 
-import com.github.googelfist.workshedule.domain.models.Month
+import com.github.googelfist.workshedule.domain.models.MonthDTO
 
 class GeneratePreviousMonthUseCase(private val generateMonthUseCase: GenerateMonthUseCase) {
 
-    fun generate(month: Month): Month {
-        val nextMonthDate = month.date.minusMonths(VALUE)
+    fun generate(monthDTO: MonthDTO): MonthDTO {
+        val nextMonthDate = monthDTO.date.minusMonths(VALUE)
         return generateMonthUseCase.generate(nextMonthDate)
     }
 

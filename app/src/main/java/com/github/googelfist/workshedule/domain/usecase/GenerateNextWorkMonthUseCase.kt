@@ -1,6 +1,6 @@
 package com.github.googelfist.workshedule.domain.usecase
 
-import com.github.googelfist.workshedule.domain.models.Month
+import com.github.googelfist.workshedule.domain.models.MonthDTO
 import java.time.LocalDate
 
 class GenerateNextWorkMonthUseCase(
@@ -8,8 +8,8 @@ class GenerateNextWorkMonthUseCase(
     private val getActualDateFirstWorkUseCase: GetActualDateFirstWorkUseCase
 ) {
 
-    fun generate(month: Month, firstWorkDate: LocalDate, step: Int): Month {
-        val nextMonthDate = month.date.plusMonths(VALUE)
+    fun generate(monthDTO: MonthDTO, firstWorkDate: LocalDate, step: Int): MonthDTO {
+        val nextMonthDate = monthDTO.date.plusMonths(VALUE)
         val actualDateFirstWork =
             getActualDateFirstWorkUseCase.getActualDateFirstWork(nextMonthDate, firstWorkDate, step)
         return generateWorkMonthUseCase.generate(nextMonthDate, actualDateFirstWork, step)

@@ -7,8 +7,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GestureDetectorCompat
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.googelfist.workshedule.databinding.ActivityMainBinding
 import com.github.googelfist.workshedule.presentation.adapters.DayListAdapter
@@ -41,8 +39,8 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
         viewModel.generateCurrentMonth()
-        viewModel.month.dayListLD.observe(this) { dayListAdapter.submitList(it) }
-        viewModel.month.formattedDateLD.observe(this) { binding.tvYearMonth.text = it }
+        viewModel.monthDTO.dayListLD.observe(this) { dayListAdapter.submitList(it) }
+        viewModel.monthDTO.formattedDateLD.observe(this) { binding.tvYearMonth.text = it }
 
         setupButtons()
 
