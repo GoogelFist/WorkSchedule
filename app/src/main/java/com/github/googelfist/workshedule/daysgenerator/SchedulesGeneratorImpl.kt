@@ -2,15 +2,14 @@ package com.github.googelfist.workshedule.daysgenerator
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.github.googelfist.workshedule.domain.DaysGenerator
-import com.github.googelfist.workshedule.domain.WorkDaysGenerator
+import com.github.googelfist.workshedule.domain.SchedulesGenerator
 import com.github.googelfist.workshedule.domain.models.Day
 import java.time.LocalDate
 
-class WorkDaysGeneratorImpl(private val daysGenerator: DaysGenerator) : WorkDaysGenerator {
+class SchedulesGeneratorImpl(private val daysGenerator: DaysGenerator) : SchedulesGenerator {
     private val dayListLD = MutableLiveData<List<Day>>()
 
-    override fun generateWorkDays(
+    override fun generateScheduleWorkDays(
         date: LocalDate,
         firstWorkDate: LocalDate,
         step: Int
@@ -18,6 +17,12 @@ class WorkDaysGeneratorImpl(private val daysGenerator: DaysGenerator) : WorkDays
         val dayList = daysGenerator.generateDays(date)
         dayList.setWeekendDays(firstWorkDate, step)
         dayList.setWorkDays(firstWorkDate, step)
+        dayListLD.value = dayList
+        return dayListLD
+    }
+
+    override fun generateScheduleDays(date: LocalDate): LiveData<List<Day>> {
+        val dayList = daysGenerator.generateDays(date)
         dayListLD.value = dayList
         return dayListLD
     }

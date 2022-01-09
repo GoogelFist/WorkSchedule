@@ -2,7 +2,7 @@ package com.github.googelfist.workshedule.presentation
 
 import androidx.lifecycle.ViewModel
 import com.github.googelfist.workshedule.daysgenerator.DaysGeneratorImpl
-import com.github.googelfist.workshedule.daysgenerator.WorkDaysGeneratorImpl
+import com.github.googelfist.workshedule.daysgenerator.SchedulesGeneratorImpl
 import com.github.googelfist.workshedule.domain.models.Month
 import com.github.googelfist.workshedule.domain.usecase.*
 import java.time.LocalDate
@@ -11,19 +11,19 @@ class MainViewModel : ViewModel() {
 
     // TODO: 26-Dec-21 incorrect architecture
     private val daysGenerator = DaysGeneratorImpl()
-    private val workDaysGenerator = WorkDaysGeneratorImpl(daysGenerator)
+    private val schedulesGenerator = SchedulesGeneratorImpl(daysGenerator)
 
     private val getDateOfChosenMonthUseCase = GetDateNowUseCase()
     private val formatDateUseCase = FormatDateUseCase()
 
-    private val generateMonthUseCase = GenerateMonthUseCase(daysGenerator, formatDateUseCase)
+    private val generateMonthUseCase = GenerateMonthUseCase(schedulesGenerator, formatDateUseCase)
     private val generateNextMonthUseCase = GenerateNextMonthUseCase(generateMonthUseCase)
     private val generatePreviousMonthUseCase = GeneratePreviousMonthUseCase(generateMonthUseCase)
 
     private val getActualDateFirstWorkUseCase = GetActualDateFirstWorkUseCase()
 
     private val generateWorkMonthUseCase =
-        GenerateWorkMonthUseCase(workDaysGenerator, formatDateUseCase)
+        GenerateWorkMonthUseCase(schedulesGenerator, formatDateUseCase)
 
     private val generateNextWorkMonthUseCase =
         GenerateNextWorkMonthUseCase(generateWorkMonthUseCase, getActualDateFirstWorkUseCase)
