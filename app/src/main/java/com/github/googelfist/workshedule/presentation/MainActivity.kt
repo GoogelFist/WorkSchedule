@@ -43,7 +43,6 @@ class MainActivity : AppCompatActivity() {
         viewModel.monthDTO.formattedDateLD.observe(this) { binding.tvYearMonth.text = it }
 
         setupButtons()
-
     }
 
     private fun setupGestureListener() {
@@ -92,9 +91,5 @@ class MainActivity : AppCompatActivity() {
         binding.bSettings.setOnClickListener {
             startActivity(Intent(this, SettingsActivity::class.java))
         }
-    }
-
-    companion object {
-        private const val SPAN_COUNT = 7
     }
 }

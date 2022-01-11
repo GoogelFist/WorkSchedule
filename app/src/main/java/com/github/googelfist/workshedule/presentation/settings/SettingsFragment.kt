@@ -18,7 +18,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         settings = preferenceManager.sharedPreferences
 
         val datePref = preferenceManager.findPreference<Preference>(DATE_PICKER_KEY)
-            ?: throw  RuntimeException("Preference not found")
+            ?: throw RuntimeException("Preference not found")
         datePref.summary = settings.getString(DATE_PICKER_KEY, PREFERENCE_DEFAULT_VALUE)
         datePref.onPreferenceClickListener = datePicker
     }

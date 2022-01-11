@@ -8,7 +8,7 @@ import java.time.LocalDate
 class MainViewModel(
     private val generateMonthUseCase: GenerateMonthUseCase,
     private val getDateOfChosenMonthUseCase: GetDateNowUseCase,
-    private val getActualDateFirstWorkUseCase:GetActualDateFirstWorkUseCase,
+    private val getActualDateFirstWorkUseCase: GetActualDateFirstWorkUseCase,
     private val generateNextMonthUseCase: GenerateNextMonthUseCase,
     private val generatePreviousMonthUseCase: GeneratePreviousMonthUseCase,
     private val generateWorkMonthUseCase: GenerateWorkMonthUseCase,

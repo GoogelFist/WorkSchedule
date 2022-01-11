@@ -28,7 +28,6 @@ class MainViewModelFactory : ViewModelProvider.Factory {
     private val generatePreviousWorkMonthUseCase =
         GeneratePreviousWorkMonthUseCase(generateWorkMonthUseCase, getActualDateFirstWorkUseCase)
 
-
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return MainViewModel(
             generateMonthUseCase,

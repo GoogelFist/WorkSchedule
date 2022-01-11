@@ -1,5 +1,5 @@
 package com.github.googelfist.workshedule.domain
 
-interface DateRepository {
+interface PreferenceRepository {
     fun loadPreference(): String
 }

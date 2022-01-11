@@ -13,6 +13,7 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
     <style name="dateTimePicker" parent="ThemeOverlay.MaterialComponents.Dialog">
         <item name="colorAccent">@color/design_default_color_primary</item>
     </style>
