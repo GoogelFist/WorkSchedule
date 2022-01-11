@@ -1,11 +1,11 @@
 package com.github.googelfist.workshedule.domain.models
 
-open class Day(
-    open val value: Int,
-    open val month: Int,
-    open val year: Int,
-    open val isActive: Boolean = false,
-    open val isToday: Boolean = false,
-    open var isWeekend: Boolean = false,
-    open var isWork: Boolean = false
+data class Day(
+    val value: Int,
+    val month: Int,
+    val year: Int,
+    val isActive: Boolean = false,
+    val isToday: Boolean = false,
+    val isWeekend: Boolean = false,
+    val isWork: Boolean = false
 )

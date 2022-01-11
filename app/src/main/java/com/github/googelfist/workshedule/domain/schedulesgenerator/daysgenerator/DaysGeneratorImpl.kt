@@ -1,8 +1,6 @@
 package com.github.googelfist.workshedule.domain.schedulesgenerator.daysgenerator
 
-import com.github.googelfist.workshedule.domain.models.ActiveDay
 import com.github.googelfist.workshedule.domain.models.Day
-import com.github.googelfist.workshedule.domain.models.InActiveDay
 import java.time.LocalDate
 
 class DaysGeneratorImpl : DaysGenerator {
@@ -42,25 +40,24 @@ class DaysGeneratorImpl : DaysGenerator {
     private fun getDay(firstDate: LocalDate, date: LocalDate): Day {
         val today = LocalDate.now()
         return when {
-            firstDate.monthValue != date.monthValue -> InActiveDay(
+            firstDate.monthValue != date.monthValue -> Day(
                 value = firstDate.dayOfMonth,
                 month = firstDate.monthValue,
                 year = firstDate.year
             )
 
             firstDate.monthValue == today.monthValue && firstDate.dayOfMonth == today.dayOfMonth ->
-                ActiveDay(
+                Day(
                     value = firstDate.dayOfMonth,
                     month = firstDate.monthValue,
-                    year = firstDate.year,
-                    isToday = true
-                )
+                    year = firstDate.year
+                ).copy(isActive = true, isToday = true)
 
-            else -> ActiveDay(
+            else -> Day(
                 value = firstDate.dayOfMonth,
                 month = firstDate.monthValue,
                 year = firstDate.year
-            )
+            ).copy(isActive = true)
         }
     }
 
