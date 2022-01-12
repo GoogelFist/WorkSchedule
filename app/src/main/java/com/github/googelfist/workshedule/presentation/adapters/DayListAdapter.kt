@@ -4,7 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.github.googelfist.workshedule.R
-import com.github.googelfist.workshedule.domain.models.Day
+import com.github.googelfist.workshedule.domain.models.days.ActiveDay
+import com.github.googelfist.workshedule.domain.models.days.Day
+import com.github.googelfist.workshedule.domain.models.days.InActiveDay
+import com.github.googelfist.workshedule.domain.models.days.Today
 
 class DayListAdapter : ListAdapter<Day, DayViewHolder>(DayDiffCallback()) {
 
@@ -44,17 +47,17 @@ class DayListAdapter : ListAdapter<Day, DayViewHolder>(DayDiffCallback()) {
         val day = getItem(position)
 
         return when {
-            day.isActive && day.isWork && day.isToday -> TODAY_WORK_TYPE
-            day.isActive && day.isWeekend && day.isToday -> TODAY_WEEKEND_TYPE
-            day.isToday && day.isActive -> TODAY_TYPE
+            day is Today && day.isWork -> TODAY_WORK_TYPE
+            day is Today && day.isWeekend -> TODAY_WEEKEND_TYPE
+            day is Today -> TODAY_TYPE
 
-            day.isWork && day.isActive -> ACTIVE_WORK_DAY_TYPE
-            day.isWork && !day.isActive -> INACTIVE_WORK_DAY_TYPE
+            day is ActiveDay && day.isWork -> ACTIVE_WORK_DAY_TYPE
+            day is InActiveDay && day.isWork -> INACTIVE_WORK_DAY_TYPE
 
-            day.isWeekend && day.isActive -> ACTIVE_WEEKEND_DAY_TYPE
-            day.isWeekend && !day.isActive -> INACTIVE_WEEKEND_DAY_TYPE
+            day is ActiveDay && day.isWeekend -> ACTIVE_WEEKEND_DAY_TYPE
+            day is InActiveDay && day.isWeekend -> INACTIVE_WEEKEND_DAY_TYPE
 
-            !day.isActive -> INACTIVE_DAY_TYPE
+            day is InActiveDay -> INACTIVE_DAY_TYPE
 
             else -> ACTIVE_DAY_TYPE
         }

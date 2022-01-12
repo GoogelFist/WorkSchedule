@@ -1,23 +1,24 @@
 package com.github.googelfist.workshedule.domain.schedulesgenerator.daysgenerator
 
-import com.github.googelfist.workshedule.domain.models.Day
+import com.github.googelfist.workshedule.domain.models.days.Day
+import com.github.googelfist.workshedule.domain.schedulesgenerator.daysfabric.DaysFabric
 import java.time.LocalDate
 
-class DaysGeneratorImpl : DaysGenerator {
+class DaysGeneratorImpl(private val daysFabric: DaysFabric) : DaysGenerator {
 
     override fun generateDays(date: LocalDate): List<Day> {
-        var firstDay = getFirstDay(date)
+        var firstDay = getFirstDate(date)
 
         val dayList = mutableListOf<Day>()
         for (i in 0 until 42) {
-            dayList.add(getDay(firstDay, date))
+            dayList.add(daysFabric.getDays(firstDay, date))
 
             firstDay = firstDay.plusDays(ONE_VALUE)
         }
         return dayList
     }
 
-    private fun getFirstDay(date: LocalDate): LocalDate {
+    private fun getFirstDate(date: LocalDate): LocalDate {
         val datesListOfRange = mutableListOf<LocalDate>()
         var dateMinRange = date.minusDays(RANGE_HALF_LENGTH)
         for (i in 0 until RANGE_LENGTH) {
@@ -35,30 +36,6 @@ class DaysGeneratorImpl : DaysGenerator {
             else -> firstMonday.minusWeeks(ONE_VALUE)
         }
         return firstDay
-    }
-
-    private fun getDay(firstDate: LocalDate, date: LocalDate): Day {
-        val today = LocalDate.now()
-        return when {
-            firstDate.monthValue != date.monthValue -> Day(
-                value = firstDate.dayOfMonth,
-                month = firstDate.monthValue,
-                year = firstDate.year
-            )
-
-            firstDate.monthValue == today.monthValue && firstDate.dayOfMonth == today.dayOfMonth ->
-                Day(
-                    value = firstDate.dayOfMonth,
-                    month = firstDate.monthValue,
-                    year = firstDate.year
-                ).copy(isActive = true, isToday = true)
-
-            else -> Day(
-                value = firstDate.dayOfMonth,
-                month = firstDate.monthValue,
-                year = firstDate.year
-            ).copy(isActive = true)
-        }
     }
 
     companion object {

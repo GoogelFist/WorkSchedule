@@ -1,6 +1,7 @@
 package com.github.googelfist.workshedule.domain.models
 
 import androidx.lifecycle.LiveData
+import com.github.googelfist.workshedule.domain.models.days.Day
 import java.time.LocalDate
 
 data class MonthDTO(

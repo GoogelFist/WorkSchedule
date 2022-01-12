@@ -2,11 +2,15 @@ package com.github.googelfist.workshedule.domain.schedulesgenerator
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.github.googelfist.workshedule.domain.models.Day
+import com.github.googelfist.workshedule.domain.models.days.Day
 import com.github.googelfist.workshedule.domain.schedulesgenerator.daysgenerator.DaysGenerator
+import com.github.googelfist.workshedule.domain.schedulesgenerator.daysmapper.DaysMapper
 import java.time.LocalDate
 
-class SchedulesGeneratorImpl(private val daysGenerator: DaysGenerator) : SchedulesGenerator {
+class SchedulesGeneratorImpl(
+    private val daysGenerator: DaysGenerator,
+    private val dayMapper: DaysMapper
+) : SchedulesGenerator {
     private val dayListLD = MutableLiveData<List<Day>>()
 
     override fun generateScheduleWorkDays(
@@ -29,10 +33,10 @@ class SchedulesGeneratorImpl(private val daysGenerator: DaysGenerator) : Schedul
         val workDates = getWorkDates(date, step)
 
         return this.map {
-            if (workDates.contains(LocalDate.of(it.year, it.month, it.value))) {
-                it.copy(isWork = true)
+            if (isWorkDay(workDates, it)) {
+                dayMapper.dayToWorkDay(it)
             } else {
-                it.copy(isWeekend = true)
+                dayMapper.dayToWeekendDay(it)
             }
         }
     }
@@ -48,6 +52,11 @@ class SchedulesGeneratorImpl(private val daysGenerator: DaysGenerator) : Schedul
         }
         return dateSet
     }
+
+    private fun isWorkDay(
+        workDates: Set<LocalDate>,
+        day: Day
+    ) = workDates.contains(LocalDate.of(day.year, day.month, day.value))
 
     companion object {
         private const val ONE_VALUE = 1L

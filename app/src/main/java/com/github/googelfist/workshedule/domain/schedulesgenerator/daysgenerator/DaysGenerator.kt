@@ -1,6 +1,6 @@
 package com.github.googelfist.workshedule.domain.schedulesgenerator.daysgenerator
 
-import com.github.googelfist.workshedule.domain.models.Day
+import com.github.googelfist.workshedule.domain.models.days.Day
 import java.time.LocalDate
 
 interface DaysGenerator {

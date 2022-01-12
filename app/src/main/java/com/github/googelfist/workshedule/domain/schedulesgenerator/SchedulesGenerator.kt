@@ -1,7 +1,7 @@
 package com.github.googelfist.workshedule.domain.schedulesgenerator
 
 import androidx.lifecycle.LiveData
-import com.github.googelfist.workshedule.domain.models.Day
+import com.github.googelfist.workshedule.domain.models.days.Day
 import java.time.LocalDate
 
 interface SchedulesGenerator {
