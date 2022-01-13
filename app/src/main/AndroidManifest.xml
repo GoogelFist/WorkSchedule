@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.github.googelfist.workshedule">
+    package="com.github.googelfist.workschedule">
 
     <application
         android:allowBackup="true"
@@ -9,9 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.WorkSchedule">
-        <activity android:name=".presentation.settings.SettingsActivity" />
+        <activity android:name="com.github.googelfist.workschedule.presentation.settings.SettingsActivity" />
         <activity
-            android:name=".presentation.MainActivity"
+            android:name="com.github.googelfist.workschedule.presentation.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
