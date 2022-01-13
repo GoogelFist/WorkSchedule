@@ -8,11 +8,11 @@ class GenerateNextWorkMonthUseCase(
     private val getActualDateFirstWorkUseCase: GetActualDateFirstWorkUseCase
 ) {
 
-    fun generate(monthDTO: MonthDTO, firstWorkDate: LocalDate, step: Int): MonthDTO {
+    operator fun invoke(monthDTO: MonthDTO, firstWorkDate: LocalDate, step: Int): MonthDTO {
         val nextMonthDate = monthDTO.date.plusMonths(VALUE)
         val actualDateFirstWork =
-            getActualDateFirstWorkUseCase.getActualDateFirstWork(nextMonthDate, firstWorkDate, step)
-        return generateWorkMonthUseCase.generate(nextMonthDate, actualDateFirstWork, step)
+            getActualDateFirstWorkUseCase(nextMonthDate, firstWorkDate, step)
+        return generateWorkMonthUseCase(nextMonthDate, actualDateFirstWork, step)
     }
 
     companion object {

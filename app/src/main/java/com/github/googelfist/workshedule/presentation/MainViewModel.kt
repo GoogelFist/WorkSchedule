@@ -23,7 +23,7 @@ class MainViewModel(
     private val generateNextWorkMonthUseCase: GenerateNextWorkMonthUseCase,
     private val generatePreviousWorkMonthUseCase: GeneratePreviousWorkMonthUseCase
 ) : ViewModel() {
-    private var date: LocalDate = getDateOfChosenMonthUseCase.getDateNow()
+    private var date: LocalDate = getDateOfChosenMonthUseCase()
 
     // TODO: 06-Jan-22 this will be in base
     private var firstWorkDate: LocalDate = LocalDate.of(2021, 12, 1)
@@ -34,18 +34,18 @@ class MainViewModel(
     fun generateCurrentMonth() {
 //        month = generateMonthUseCase.generate(date)
         firstWorkDate =
-            getActualDateFirstWorkUseCase.getActualDateFirstWork(date, firstWorkDate, STEP)
-        monthDTO = generateWorkMonthUseCase.generate(date, firstWorkDate, STEP)
+            getActualDateFirstWorkUseCase(date, firstWorkDate, STEP)
+        monthDTO = generateWorkMonthUseCase(date, firstWorkDate, STEP)
     }
 
     fun generateNextMonth() {
 //        month = generateNextMonthUseCase.generate(month)
-        monthDTO = generateNextWorkMonthUseCase.generate(monthDTO, firstWorkDate, STEP)
+        monthDTO = generateNextWorkMonthUseCase(monthDTO, firstWorkDate, STEP)
     }
 
     fun generatePreviousMonth() {
 //        month = generatePreviousMonthUseCase.generate(month)
-        monthDTO = generatePreviousWorkMonthUseCase.generate(monthDTO, firstWorkDate, STEP)
+        monthDTO = generatePreviousWorkMonthUseCase(monthDTO, firstWorkDate, STEP)
     }
 
     companion object {

@@ -9,9 +9,9 @@ class GenerateWorkMonthUseCase(
     private val formatDateUseCase: FormatDateUseCase
 ) {
 
-    fun generate(date: LocalDate, firstWorkDate: LocalDate, step: Int): MonthDTO {
+    operator fun invoke(date: LocalDate, firstWorkDate: LocalDate, step: Int): MonthDTO {
         val currentMonth = schedulesGenerator.generateScheduleWorkDays(date, firstWorkDate, step)
-        val formatCurrentDate = formatDateUseCase.formatDate(date)
+        val formatCurrentDate = formatDateUseCase(date)
 
         return MonthDTO(formatCurrentDate, date, currentMonth)
     }

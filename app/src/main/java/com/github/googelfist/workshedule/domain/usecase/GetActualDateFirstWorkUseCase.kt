@@ -4,7 +4,7 @@ import java.time.LocalDate
 
 class GetActualDateFirstWorkUseCase {
 
-    fun getActualDateFirstWork(date: LocalDate, startWorkDate: LocalDate, step: Int): LocalDate {
+    operator fun invoke(date: LocalDate, startWorkDate: LocalDate, step: Int): LocalDate {
         var curDate = startWorkDate
         when {
             curDate == date -> return date

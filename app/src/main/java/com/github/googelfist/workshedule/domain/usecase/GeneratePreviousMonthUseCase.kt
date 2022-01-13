@@ -4,9 +4,9 @@ import com.github.googelfist.workshedule.domain.models.MonthDTO
 
 class GeneratePreviousMonthUseCase(private val generateMonthUseCase: GenerateMonthUseCase) {
 
-    fun generate(monthDTO: MonthDTO): MonthDTO {
+    operator fun invoke(monthDTO: MonthDTO): MonthDTO {
         val nextMonthDate = monthDTO.date.minusMonths(VALUE)
-        return generateMonthUseCase.generate(nextMonthDate)
+        return generateMonthUseCase(nextMonthDate)
     }
 
     companion object {

@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter
 class FormatDateUseCase {
     private val formattedDateLD = MutableLiveData<String>()
 
-    fun formatDate(date: LocalDate): LiveData<String> {
+    operator fun invoke(date: LocalDate): LiveData<String> {
         val format = DateTimeFormatter.ofPattern(FORMAT_PATTERN).format(date)
         formattedDateLD.value = format
         return formattedDateLD

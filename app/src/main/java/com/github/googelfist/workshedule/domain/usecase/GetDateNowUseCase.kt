@@ -4,7 +4,7 @@ import java.time.LocalDate
 
 class GetDateNowUseCase {
 
-    fun getDateNow(): LocalDate {
+    operator fun invoke(): LocalDate {
         return LocalDate.now()
     }
 }

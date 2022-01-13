@@ -8,14 +8,14 @@ class GeneratePreviousWorkMonthUseCase(
     private val getActualDateFirstWorkUseCase: GetActualDateFirstWorkUseCase
 ) {
 
-    fun generate(monthDTO: MonthDTO, firstWorkDate: LocalDate, step: Int): MonthDTO {
+    operator fun invoke(monthDTO: MonthDTO, firstWorkDate: LocalDate, step: Int): MonthDTO {
         val previousMonthDate = monthDTO.date.minusMonths(VALUE)
-        val actualDateFirstWork = getActualDateFirstWorkUseCase.getActualDateFirstWork(
+        val actualDateFirstWork = getActualDateFirstWorkUseCase(
             previousMonthDate,
             firstWorkDate,
             step
         )
-        return generateWorkMonthUseCase.generate(previousMonthDate, actualDateFirstWork, step)
+        return generateWorkMonthUseCase(previousMonthDate, actualDateFirstWork, step)
     }
 
     companion object {

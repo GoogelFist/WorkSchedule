@@ -9,9 +9,9 @@ class GenerateMonthUseCase(
     private val formatDateUseCase: FormatDateUseCase
 ) {
 
-    fun generate(date: LocalDate): MonthDTO {
+    operator fun invoke(date: LocalDate): MonthDTO {
         val currentMonth = schedulesGenerator.generateScheduleDays(date)
-        val formatCurrentDate = formatDateUseCase.formatDate(date)
+        val formatCurrentDate = formatDateUseCase(date)
 
         return MonthDTO(formatCurrentDate, date, currentMonth)
     }
