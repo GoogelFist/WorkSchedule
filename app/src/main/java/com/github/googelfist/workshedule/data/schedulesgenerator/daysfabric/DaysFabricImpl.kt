@@ -32,11 +32,11 @@ class DaysFabricImpl : DaysFabric {
         }
     }
 
-    private fun isInActiveDay(
-        firstDate: LocalDate,
-        date: LocalDate
-    ) = firstDate.monthValue != date.monthValue
+    private fun isInActiveDay(firstDate: LocalDate, date: LocalDate): Boolean {
+        return firstDate.monthValue != date.monthValue
+    }
 
-    private fun isToday(firstDate: LocalDate, today: LocalDate) =
-        firstDate.monthValue == today.monthValue && firstDate.dayOfMonth == today.dayOfMonth
+    private fun isToday(firstDate: LocalDate, today: LocalDate): Boolean {
+        return firstDate.monthValue == today.monthValue && firstDate.dayOfMonth == today.dayOfMonth
+    }
 }
