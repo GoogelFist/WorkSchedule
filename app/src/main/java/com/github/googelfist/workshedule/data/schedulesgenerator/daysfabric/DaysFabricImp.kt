@@ -8,7 +8,7 @@ import java.time.LocalDate
 
 class DaysFabricImp : DaysFabric {
 
-    override fun getDays(firstDate: LocalDate, date: LocalDate): Day {
+    override fun getDay(firstDate: LocalDate, date: LocalDate): Day {
         val today = LocalDate.now()
         return when {
             isInActiveDay(firstDate, date) -> InActiveDay(

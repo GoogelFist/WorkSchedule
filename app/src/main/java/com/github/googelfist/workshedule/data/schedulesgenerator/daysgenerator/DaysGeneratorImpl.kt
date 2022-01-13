@@ -11,7 +11,7 @@ class DaysGeneratorImpl(private val daysFabric: DaysFabric) : DaysGenerator {
 
         val dayList = mutableListOf<Day>()
         repeat(MAX_DAY_COUNT) {
-            dayList.add(daysFabric.getDays(firstDay, date))
+            dayList.add(daysFabric.getDay(firstDay, date))
 
             firstDay = firstDay.plusDays(ONE_VALUE)
         }
