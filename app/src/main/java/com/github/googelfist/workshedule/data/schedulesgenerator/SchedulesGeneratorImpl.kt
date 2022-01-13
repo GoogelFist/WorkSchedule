@@ -46,7 +46,7 @@ class SchedulesGeneratorImpl(
         var lowDate = date.minusDays(RANGE_HALF_LENGTH)
         val dateSet = mutableSetOf<LocalDate>()
 
-        (0..RANGE_LENGTH step step).forEach { _ ->
+        (ZERO..RANGE_LENGTH step step).forEach { _ ->
             dateSet.add(lowDate)
             dateSet.add(lowDate.plusDays(ONE_VALUE))
             lowDate = lowDate.plusDays(step.toLong())
@@ -62,5 +62,6 @@ class SchedulesGeneratorImpl(
         private const val ONE_VALUE = 1L
         private const val RANGE_LENGTH = 80
         private const val RANGE_HALF_LENGTH = RANGE_LENGTH / 2L
+        private const val ZERO = 0
     }
 }
