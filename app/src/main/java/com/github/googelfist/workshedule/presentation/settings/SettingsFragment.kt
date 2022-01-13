@@ -6,7 +6,7 @@ import android.os.Bundle
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.github.googelfist.workshedule.R
-import java.util.*
+import java.util.Calendar
 
 class SettingsFragment : PreferenceFragmentCompat() {
 
@@ -18,7 +18,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         settings = preferenceManager.sharedPreferences
 
         val datePref = preferenceManager.findPreference<Preference>(DATE_PICKER_KEY)
-            ?: throw RuntimeException("Preference not found")
+            ?: throw NoSuchElementException("Preference not found")
         datePref.summary = settings.getString(DATE_PICKER_KEY, PREFERENCE_DEFAULT_VALUE)
         datePref.onPreferenceClickListener = datePicker
     }

@@ -28,7 +28,7 @@ class DayListAdapter : ListAdapter<Day, DayViewHolder>(DayDiffCallback()) {
             INACTIVE_DAY_TYPE -> R.layout.inactive_day
             ACTIVE_DAY_TYPE -> R.layout.active_day
 
-            else -> throw RuntimeException("Unknown view type: $viewType")
+            else -> throw IllegalArgumentException("Unknown view type: $viewType")
         }
 
         val view = LayoutInflater.from(parent.context).inflate(layout, parent, false)
