@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.github.googelfist.workshedule.data.schedulesgenerator.SchedulesGeneratorImpl
 import com.github.googelfist.workshedule.data.schedulesgenerator.daysfabric.DaysFabric
-import com.github.googelfist.workshedule.data.schedulesgenerator.daysfabric.DaysFabricImp
+import com.github.googelfist.workshedule.data.schedulesgenerator.daysfabric.DaysFabricImpl
 import com.github.googelfist.workshedule.data.schedulesgenerator.daysgenerator.DaysGenerator
 import com.github.googelfist.workshedule.data.schedulesgenerator.daysgenerator.DaysGeneratorImpl
 import com.github.googelfist.workshedule.data.schedulesgenerator.daysmapper.DaysMapper
@@ -21,7 +21,7 @@ import com.github.googelfist.workshedule.domain.usecase.GetActualDateFirstWorkUs
 import com.github.googelfist.workshedule.domain.usecase.GetDateNowUseCase
 
 class MainViewModelFactory : ViewModelProvider.Factory {
-    private val daysFabric: DaysFabric = DaysFabricImp()
+    private val daysFabric: DaysFabric = DaysFabricImpl()
     private val daysGenerator: DaysGenerator = DaysGeneratorImpl(daysFabric)
     private val dayMapper: DaysMapper = DaysMapperImpl()
 

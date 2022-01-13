@@ -6,7 +6,7 @@ import com.github.googelfist.workshedule.domain.models.days.InActiveDay
 import com.github.googelfist.workshedule.domain.models.days.Today
 import java.time.LocalDate
 
-class DaysFabricImp : DaysFabric {
+class DaysFabricImpl : DaysFabric {
 
     override fun getDay(firstDate: LocalDate, date: LocalDate): Day {
         val today = LocalDate.now()
