@@ -6,16 +6,17 @@
     <DropDownPreference
         android:icon="@drawable/ic_baseline_calendar_view_day_24"
         android:entryValues="@array/preference_dropdown_items"
-        android:key="dropDown"
-        android:summary="Schedules presets"
-        android:title="Choose the schedule"
+        android:key="@string/dd_schedule_type_key"
+        android:summary="@string/dd_schedule_type_summary"
+        android:title="@string/dd_schedule_type_title"
         app:entries="@array/preference_dropdown_items"
         app:useSimpleSummaryProvider="true" />
+
     <Preference
         android:icon="@drawable/ic_baseline_calendar_today_24"
-        android:key="datePicker"
-        android:summary="Choose start work date"
-        android:title="Choose start work date"
+        android:key="@string/p_date_picker_key"
+        android:summary="@string/p_date_picker_summary"
+        android:title="@string/p_date_picker_title"
         app:useSimpleSummaryProvider="true" />
 
 </PreferenceScreen>

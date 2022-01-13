@@ -1,5 +1,7 @@
 <resources>
+    <!-- manifest values -->
     <string name="app_name">Work Schedule</string>
+    <!-- main activity values -->
     <string name="description_image_view_for_up_navigation">Image view for up navigation</string>
     <string name="description_image_view_for_down_navigation">Image view for down navigation</string>
     <string name="monday">Mo</string>
@@ -9,4 +11,11 @@
     <string name="friday">Fr</string>
     <string name="saturday">Sa</string>
     <string name="sunday">Su</string>
+    <!-- preference values -->
+    <string name="dd_schedule_type_key">schedule_type</string>
+    <string name="dd_schedule_type_summary">Choose schedule type</string>
+    <string name="dd_schedule_type_title">Choose the schedule</string>
+    <string name="p_date_picker_key">first_work_date</string>
+    <string name="p_date_picker_summary">Choose start work date</string>
+    <string name="p_date_picker_title">Choose start work date</string>
 </resources>

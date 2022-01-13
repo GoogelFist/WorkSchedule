@@ -17,10 +17,14 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         settings = preferenceManager.sharedPreferences
 
-        val datePref = preferenceManager.findPreference<Preference>(DATE_PICKER_KEY)
+        val datePref = preferenceManager.findPreference<Preference>(getDatePickerKey())
             ?: throw NoSuchElementException("Preference not found")
-        datePref.summary = settings.getString(DATE_PICKER_KEY, PREFERENCE_DEFAULT_VALUE)
+        datePref.summary = settings.getString(getDatePickerKey(), PREFERENCE_DEFAULT_VALUE)
         datePref.onPreferenceClickListener = datePicker
+    }
+
+    private fun getDatePickerKey(): String {
+        return preferenceManager.context.resources.getString(R.string.p_date_picker_key)
     }
 
     private var datePicker = Preference.OnPreferenceClickListener { preference ->
@@ -34,7 +38,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             R.style.dateTimePicker,
             { _, y, m, d ->
                 val datePicked = "$d.${m + ONE_VALUE}.$y"
-                settings.edit().putString(DATE_PICKER_KEY, datePicked).apply()
+                settings.edit().putString(getDatePickerKey(), datePicked).apply()
                 preference.summary = datePicked
             }, year, month, day
         )
@@ -43,8 +47,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     }
 
     companion object {
-        private const val DATE_PICKER_KEY = "datePicker"
-        private const val PREFERENCE_DEFAULT_VALUE = "0001-1-1"
+        private const val PREFERENCE_DEFAULT_VALUE = "Choose start work date"
         private const val ONE_VALUE = 1
     }
 }

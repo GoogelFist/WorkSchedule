@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="preference_dropdown_items">
-        <item>Two in two</item>
-        <item>nothing</item>
+        <item>Choose schedule type</item>
+        <item>2 / 2 </item>
         <item>nothing</item>
         <item>nothing</item>
     </string-array>
