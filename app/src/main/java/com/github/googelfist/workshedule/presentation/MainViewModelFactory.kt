@@ -2,14 +2,14 @@ package com.github.googelfist.workshedule.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.github.googelfist.workshedule.domain.schedulesgenerator.SchedulesGenerator
-import com.github.googelfist.workshedule.domain.schedulesgenerator.SchedulesGeneratorImpl
-import com.github.googelfist.workshedule.domain.schedulesgenerator.daysfabric.DaysFabric
-import com.github.googelfist.workshedule.domain.schedulesgenerator.daysfabric.DaysFabricImp
-import com.github.googelfist.workshedule.domain.schedulesgenerator.daysgenerator.DaysGenerator
-import com.github.googelfist.workshedule.domain.schedulesgenerator.daysgenerator.DaysGeneratorImpl
-import com.github.googelfist.workshedule.domain.schedulesgenerator.daysmapper.DaysMapper
-import com.github.googelfist.workshedule.domain.schedulesgenerator.daysmapper.DaysMapperImpl
+import com.github.googelfist.workshedule.data.schedulesgenerator.SchedulesGeneratorImpl
+import com.github.googelfist.workshedule.data.schedulesgenerator.daysfabric.DaysFabric
+import com.github.googelfist.workshedule.data.schedulesgenerator.daysfabric.DaysFabricImp
+import com.github.googelfist.workshedule.data.schedulesgenerator.daysgenerator.DaysGenerator
+import com.github.googelfist.workshedule.data.schedulesgenerator.daysgenerator.DaysGeneratorImpl
+import com.github.googelfist.workshedule.data.schedulesgenerator.daysmapper.DaysMapper
+import com.github.googelfist.workshedule.data.schedulesgenerator.daysmapper.DaysMapperImpl
+import com.github.googelfist.workshedule.domain.SchedulesGenerator
 import com.github.googelfist.workshedule.domain.usecase.FormatDateUseCase
 import com.github.googelfist.workshedule.domain.usecase.GenerateMonthUseCase
 import com.github.googelfist.workshedule.domain.usecase.GenerateNextMonthUseCase

@@ -2,9 +2,17 @@ package com.github.googelfist.workshedule.presentation
 
 import androidx.lifecycle.ViewModel
 import com.github.googelfist.workshedule.domain.models.MonthDTO
-import com.github.googelfist.workshedule.domain.usecase.*
+import com.github.googelfist.workshedule.domain.usecase.GenerateMonthUseCase
+import com.github.googelfist.workshedule.domain.usecase.GenerateNextMonthUseCase
+import com.github.googelfist.workshedule.domain.usecase.GenerateNextWorkMonthUseCase
+import com.github.googelfist.workshedule.domain.usecase.GeneratePreviousMonthUseCase
+import com.github.googelfist.workshedule.domain.usecase.GeneratePreviousWorkMonthUseCase
+import com.github.googelfist.workshedule.domain.usecase.GenerateWorkMonthUseCase
+import com.github.googelfist.workshedule.domain.usecase.GetActualDateFirstWorkUseCase
+import com.github.googelfist.workshedule.domain.usecase.GetDateNowUseCase
 import java.time.LocalDate
 
+// TODO: 13-Jan-22  too many parameters
 class MainViewModel(
     private val generateMonthUseCase: GenerateMonthUseCase,
     private val getDateOfChosenMonthUseCase: GetDateNowUseCase,
@@ -22,6 +30,7 @@ class MainViewModel(
 
     lateinit var monthDTO: MonthDTO
 
+    // TODO: 12-Jan-22 naming methods
     fun generateCurrentMonth() {
 //        month = generateMonthUseCase.generate(date)
         firstWorkDate =

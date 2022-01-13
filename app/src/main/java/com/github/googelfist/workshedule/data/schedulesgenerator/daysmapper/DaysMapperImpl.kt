@@ -1,4 +1,4 @@
-package com.github.googelfist.workshedule.domain.schedulesgenerator.daysmapper
+package com.github.googelfist.workshedule.data.schedulesgenerator.daysmapper
 
 import com.github.googelfist.workshedule.domain.models.days.ActiveDay
 import com.github.googelfist.workshedule.domain.models.days.Day

@@ -1,4 +1,4 @@
-package com.github.googelfist.workshedule.domain.schedulesgenerator
+package com.github.googelfist.workshedule.domain
 
 import androidx.lifecycle.LiveData
 import com.github.googelfist.workshedule.domain.models.days.Day

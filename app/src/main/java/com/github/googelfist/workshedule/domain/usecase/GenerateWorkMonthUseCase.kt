@@ -1,7 +1,7 @@
 package com.github.googelfist.workshedule.domain.usecase
 
+import com.github.googelfist.workshedule.domain.SchedulesGenerator
 import com.github.googelfist.workshedule.domain.models.MonthDTO
-import com.github.googelfist.workshedule.domain.schedulesgenerator.SchedulesGenerator
 import java.time.LocalDate
 
 class GenerateWorkMonthUseCase(

@@ -1,7 +1,7 @@
-package com.github.googelfist.workshedule.domain.schedulesgenerator.daysgenerator
+package com.github.googelfist.workshedule.data.schedulesgenerator.daysgenerator
 
+import com.github.googelfist.workshedule.data.schedulesgenerator.daysfabric.DaysFabric
 import com.github.googelfist.workshedule.domain.models.days.Day
-import com.github.googelfist.workshedule.domain.schedulesgenerator.daysfabric.DaysFabric
 import java.time.LocalDate
 
 class DaysGeneratorImpl(private val daysFabric: DaysFabric) : DaysGenerator {
@@ -10,7 +10,7 @@ class DaysGeneratorImpl(private val daysFabric: DaysFabric) : DaysGenerator {
         var firstDay = getFirstDate(date)
 
         val dayList = mutableListOf<Day>()
-        for (i in 0 until 42) {
+        repeat(MAX_DAY_COUNT) {
             dayList.add(daysFabric.getDays(firstDay, date))
 
             firstDay = firstDay.plusDays(ONE_VALUE)
@@ -21,7 +21,7 @@ class DaysGeneratorImpl(private val daysFabric: DaysFabric) : DaysGenerator {
     private fun getFirstDate(date: LocalDate): LocalDate {
         val datesListOfRange = mutableListOf<LocalDate>()
         var dateMinRange = date.minusDays(RANGE_HALF_LENGTH)
-        for (i in 0 until RANGE_LENGTH) {
+        repeat(RANGE_LENGTH) {
             datesListOfRange.add(dateMinRange)
             dateMinRange = dateMinRange.plusDays(ONE_VALUE)
         }
@@ -29,7 +29,7 @@ class DaysGeneratorImpl(private val daysFabric: DaysFabric) : DaysGenerator {
         val currentMonth = date.month
         val firstMonday = datesListOfRange.filter { it.month == currentMonth }
             .find { it.dayOfWeek.value == MONDAY }
-            ?: throw RuntimeException("First monday of active month not found")
+            ?: throw NoSuchElementException("First monday of active month not found")
 
         val firstDay = when (firstMonday.dayOfMonth) {
             ONE_VALUE.toInt() -> firstMonday
@@ -43,5 +43,6 @@ class DaysGeneratorImpl(private val daysFabric: DaysFabric) : DaysGenerator {
         private const val RANGE_LENGTH = 80
         private const val RANGE_HALF_LENGTH = RANGE_LENGTH / 2L
         private const val MONDAY = 1
+        private const val MAX_DAY_COUNT = 42
     }
 }
