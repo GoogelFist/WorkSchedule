@@ -4,30 +4,34 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.github.googelfist.workschedule.data.schedulesgenerator.daysgenerator.DaysGenerator
 import com.github.googelfist.workschedule.data.schedulesgenerator.daysmapper.DaysMapper
-import com.github.googelfist.workschedule.domain.SchedulesGenerator
+import com.github.googelfist.workschedule.domain.ScheduleGenerator
 import com.github.googelfist.workschedule.domain.models.days.Day
 import java.time.LocalDate
 
-class SchedulesGeneratorImpl(
+class TwoInTwoScheduleGeneratorImpl(
     private val daysGenerator: DaysGenerator,
     private val dayMapper: DaysMapper
-) : SchedulesGenerator {
+) : ScheduleGenerator {
     private val dayListLD = MutableLiveData<List<Day>>()
 
-    override fun generateScheduleWorkDays(
-        date: LocalDate,
-        firstWorkDate: LocalDate,
-        step: Int
-    ): LiveData<List<Day>> {
+    override fun generateSchedule(date: LocalDate, firstWorkDate: LocalDate): LiveData<List<Day>> {
         val dayList = daysGenerator.generateDays(date)
-        dayListLD.value = dayList.createSchedule(firstWorkDate, step)
+        dayListLD.value = dayList.createSchedule(firstWorkDate, STEP)
         return dayListLD
     }
 
-    override fun generateScheduleDays(date: LocalDate): LiveData<List<Day>> {
-        val dayList = daysGenerator.generateDays(date)
-        dayListLD.value = dayList
-        return dayListLD
+    override fun getActualFirstDate(date: LocalDate, firstWorkDate: LocalDate): LocalDate {
+        var curDate = firstWorkDate
+        when {
+            curDate == date -> return date
+            curDate < date -> while (curDate < date) {
+                curDate = curDate.plusDays(STEP.toLong())
+            }
+            curDate > date -> while (curDate > date) {
+                curDate = curDate.minusDays(STEP.toLong())
+            }
+        }
+        return curDate
     }
 
     private fun List<Day>.createSchedule(date: LocalDate, step: Int): List<Day> {
@@ -59,6 +63,7 @@ class SchedulesGeneratorImpl(
     }
 
     companion object {
+        private const val STEP = 4
         private const val ONE_VALUE = 1L
         private const val RANGE_LENGTH = 80
         private const val RANGE_HALF_LENGTH = RANGE_LENGTH / 2L

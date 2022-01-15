@@ -1,20 +1,20 @@
 package com.github.googelfist.workschedule.domain.usecase
 
+import com.github.googelfist.workschedule.domain.ScheduleGenerator
+import com.github.googelfist.workschedule.domain.models.PreferencesModel
 import java.time.LocalDate
 
-class GetActualDateFirstWorkUseCase {
-
-    operator fun invoke(date: LocalDate, startWorkDate: LocalDate, step: Int): LocalDate {
-        var curDate = startWorkDate
-        when {
-            curDate == date -> return date
-            curDate < date -> while (curDate < date) {
-                curDate = curDate.plusDays(step.toLong())
-            }
-            curDate > date -> while (curDate > date) {
-                curDate = curDate.minusDays(step.toLong())
-            }
+class GetActualDateFirstWorkUseCase(
+    private val scheduleGenerator: ScheduleGenerator
+) {
+    operator fun invoke(date: LocalDate, preference: PreferencesModel): LocalDate {
+        val actualFirstWorkDate: LocalDate = if (preference.actualFirstWorkDate.isEmpty()) {
+            val firstWorkDate = LocalDate.parse(preference.firstWorkDate)
+            scheduleGenerator.getActualFirstDate(date, firstWorkDate)
+        } else {
+            val actualDate = LocalDate.parse(preference.actualFirstWorkDate)
+            scheduleGenerator.getActualFirstDate(date, actualDate)
         }
-        return curDate
+        return actualFirstWorkDate
     }
 }

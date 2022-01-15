@@ -4,4 +4,6 @@ import com.github.googelfist.workschedule.domain.models.PreferencesModel
 
 interface PreferenceRepository {
     fun loadPreference(): PreferencesModel
+
+    fun savePreference(preference: PreferencesModel)
 }

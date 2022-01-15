@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
 
         setupRecyclerView()
 
-        viewModel = ViewModelProvider(this, MainViewModelFactory())[MainViewModel::class.java]
+        viewModel = ViewModelProvider(this, MainViewModelFactory(this))[MainViewModel::class.java]
 
         viewModel.generateCurrentMonth()
         viewModel.monthDTO.dayListLD.observe(this) { dayListAdapter.submitList(it) }

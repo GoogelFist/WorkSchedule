@@ -1,6 +1,7 @@
 package com.github.googelfist.workschedule.domain.models
 
 data class PreferencesModel(
-    private val scheduleType: String,
-    private val firstWorkDate: String
+    val scheduleType: String,
+    val firstWorkDate: String,
+    val actualFirstWorkDate: String
 )
