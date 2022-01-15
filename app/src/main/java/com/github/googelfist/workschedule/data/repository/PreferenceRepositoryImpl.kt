@@ -1,4 +1,4 @@
-package com.github.googelfist.workschedule.data
+package com.github.googelfist.workschedule.data.repository
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -12,17 +12,23 @@ class PreferenceRepositoryImpl(private val context: Context) : PreferenceReposit
         context.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE)
 
     override fun loadPreference(): PreferencesModel {
-        val firstWorkDate = sharedPreferences.getString(
+        val firstWorkDate = getDate(sharedPreferences)
+        val scheduleType = getScheduleType(sharedPreferences)
+        return PreferencesModel(scheduleType = scheduleType, firstWorkDate = firstWorkDate)
+    }
+
+    private fun getDate(sharedPreferences: SharedPreferences): String {
+        return sharedPreferences.getString(
             getDatePickerKey(),
             DATE_PICKER_DEFAULT_VALUE
         ) ?: DATE_PICKER_DEFAULT_VALUE
+    }
 
-        val scheduleType = sharedPreferences.getString(
+    private fun getScheduleType(sharedPreferences: SharedPreferences): String {
+        return sharedPreferences.getString(
             getDropDownKey(),
             DROPDOWN_DEFAULT_VALUE
         ) ?: DROPDOWN_DEFAULT_VALUE
-
-        return PreferencesModel(scheduleType = scheduleType, firstWorkDate = firstWorkDate)
     }
 
     private fun getDropDownKey() = context.resources.getString(R.string.dd_schedule_type_key)
