@@ -9,7 +9,7 @@ import java.time.LocalDate
 class DaysFabricImpl : DaysFabric {
 
     override fun getDay(firstDate: LocalDate, date: LocalDate): Day {
-        val today = LocalDate.now()
+
         return when {
             isInActiveDay(firstDate, date) -> InActiveDay(
                 value = firstDate.dayOfMonth,
@@ -17,7 +17,7 @@ class DaysFabricImpl : DaysFabric {
                 year = firstDate.year
             )
 
-            isToday(firstDate, today) ->
+            isToday(firstDate) ->
                 Today(
                     value = firstDate.dayOfMonth,
                     month = firstDate.monthValue,
@@ -36,7 +36,8 @@ class DaysFabricImpl : DaysFabric {
         return firstDate.monthValue != date.monthValue
     }
 
-    private fun isToday(firstDate: LocalDate, today: LocalDate): Boolean {
-        return firstDate.monthValue == today.monthValue && firstDate.dayOfMonth == today.dayOfMonth
+    private fun isToday(firstDate: LocalDate): Boolean {
+        val today = LocalDate.now()
+        return firstDate == today
     }
 }
