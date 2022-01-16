@@ -5,5 +5,5 @@ data class InActiveDay(
     override val month: Int,
     override val year: Int,
     val isWork: Boolean = false,
-    val isWeekend: Boolean = true
+    val isWeekend: Boolean = false
 ) : Day(value, month, year)

@@ -30,7 +30,9 @@ class TwoInTwoScheduleDaysFabricImpl : DaysFabric {
             isInActiveDay(dateInMonth, activeDate) -> InActiveDay(
                 value = dateInMonth.dayOfMonth,
                 month = dateInMonth.monthValue,
-                year = dateInMonth.year
+                year = dateInMonth.year,
+                isWork = false,
+                isWeekend = true
             )
 
             isWorkDay(workSchedule, dateInMonth) && isToday(dateInMonth) ->
@@ -46,7 +48,9 @@ class TwoInTwoScheduleDaysFabricImpl : DaysFabric {
                 Today(
                     value = dateInMonth.dayOfMonth,
                     month = dateInMonth.monthValue,
-                    year = dateInMonth.year
+                    year = dateInMonth.year,
+                    isWork = false,
+                    isWeekend = true
                 )
 
             isWorkDay(workSchedule, dateInMonth) && isActiveDay(dateInMonth, activeDate) ->
@@ -61,7 +65,9 @@ class TwoInTwoScheduleDaysFabricImpl : DaysFabric {
             else -> ActiveDay(
                 value = dateInMonth.dayOfMonth,
                 month = dateInMonth.monthValue,
-                year = dateInMonth.year
+                year = dateInMonth.year,
+                isWork = false,
+                isWeekend = true
             )
         }
     }

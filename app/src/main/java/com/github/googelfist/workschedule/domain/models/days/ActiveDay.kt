@@ -7,5 +7,5 @@ data class ActiveDay(
     val isActive: Boolean = true,
     val isToday: Boolean = false,
     val isWork: Boolean = false,
-    val isWeekend: Boolean = true
+    val isWeekend: Boolean = false
 ) : Day(value, month, year)
