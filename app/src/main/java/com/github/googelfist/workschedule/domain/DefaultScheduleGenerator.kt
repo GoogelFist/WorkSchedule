@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import com.github.googelfist.workschedule.domain.models.days.Day
 import java.time.LocalDate
 
-interface ScheduleGenerator {
+interface DefaultScheduleGenerator {
 
-    fun generateSchedule(activeDate: LocalDate, firstWorkDate: LocalDate): LiveData<List<Day>>
+    fun generateSchedule(activeDate: LocalDate): LiveData<List<Day>>
 }

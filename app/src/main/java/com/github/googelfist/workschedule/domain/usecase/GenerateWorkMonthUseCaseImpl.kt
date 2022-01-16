@@ -4,15 +4,15 @@ import com.github.googelfist.workschedule.domain.ScheduleGenerator
 import com.github.googelfist.workschedule.domain.models.MonthDTO
 import java.time.LocalDate
 
-class GenerateWorkMonthUseCase(
+class GenerateWorkMonthUseCaseImpl(
     private val scheduleGenerator: ScheduleGenerator,
     private val formatDateUseCase: FormatDateUseCase,
     private val loadPreferencesUseCase: LoadPreferencesUseCase,
     private val savePreferenceUseCase: SavePreferenceUseCase,
     private val getActualDateFirstWorkUseCase: GetActualDateFirstWorkUseCase
-) {
+) : GenerateMonthUseCase {
 
-    operator fun invoke(date: LocalDate): MonthDTO {
+    override fun generate(date: LocalDate): MonthDTO {
         val preference = loadPreferencesUseCase()
         val actualFirstWorkDate = getActualDateFirstWorkUseCase(date, preference)
         savePreferenceUseCase(preference.copy(actualFirstWorkDate = actualFirstWorkDate.toString()))

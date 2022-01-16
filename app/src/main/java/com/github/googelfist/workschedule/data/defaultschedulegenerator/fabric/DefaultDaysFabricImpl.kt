@@ -1,4 +1,4 @@
-package com.github.googelfist.workschedule.data.schedulesgenerator.daysfabric
+package com.github.googelfist.workschedule.data.defaultschedulegenerator.fabric
 
 import com.github.googelfist.workschedule.domain.models.days.ActiveDay
 import com.github.googelfist.workschedule.domain.models.days.Day
@@ -6,9 +6,9 @@ import com.github.googelfist.workschedule.domain.models.days.InActiveDay
 import com.github.googelfist.workschedule.domain.models.days.Today
 import java.time.LocalDate
 
-class DefaultScheduleDaysFabricImpl : DaysFabric {
+class DefaultDaysFabricImpl : DefaultDaysFabric {
 
-    override fun getDay(dateInMonth: LocalDate, activeDate: LocalDate, firstWorkDate: LocalDate): Day {
+    override fun getDay(dateInMonth: LocalDate, activeDate: LocalDate): Day {
 
         return when {
             isInActiveDay(dateInMonth, activeDate) -> InActiveDay(

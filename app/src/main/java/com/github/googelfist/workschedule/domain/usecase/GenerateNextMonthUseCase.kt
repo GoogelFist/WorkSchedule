@@ -2,13 +2,13 @@ package com.github.googelfist.workschedule.domain.usecase
 
 import com.github.googelfist.workschedule.domain.models.MonthDTO
 
-class GeneratePreviousWorkMonthUseCase(
-    private val generateWorkMonthUseCase: GenerateWorkMonthUseCase,
+class GenerateNextMonthUseCase(
+    private val generateMonthUseCase: GenerateMonthUseCase,
 ) {
 
     operator fun invoke(monthDTO: MonthDTO): MonthDTO {
-        val previousMonthDate = monthDTO.date.minusMonths(VALUE)
-        return generateWorkMonthUseCase(previousMonthDate)
+        val nextMonthDate = monthDTO.date.plusMonths(VALUE)
+        return generateMonthUseCase.generate(nextMonthDate)
     }
 
     companion object {

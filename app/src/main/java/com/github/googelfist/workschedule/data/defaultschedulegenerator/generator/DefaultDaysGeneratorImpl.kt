@@ -1,17 +1,17 @@
-package com.github.googelfist.workschedule.data.schedulesgenerator.daysgenerator
+package com.github.googelfist.workschedule.data.defaultschedulegenerator.generator
 
-import com.github.googelfist.workschedule.data.schedulesgenerator.daysfabric.DaysFabric
+import com.github.googelfist.workschedule.data.defaultschedulegenerator.fabric.DefaultDaysFabric
 import com.github.googelfist.workschedule.domain.models.days.Day
 import java.time.LocalDate
 
-class TwoInTwoDaysGeneratorImpl(private val daysFabric: DaysFabric) : DaysGenerator {
+class DefaultDaysGeneratorImpl(private val daysFabric: DefaultDaysFabric) : DefaultDaysGenerator {
 
-    override fun generateDays(activeDate: LocalDate, firstWorkDate: LocalDate): List<Day> {
+    override fun generateDays(activeDate: LocalDate): List<Day> {
         var firstDay = getFirstDate(activeDate)
 
         val dayList = mutableListOf<Day>()
         repeat(MAX_DAY_COUNT) {
-            dayList.add(daysFabric.getDay(firstDay, activeDate, firstWorkDate))
+            dayList.add(daysFabric.getDay(firstDay, activeDate))
 
             firstDay = firstDay.plusDays(ONE_VALUE)
         }
