@@ -14,7 +14,7 @@ class GenerateWorkMonthUseCase(
 
     operator fun invoke(date: LocalDate): MonthDTO {
         val preference = loadPreferencesUseCase()
-        val actualFirstWorkDate = getActualDateFirstWorkUseCase(date,preference)
+        val actualFirstWorkDate = getActualDateFirstWorkUseCase(date, preference)
         savePreferenceUseCase(preference.copy(actualFirstWorkDate = actualFirstWorkDate.toString()))
 
         val currentMonth = scheduleGenerator.generateSchedule(date, actualFirstWorkDate)
