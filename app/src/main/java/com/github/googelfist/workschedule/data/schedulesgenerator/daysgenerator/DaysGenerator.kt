@@ -4,5 +4,5 @@ import com.github.googelfist.workschedule.domain.models.days.Day
 import java.time.LocalDate
 
 interface DaysGenerator {
-    fun generateDays(date: LocalDate): List<Day>
+    fun generateDays(activeDate: LocalDate, firstWorkDate: LocalDate): List<Day>
 }

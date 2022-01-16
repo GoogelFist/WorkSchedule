@@ -4,14 +4,14 @@ import com.github.googelfist.workschedule.data.schedulesgenerator.daysfabric.Day
 import com.github.googelfist.workschedule.domain.models.days.Day
 import java.time.LocalDate
 
-class DaysGeneratorImpl(private val daysFabric: DaysFabric) : DaysGenerator {
+class TwoInTwoDaysGeneratorImpl(private val daysFabric: DaysFabric) : DaysGenerator {
 
-    override fun generateDays(date: LocalDate): List<Day> {
-        var firstDay = getFirstDate(date)
+    override fun generateDays(activeDate: LocalDate, firstWorkDate: LocalDate): List<Day> {
+        var firstDay = getFirstDate(activeDate)
 
         val dayList = mutableListOf<Day>()
         repeat(MAX_DAY_COUNT) {
-            dayList.add(daysFabric.getDay(firstDay, date))
+            dayList.add(daysFabric.getDay(firstDay, activeDate, firstWorkDate))
 
             firstDay = firstDay.plusDays(ONE_VALUE)
         }

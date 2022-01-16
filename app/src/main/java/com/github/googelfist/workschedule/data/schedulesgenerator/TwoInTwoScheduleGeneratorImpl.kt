@@ -3,70 +3,39 @@ package com.github.googelfist.workschedule.data.schedulesgenerator
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.github.googelfist.workschedule.data.schedulesgenerator.daysgenerator.DaysGenerator
-import com.github.googelfist.workschedule.data.schedulesgenerator.daysmapper.DaysMapper
 import com.github.googelfist.workschedule.domain.ScheduleGenerator
 import com.github.googelfist.workschedule.domain.models.days.Day
 import java.time.LocalDate
 
 class TwoInTwoScheduleGeneratorImpl(
-    private val daysGenerator: DaysGenerator,
-    private val dayMapper: DaysMapper
+    private val daysGenerator: DaysGenerator
 ) : ScheduleGenerator {
     private val dayListLD = MutableLiveData<List<Day>>()
 
-    override fun generateSchedule(date: LocalDate, firstWorkDate: LocalDate): LiveData<List<Day>> {
-        val dayList = daysGenerator.generateDays(date)
-        dayListLD.value = dayList.createSchedule(firstWorkDate, STEP)
+    override fun generateSchedule(
+        activeDate: LocalDate,
+        firstWorkDate: LocalDate
+    ): LiveData<List<Day>> {
+        val dayList = daysGenerator.generateDays(activeDate, firstWorkDate)
+        dayListLD.value = dayList
         return dayListLD
     }
 
-    override fun getActualFirstDate(date: LocalDate, firstWorkDate: LocalDate): LocalDate {
+    override fun getActualFirstDate(activeDate: LocalDate, firstWorkDate: LocalDate): LocalDate {
         var curDate = firstWorkDate
         when {
-            curDate == date -> return date
-            curDate < date -> while (curDate < date) {
-                curDate = curDate.plusDays(STEP.toLong())
+            curDate == activeDate -> return activeDate
+            curDate < activeDate -> while (curDate < activeDate) {
+                curDate = curDate.plusDays(STEP)
             }
-            curDate > date -> while (curDate > date) {
-                curDate = curDate.minusDays(STEP.toLong())
+            curDate > activeDate -> while (curDate > activeDate) {
+                curDate = curDate.minusDays(STEP)
             }
         }
         return curDate
     }
 
-    private fun List<Day>.createSchedule(date: LocalDate, step: Int): List<Day> {
-        val workDates = getWorkDates(date, step)
-
-        return this.map {
-            if (isWorkDay(workDates, it)) {
-                dayMapper.dayToWorkDay(it)
-            } else {
-                dayMapper.dayToWeekendDay(it)
-            }
-        }
-    }
-
-    private fun getWorkDates(date: LocalDate, step: Int): Set<LocalDate> {
-        var lowDate = date.minusDays(RANGE_HALF_LENGTH)
-        val dateSet = mutableSetOf<LocalDate>()
-
-        (ZERO..RANGE_LENGTH step step).forEach { _ ->
-            dateSet.add(lowDate)
-            dateSet.add(lowDate.plusDays(ONE_VALUE))
-            lowDate = lowDate.plusDays(step.toLong())
-        }
-        return dateSet
-    }
-
-    private fun isWorkDay(workDates: Set<LocalDate>, day: Day): Boolean {
-        return workDates.contains(LocalDate.of(day.year, day.month, day.value))
-    }
-
     companion object {
-        private const val STEP = 4
-        private const val ONE_VALUE = 1L
-        private const val RANGE_LENGTH = 80
-        private const val RANGE_HALF_LENGTH = RANGE_LENGTH / 2L
-        private const val ZERO = 0
+        private const val STEP = 4L
     }
 }

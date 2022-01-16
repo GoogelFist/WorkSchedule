@@ -6,11 +6,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.github.googelfist.workschedule.data.repository.PreferenceRepositoryImpl
 import com.github.googelfist.workschedule.data.schedulesgenerator.TwoInTwoScheduleGeneratorImpl
 import com.github.googelfist.workschedule.data.schedulesgenerator.daysfabric.DaysFabric
-import com.github.googelfist.workschedule.data.schedulesgenerator.daysfabric.DaysFabricImpl
+import com.github.googelfist.workschedule.data.schedulesgenerator.daysfabric.TwoInTwoScheduleDaysFabricImpl
 import com.github.googelfist.workschedule.data.schedulesgenerator.daysgenerator.DaysGenerator
-import com.github.googelfist.workschedule.data.schedulesgenerator.daysgenerator.DaysGeneratorImpl
-import com.github.googelfist.workschedule.data.schedulesgenerator.daysmapper.DaysMapper
-import com.github.googelfist.workschedule.data.schedulesgenerator.daysmapper.DaysMapperImpl
+import com.github.googelfist.workschedule.data.schedulesgenerator.daysgenerator.TwoInTwoDaysGeneratorImpl
 import com.github.googelfist.workschedule.domain.PreferenceRepository
 import com.github.googelfist.workschedule.domain.ScheduleGenerator
 import com.github.googelfist.workschedule.domain.usecase.FormatDateUseCase
@@ -23,15 +21,14 @@ import com.github.googelfist.workschedule.domain.usecase.LoadPreferencesUseCase
 import com.github.googelfist.workschedule.domain.usecase.SavePreferenceUseCase
 
 class MainViewModelFactory(context: Context) : ViewModelProvider.Factory {
-    private val daysFabric: DaysFabric = DaysFabricImpl()
-    private val daysGenerator: DaysGenerator = DaysGeneratorImpl(daysFabric = daysFabric)
-    private val dayMapper: DaysMapper = DaysMapperImpl()
+    private val daysFabric: DaysFabric = TwoInTwoScheduleDaysFabricImpl()
+    private val daysGenerator: DaysGenerator = TwoInTwoDaysGeneratorImpl(daysFabric = daysFabric)
 
     private val preferenceRepository: PreferenceRepository =
         PreferenceRepositoryImpl(context = context)
 
     private val scheduleGenerator: ScheduleGenerator =
-        TwoInTwoScheduleGeneratorImpl(daysGenerator = daysGenerator, dayMapper = dayMapper)
+        TwoInTwoScheduleGeneratorImpl(daysGenerator = daysGenerator)
 
     private val loadPreferencesUseCase =
         LoadPreferencesUseCase(preferenceRepository = preferenceRepository)

@@ -5,13 +5,8 @@ import com.github.googelfist.workschedule.domain.models.days.Day
 import java.time.LocalDate
 
 interface ScheduleGenerator {
-//    fun generateScheduleWorkDays(
-//        date: LocalDate,
-//        firstWorkDate: LocalDate,
-//        step: Int
-//    ): LiveData<List<Day>>
 
-    fun generateSchedule(date: LocalDate, firstWorkDate: LocalDate): LiveData<List<Day>>
+    fun generateSchedule(activeDate: LocalDate, firstWorkDate: LocalDate): LiveData<List<Day>>
 
-    fun getActualFirstDate(date: LocalDate, firstWorkDate: LocalDate): LocalDate
+    fun getActualFirstDate(activeDate: LocalDate, firstWorkDate: LocalDate): LocalDate
 }

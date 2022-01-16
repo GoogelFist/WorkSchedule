@@ -6,6 +6,6 @@ data class Today(
     override val year: Int,
     val isActive: Boolean = true,
     val isToday: Boolean = true,
-    val isWeekend: Boolean = false,
-    val isWork: Boolean = false
+    val isWork: Boolean = false,
+    val isWeekend: Boolean = true
 ) : Day(value, month, year)

@@ -12,13 +12,13 @@ class DefaultScheduleGeneratorImpl(
 ) : ScheduleGenerator {
     private val dayListLD = MutableLiveData<List<Day>>()
 
-    override fun generateSchedule(date: LocalDate, firstWorkDate: LocalDate): LiveData<List<Day>> {
-        val dayList = daysGenerator.generateDays(date)
+    override fun generateSchedule(activeDate: LocalDate, firstWorkDate: LocalDate): LiveData<List<Day>> {
+        val dayList = daysGenerator.generateDays(activeDate, firstWorkDate)
         dayListLD.value = dayList
         return dayListLD
     }
 
-    override fun getActualFirstDate(date: LocalDate, firstWorkDate: LocalDate): LocalDate {
-        TODO("Not yet implemented")
+    override fun getActualFirstDate(activeDate: LocalDate, firstWorkDate: LocalDate): LocalDate {
+        TODO()
     }
 }
