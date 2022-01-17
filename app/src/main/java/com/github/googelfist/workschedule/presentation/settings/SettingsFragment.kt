@@ -38,7 +38,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
             requireActivity(),
             R.style.dateTimePicker,
             { _, y, m, d ->
-//                val datePicked = "$d.${m + ONE_VALUE}.$y"
                 val datePicked = LocalDate.of(y, m + ONE_VALUE, d).toString()
                 settings.edit().putString(getDatePickerKey(), datePicked).apply()
                 preference.summary = datePicked
