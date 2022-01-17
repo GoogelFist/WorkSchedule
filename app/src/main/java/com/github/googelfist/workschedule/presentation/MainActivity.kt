@@ -79,6 +79,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupButtons() {
         binding.ivMonthUp.setOnClickListener { viewModel.onGeneratePreviousMonth() }
         binding.ivMonthDown.setOnClickListener { viewModel.onGenerateNextMonth() }
+        binding.ivCurrentMonth.setOnClickListener { viewModel.onGenerateCurrentMonth() }
 
         binding.ivSettings.setOnClickListener {
             startActivity(Intent(this, SettingsActivity::class.java))
