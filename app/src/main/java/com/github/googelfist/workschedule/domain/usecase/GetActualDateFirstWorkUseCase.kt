@@ -9,14 +9,8 @@ class GetActualDateFirstWorkUseCase {
             TWO_IN_TWO -> STEP_TWO_IN_TWO
             else -> STEP_DEFAULT
         }
-        val actualFirstWorkDate: LocalDate = if (preference.actualFirstWorkDate.isEmpty()) {
-            val firstWorkDate = LocalDate.parse(preference.firstWorkDate)
-            getActualFirstDate(date, firstWorkDate, step)
-        } else {
-            val actualDate = LocalDate.parse(preference.actualFirstWorkDate)
-            getActualFirstDate(date, actualDate, step)
-        }
-        return actualFirstWorkDate
+        val firstWorkDate = LocalDate.parse(preference.firstWorkDate)
+        return getActualFirstDate(date, firstWorkDate, step)
     }
 
     private fun getActualFirstDate(
