@@ -1,10 +1,10 @@
 package com.github.googelfist.workschedule.domain.usecase
 
-import com.github.googelfist.workschedule.domain.models.PreferencesModel
+import com.github.googelfist.workschedule.domain.models.PreferencesDTO
 import java.time.LocalDate
 
 class GetActualDateFirstWorkUseCase {
-    operator fun invoke(date: LocalDate, preference: PreferencesModel): LocalDate {
+    operator fun invoke(date: LocalDate, preference: PreferencesDTO): LocalDate {
         val step = when (preference.scheduleType) {
             TWO_IN_TWO -> STEP_TWO_IN_TWO
             else -> STEP_DEFAULT
