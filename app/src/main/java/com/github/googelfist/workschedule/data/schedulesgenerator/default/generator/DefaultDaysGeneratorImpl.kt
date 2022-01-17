@@ -1,17 +1,17 @@
-package com.github.googelfist.workschedule.data.schedulesgenerator.generator
+package com.github.googelfist.workschedule.data.schedulesgenerator.default.generator
 
-import com.github.googelfist.workschedule.data.schedulesgenerator.fabric.WorkDaysFabric
+import com.github.googelfist.workschedule.data.schedulesgenerator.default.fabric.DefaultDaysFabric
 import com.github.googelfist.workschedule.domain.models.days.Day
 import java.time.LocalDate
 
-class WorkDaysGeneratorImpl(private val workDaysFabric: WorkDaysFabric) : WorkDaysGenerator {
+class DefaultDaysGeneratorImpl(private val daysFabric: DefaultDaysFabric) : DefaultDaysGenerator {
 
-    override fun generateDays(activeDate: LocalDate, firstWorkDate: LocalDate): List<Day> {
+    override fun generateDays(activeDate: LocalDate): List<Day> {
         var firstDay = getFirstDate(activeDate)
 
         val dayList = mutableListOf<Day>()
         repeat(MAX_DAY_COUNT) {
-            dayList.add(workDaysFabric.getDay(firstDay, activeDate, firstWorkDate))
+            dayList.add(daysFabric.getDay(firstDay, activeDate))
 
             firstDay = firstDay.plusDays(ONE_VALUE)
         }

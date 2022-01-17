@@ -1,8 +1,8 @@
-package com.github.googelfist.workschedule.data.schedulesgenerator
+package com.github.googelfist.workschedule.data.schedulesgenerator.work
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.github.googelfist.workschedule.data.schedulesgenerator.generator.WorkDaysGenerator
+import com.github.googelfist.workschedule.data.schedulesgenerator.work.generator.WorkDaysGenerator
 import com.github.googelfist.workschedule.domain.ScheduleGenerator
 import com.github.googelfist.workschedule.domain.models.days.Day
 import java.time.LocalDate

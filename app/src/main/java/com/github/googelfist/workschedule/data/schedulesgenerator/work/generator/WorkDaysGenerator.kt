@@ -1,4 +1,4 @@
-package com.github.googelfist.workschedule.data.schedulesgenerator.generator
+package com.github.googelfist.workschedule.data.schedulesgenerator.work.generator
 
 import com.github.googelfist.workschedule.domain.models.days.Day
 import java.time.LocalDate
