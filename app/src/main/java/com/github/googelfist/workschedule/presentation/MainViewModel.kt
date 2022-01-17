@@ -14,7 +14,7 @@ class MainViewModel(
     private val generateNextMonthUseCase: GenerateNextMonthUseCase,
     private val generatePreviousMonthUseCase: GeneratePreviousMonthUseCase
 ) : ViewModel() {
-    private var date: LocalDate = getDateNowUseCase()
+    private val date: LocalDate = getDateNowUseCase()
 
     lateinit var monthDTO: MonthDTO
 
