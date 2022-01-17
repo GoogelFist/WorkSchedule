@@ -30,16 +30,12 @@ import com.github.googelfist.workschedule.domain.usecase.preference.SavePreferen
 
 class MainViewModelFactory(context: Context) : ViewModelProvider.Factory {
 
-    private val preferenceRepository: PreferenceRepository =
-        PreferenceRepositoryImpl(context = context)
-
-    private val loadPreferencesUseCase =
-        LoadPreferencesUseCase(preferenceRepository = preferenceRepository)
-
+    private val repository: PreferenceRepository = PreferenceRepositoryImpl(context)
+    private val loadPreferencesUseCase = LoadPreferencesUseCase(repository)
     private val formatDateUseCase = FormatDateUseCase()
+    private val getDateNowUseCase = GetDateNowUseCase()
 
-    private val getDateOfChosenMonthUseCase = GetDateNowUseCase()
-
+    @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return getModel() as T
     }
@@ -53,26 +49,20 @@ class MainViewModelFactory(context: Context) : ViewModelProvider.Factory {
 
     private fun setupDefaultSchedule(): MainViewModel {
         val daysFabric: DefaultDaysFabric = DefaultDaysFabricImpl()
-
-        val daysGenerator: DefaultDaysGenerator = DefaultDaysGeneratorImpl(daysFabric = daysFabric)
-
-        val scheduleGenerator: DefaultScheduleGenerator =
-            DefaultScheduleGeneratorImpl(daysGenerator = daysGenerator)
+        val daysGenerator: DefaultDaysGenerator = DefaultDaysGeneratorImpl(daysFabric)
+        val generator: DefaultScheduleGenerator = DefaultScheduleGeneratorImpl(daysGenerator)
 
         val generateMonthUseCase: GenerateMonthUseCase =
             GenerateDefaultMontUseCaseImpl(
-                scheduleGenerator = scheduleGenerator,
+                scheduleGenerator = generator,
                 formatDateUseCase = formatDateUseCase
             )
 
-        val generateNextMonthUseCase =
-            GenerateNextMonthUseCase(generateMonthUseCase = generateMonthUseCase)
-
-        val generatePreviousMonthUseCase =
-            GeneratePreviousMonthUseCase(generateMonthUseCase = generateMonthUseCase)
+        val generateNextMonthUseCase = GenerateNextMonthUseCase(generateMonthUseCase)
+        val generatePreviousMonthUseCase = GeneratePreviousMonthUseCase(generateMonthUseCase)
 
         return MainViewModel(
-            getDateNowUseCase = getDateOfChosenMonthUseCase,
+            getDateNowUseCase = getDateNowUseCase,
             generateMonthUseCase = generateMonthUseCase,
             generateNextMonthUseCase = generateNextMonthUseCase,
             generatePreviousMonthUseCase = generatePreviousMonthUseCase
@@ -81,15 +71,9 @@ class MainViewModelFactory(context: Context) : ViewModelProvider.Factory {
 
     private fun setupTwoInTwoSchedule(): MainViewModel {
         val daysFabric: WorkDaysFabric = TwoInTwoWorkDaysFabricImpl()
-
-        val daysGenerator: WorkDaysGenerator = WorkDaysGeneratorImpl(workDaysFabric = daysFabric)
-
-        val scheduleGenerator: ScheduleGenerator =
-            TwoInTwoScheduleGeneratorImpl(workDaysGenerator = daysGenerator)
-
-        val savePreferenceUseCase =
-            SavePreferenceUseCase(preferenceRepository = preferenceRepository)
-
+        val daysGenerator: WorkDaysGenerator = WorkDaysGeneratorImpl(daysFabric)
+        val scheduleGenerator: ScheduleGenerator = TwoInTwoScheduleGeneratorImpl(daysGenerator)
+        val savePreferenceUseCase = SavePreferenceUseCase(repository)
         val getActualDateFirstWorkUseCase = GetActualDateFirstWorkUseCase()
 
         val generateMonthUseCase: GenerateMonthUseCase =
@@ -101,14 +85,11 @@ class MainViewModelFactory(context: Context) : ViewModelProvider.Factory {
                 getActualDateFirstWorkUseCase = getActualDateFirstWorkUseCase
             )
 
-        val generateNextMonthUseCase =
-            GenerateNextMonthUseCase(generateMonthUseCase = generateMonthUseCase)
-
-        val generatePreviousMonthUseCase =
-            GeneratePreviousMonthUseCase(generateMonthUseCase = generateMonthUseCase)
+        val generateNextMonthUseCase = GenerateNextMonthUseCase(generateMonthUseCase)
+        val generatePreviousMonthUseCase = GeneratePreviousMonthUseCase(generateMonthUseCase)
 
         return MainViewModel(
-            getDateNowUseCase = getDateOfChosenMonthUseCase,
+            getDateNowUseCase = getDateNowUseCase,
             generateMonthUseCase = generateMonthUseCase,
             generateNextMonthUseCase = generateNextMonthUseCase,
             generatePreviousMonthUseCase = generatePreviousMonthUseCase
