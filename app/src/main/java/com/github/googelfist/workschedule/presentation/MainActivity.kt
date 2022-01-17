@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity() {
         binding.ivMonthUp.setOnClickListener { viewModel.onGeneratePreviousMonth() }
         binding.ivMonthDown.setOnClickListener { viewModel.onGenerateNextMonth() }
 
-        binding.bSettings.setOnClickListener {
+        binding.ivSettings.setOnClickListener {
             startActivity(Intent(this, SettingsActivity::class.java))
         }
     }

@@ -4,6 +4,7 @@
     <!-- main activity values -->
     <string name="description_image_view_for_up_navigation">Image view for up navigation</string>
     <string name="description_image_view_for_down_navigation">Image view for down navigation</string>
+    <string name="description_image_view_for_settings">Image view for settings</string>
     <string name="monday">Mo</string>
     <string name="tuesday">Tu</string>
     <string name="wednesday">We</string>
