@@ -18,16 +18,15 @@ class MainViewModel(
 
     lateinit var monthDTO: MonthDTO
 
-    // TODO: 12-Jan-22 naming methods
-    fun generateCurrentMonth() {
+    fun onGenerateCurrentMonth() {
         monthDTO = generateMonthUseCase.generate(date)
     }
 
-    fun generateNextMonth() {
+    fun onGenerateNextMonth() {
         monthDTO = generateNextMonthUseCase(monthDTO)
     }
 
-    fun generatePreviousMonth() {
+    fun onGeneratePreviousMonth() {
         monthDTO = generatePreviousMonthUseCase(monthDTO)
     }
 }

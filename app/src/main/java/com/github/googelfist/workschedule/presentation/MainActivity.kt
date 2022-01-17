@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
 
         viewModel = ViewModelProvider(this, MainViewModelFactory(this))[MainViewModel::class.java]
 
-        viewModel.generateCurrentMonth()
+        viewModel.onGenerateCurrentMonth()
         viewModel.monthDTO.dayListLD.observe(this) { dayListAdapter.submitList(it) }
         viewModel.monthDTO.formattedDateLD.observe(this) { binding.tvYearMonth.text = it }
 
@@ -47,10 +47,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupGestureListener() {
         gestureListener = MainActivityGestureListener()
-        gestureListener.onSwipeDown = { viewModel.generatePreviousMonth() }
-        gestureListener.onSwipeUp = { viewModel.generateNextMonth() }
-        gestureListener.onSwipeRight = { viewModel.generatePreviousMonth() }
-        gestureListener.onSwipeLeft = { viewModel.generateNextMonth() }
+        gestureListener.onSwipeDown = { viewModel.onGeneratePreviousMonth() }
+        gestureListener.onSwipeUp = { viewModel.onGenerateNextMonth() }
+        gestureListener.onSwipeRight = { viewModel.onGeneratePreviousMonth() }
+        gestureListener.onSwipeLeft = { viewModel.onGenerateNextMonth() }
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -85,8 +85,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupButtons() {
-        binding.ivMonthUp.setOnClickListener { viewModel.generatePreviousMonth() }
-        binding.ivMonthDown.setOnClickListener { viewModel.generateNextMonth() }
+        binding.ivMonthUp.setOnClickListener { viewModel.onGeneratePreviousMonth() }
+        binding.ivMonthDown.setOnClickListener { viewModel.onGenerateNextMonth() }
 
         binding.bSettings.setOnClickListener {
             startActivity(Intent(this, SettingsActivity::class.java))
