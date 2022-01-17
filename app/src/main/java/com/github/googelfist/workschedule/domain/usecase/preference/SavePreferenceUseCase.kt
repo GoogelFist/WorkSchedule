@@ -6,7 +6,6 @@ import com.github.googelfist.workschedule.domain.models.PreferencesDTO
 class SavePreferenceUseCase(private val preferenceRepository: PreferenceRepository) {
 
     operator fun invoke(preference: PreferencesDTO) {
-
         preferenceRepository.savePreference(preference)
     }
 }
