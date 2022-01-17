@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.GestureDetectorCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.github.googelfist.workschedule.databinding.ActivityMainBinding
@@ -20,19 +19,12 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var dayListAdapter: DayListAdapter
 
-    private lateinit var mDetector: GestureDetectorCompat
-
-    private lateinit var gestureListener: MainActivityGestureListener
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-
-        setupGestureListener()
-        mDetector = GestureDetectorCompat(this, gestureListener)
 
         setupRecyclerView()
 
@@ -45,14 +37,6 @@ class MainActivity : AppCompatActivity() {
         setupButtons()
     }
 
-    private fun setupGestureListener() {
-        gestureListener = MainActivityGestureListener()
-        gestureListener.onSwipeDown = { viewModel.onGeneratePreviousMonth() }
-        gestureListener.onSwipeUp = { viewModel.onGenerateNextMonth() }
-        gestureListener.onSwipeRight = { viewModel.onGeneratePreviousMonth() }
-        gestureListener.onSwipeLeft = { viewModel.onGenerateNextMonth() }
-    }
-
     @SuppressLint("ClickableViewAccessibility")
     private fun setupRecyclerView() {
         val rvDayList = binding.rvDayList
@@ -62,8 +46,15 @@ class MainActivity : AppCompatActivity() {
 
         setRecyclerViewPool(rvDayList)
 
-        rvDayList.setOnTouchListener { _, motionEvent -> mDetector.onTouchEvent(motionEvent) }
+        rvDayList.onFlingListener = object : RecyclerViewSwipeListener() {
+            override fun onSwipeUp() {
+                viewModel.onGenerateNextMonth()
+            }
 
+            override fun onSwipeDown() {
+                viewModel.onGeneratePreviousMonth()
+            }
+        }
         dayListAdapter.onDayClickListener = {
             Toast.makeText(this, "$it", Toast.LENGTH_SHORT).show()
         }
