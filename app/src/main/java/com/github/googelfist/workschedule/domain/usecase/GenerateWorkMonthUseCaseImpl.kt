@@ -2,6 +2,8 @@ package com.github.googelfist.workschedule.domain.usecase
 
 import com.github.googelfist.workschedule.domain.ScheduleGenerator
 import com.github.googelfist.workschedule.domain.models.MonthDTO
+import com.github.googelfist.workschedule.domain.usecase.preference.LoadPreferencesUseCase
+import com.github.googelfist.workschedule.domain.usecase.preference.SavePreferenceUseCase
 import java.time.LocalDate
 
 class GenerateWorkMonthUseCaseImpl(

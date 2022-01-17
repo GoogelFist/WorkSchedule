@@ -25,8 +25,8 @@ import com.github.googelfist.workschedule.domain.usecase.GeneratePreviousMonthUs
 import com.github.googelfist.workschedule.domain.usecase.GenerateWorkMonthUseCaseImpl
 import com.github.googelfist.workschedule.domain.usecase.GetActualDateFirstWorkUseCase
 import com.github.googelfist.workschedule.domain.usecase.GetDateNowUseCase
-import com.github.googelfist.workschedule.domain.usecase.LoadPreferencesUseCase
-import com.github.googelfist.workschedule.domain.usecase.SavePreferenceUseCase
+import com.github.googelfist.workschedule.domain.usecase.preference.LoadPreferencesUseCase
+import com.github.googelfist.workschedule.domain.usecase.preference.SavePreferenceUseCase
 
 class MainViewModelFactory(context: Context) : ViewModelProvider.Factory {
 

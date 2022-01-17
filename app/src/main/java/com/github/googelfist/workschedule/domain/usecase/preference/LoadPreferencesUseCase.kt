@@ -1,4 +1,4 @@
-package com.github.googelfist.workschedule.domain.usecase
+package com.github.googelfist.workschedule.domain.usecase.preference
 
 import com.github.googelfist.workschedule.domain.PreferenceRepository
 import com.github.googelfist.workschedule.domain.models.PreferencesModel
