@@ -34,4 +34,4 @@ open class RecyclerViewSwipeListener :
     open fun onSwipeDown() {}
 }
 
-const val SWIPE_VELOCITY_THRESHOLD = 1500
+private const val SWIPE_VELOCITY_THRESHOLD = 1500
