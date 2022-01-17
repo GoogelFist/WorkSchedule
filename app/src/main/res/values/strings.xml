@@ -19,4 +19,8 @@
     <string name="p_date_picker_key">first_work_date</string>
     <string name="p_date_picker_summary">Choose start work date</string>
     <string name="p_date_picker_title">Choose start work date</string>
+    <string name="schedule_type_category_key">schedule_type_category</string>
+    <string name="schedule_type_title">Schedule type</string>
+    <string name="first_work_date_category_key">first_work_date_category</string>
+    <string name="first_work_date_title">First work date</string>
 </resources>

@@ -9,7 +9,9 @@ import com.github.googelfist.workschedule.R
 import java.time.LocalDate
 import java.util.Calendar
 
-class SettingsFragment : PreferenceFragmentCompat() {
+class SettingsFragment :
+    PreferenceFragmentCompat(),
+    SharedPreferences.OnSharedPreferenceChangeListener {
 
     private lateinit var settings: SharedPreferences
 
@@ -22,10 +24,41 @@ class SettingsFragment : PreferenceFragmentCompat() {
             ?: throw NoSuchElementException("Preference not found")
         datePref.summary = settings.getString(getDatePickerKey(), PREFERENCE_DEFAULT_VALUE)
         datePref.onPreferenceClickListener = datePicker
+
+        val dropDown = preferenceManager.findPreference<Preference>(getDropDownKey())
+        if (isDatePicked(datePref)) {
+            dropDown?.isEnabled = true
+        }
+    }
+
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+        val dropDown = preferenceManager.findPreference<Preference>(getDropDownKey())
+
+        if (key == getDatePickerKey()) {
+            dropDown?.isEnabled = true
+        }
+    }
+
+    override fun onResume() {
+        preferenceManager.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
+        super.onResume()
+    }
+
+    override fun onPause() {
+        preferenceManager.sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
+        super.onPause()
+    }
+
+    private fun isDatePicked(datePref: Preference): Boolean {
+        return datePref.summary != PREFERENCE_DEFAULT_VALUE
     }
 
     private fun getDatePickerKey(): String {
         return preferenceManager.context.resources.getString(R.string.p_date_picker_key)
+    }
+
+    private fun getDropDownKey(): String {
+        return preferenceManager.context.resources.getString(R.string.dd_schedule_type_key)
     }
 
     private var datePicker = Preference.OnPreferenceClickListener { preference ->
