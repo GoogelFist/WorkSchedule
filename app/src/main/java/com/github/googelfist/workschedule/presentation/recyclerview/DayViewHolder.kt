@@ -1,4 +1,4 @@
-package com.github.googelfist.workschedule.presentation.adapters
+package com.github.googelfist.workschedule.presentation.recyclerview
 
 import android.view.View
 import android.widget.TextView

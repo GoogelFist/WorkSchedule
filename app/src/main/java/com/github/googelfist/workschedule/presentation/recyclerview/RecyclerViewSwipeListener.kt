@@ -1,4 +1,4 @@
-package com.github.googelfist.workschedule.presentation
+package com.github.googelfist.workschedule.presentation.recyclerview
 
 import androidx.recyclerview.widget.RecyclerView
 import kotlin.math.abs

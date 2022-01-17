@@ -1,4 +1,4 @@
-package com.github.googelfist.workschedule.presentation.adapters
+package com.github.googelfist.workschedule.presentation.recyclerview
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
