@@ -33,7 +33,7 @@ class GetActualDateFirstWorkUseCase {
 
     companion object {
         private const val STEP_TWO_IN_TWO = 4L
-        private const val STEP_DEFAULT = 4L
+        private const val STEP_DEFAULT = 0L
         private const val TWO_IN_TWO = "2 / 2"
     }
 }
