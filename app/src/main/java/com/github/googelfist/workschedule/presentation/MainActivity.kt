@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.github.googelfist.workschedule.databinding.ActivityMainBinding
+import com.github.googelfist.workschedule.di.MainViewModelFactory
 import com.github.googelfist.workschedule.presentation.recyclerview.DayListAdapter
 import com.github.googelfist.workschedule.presentation.recyclerview.RecyclerViewSwipeListener
 import com.github.googelfist.workschedule.presentation.settings.SettingsActivity

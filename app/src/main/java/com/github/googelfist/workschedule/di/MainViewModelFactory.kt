@@ -1,4 +1,4 @@
-package com.github.googelfist.workschedule.presentation
+package com.github.googelfist.workschedule.di
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
@@ -24,6 +24,7 @@ import com.github.googelfist.workschedule.domain.usecase.GetActualDateFirstWorkU
 import com.github.googelfist.workschedule.domain.usecase.GetDateNowUseCase
 import com.github.googelfist.workschedule.domain.usecase.preference.LoadPreferencesUseCase
 import com.github.googelfist.workschedule.domain.usecase.preference.SavePreferenceUseCase
+import com.github.googelfist.workschedule.presentation.MainViewModel
 
 class MainViewModelFactory(context: Context) : ViewModelProvider.Factory {
 
