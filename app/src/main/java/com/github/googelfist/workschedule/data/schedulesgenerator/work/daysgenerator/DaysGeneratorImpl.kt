@@ -1,4 +1,4 @@
-package com.github.googelfist.workschedule.data.schedulesgenerator.work.generator
+package com.github.googelfist.workschedule.data.schedulesgenerator.work.daysgenerator
 
 import com.github.googelfist.workschedule.data.schedulesgenerator.work.fabric.DaysFabric
 import com.github.googelfist.workschedule.data.schedulesgenerator.work.scheduletype.ScheduleType

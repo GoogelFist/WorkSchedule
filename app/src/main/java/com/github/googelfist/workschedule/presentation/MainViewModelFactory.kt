@@ -5,10 +5,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.github.googelfist.workschedule.data.repository.PreferenceRepositoryImpl
 import com.github.googelfist.workschedule.data.schedulesgenerator.work.ScheduleGeneratorImpl
+import com.github.googelfist.workschedule.data.schedulesgenerator.work.daysgenerator.DaysGenerator
+import com.github.googelfist.workschedule.data.schedulesgenerator.work.daysgenerator.DaysGeneratorImpl
 import com.github.googelfist.workschedule.data.schedulesgenerator.work.fabric.DaysFabric
 import com.github.googelfist.workschedule.data.schedulesgenerator.work.fabric.DaysFabricImpl
-import com.github.googelfist.workschedule.data.schedulesgenerator.work.generator.DaysGenerator
-import com.github.googelfist.workschedule.data.schedulesgenerator.work.generator.DaysGeneratorImpl
 import com.github.googelfist.workschedule.data.schedulesgenerator.work.scheduletype.DefaultScheduleImpl
 import com.github.googelfist.workschedule.data.schedulesgenerator.work.scheduletype.ScheduleType
 import com.github.googelfist.workschedule.data.schedulesgenerator.work.scheduletype.TwoInTwoWorkScheduleImpl
