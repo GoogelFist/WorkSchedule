@@ -1,17 +1,9 @@
 package com.github.googelfist.workschedule.domain.usecase
 
-import com.github.googelfist.workschedule.domain.models.MonthDTO
+import androidx.lifecycle.LiveData
+import com.github.googelfist.workschedule.domain.models.days.Day
 
-class GenerateNextMonthUseCase(
-    private val generateMonthUseCase: GenerateMonthUseCase,
-) {
+interface GenerateNextMonthUseCase {
 
-    operator fun invoke(monthDTO: MonthDTO): MonthDTO {
-        val nextMonthDate = monthDTO.date.plusMonths(VALUE)
-        return generateMonthUseCase.generate(nextMonthDate)
-    }
-
-    companion object {
-        private const val VALUE = 1L
-    }
+    operator fun invoke(): LiveData<List<Day>>
 }

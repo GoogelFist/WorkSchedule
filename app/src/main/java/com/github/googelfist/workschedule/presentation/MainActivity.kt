@@ -32,9 +32,8 @@ class MainActivity : AppCompatActivity() {
 
         viewModel = ViewModelProvider(this, MainViewModelFactory(this))[MainViewModel::class.java]
 
-        viewModel.onGenerateCurrentMonth()
-        viewModel.monthDTO.dayListLD.observe(this) { dayListAdapter.submitList(it) }
-        viewModel.monthDTO.formattedDateLD.observe(this) { binding.tvYearMonth.text = it }
+        viewModel.dayListLD.observe(this) { dayListAdapter.submitList(it) }
+        viewModel.formatDateLD.observe(this) { binding.tvYearMonth.text = it }
 
         setupButtons()
     }

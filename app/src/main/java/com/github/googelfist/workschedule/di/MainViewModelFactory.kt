@@ -4,35 +4,42 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.github.googelfist.workschedule.data.repository.PreferenceRepositoryImpl
-import com.github.googelfist.workschedule.data.schedulesgenerator.ScheduleGeneratorImpl
-import com.github.googelfist.workschedule.data.schedulesgenerator.daysgenerator.DaysGenerator
-import com.github.googelfist.workschedule.data.schedulesgenerator.daysgenerator.DaysGeneratorImpl
-import com.github.googelfist.workschedule.data.schedulesgenerator.fabric.DaysFabric
-import com.github.googelfist.workschedule.data.schedulesgenerator.fabric.DaysFabricImpl
-import com.github.googelfist.workschedule.data.schedulesgenerator.scheduletype.DefaultScheduleImpl
+import com.github.googelfist.workschedule.data.schedulesgenerator.DefaultScheduleGeneratorImp
+import com.github.googelfist.workschedule.data.schedulesgenerator.WorkScheduleGeneratorImpl
+import com.github.googelfist.workschedule.data.schedulesgenerator.daysgenerator.DefaultDaysGenerator
+import com.github.googelfist.workschedule.data.schedulesgenerator.daysgenerator.DefaultDaysGeneratorImpl
+import com.github.googelfist.workschedule.data.schedulesgenerator.daysgenerator.WorkDaysGenerator
+import com.github.googelfist.workschedule.data.schedulesgenerator.daysgenerator.WorkDaysGeneratorImpl
+import com.github.googelfist.workschedule.data.schedulesgenerator.fabric.DefaultDaysFabric
+import com.github.googelfist.workschedule.data.schedulesgenerator.fabric.DefaultDaysFabricImpl
+import com.github.googelfist.workschedule.data.schedulesgenerator.fabric.WorkDaysFabric
+import com.github.googelfist.workschedule.data.schedulesgenerator.fabric.WorkDaysFabricImpl
+import com.github.googelfist.workschedule.data.schedulesgenerator.formatter.DateFormatter
+import com.github.googelfist.workschedule.data.schedulesgenerator.formatter.DateFormatterImpl
 import com.github.googelfist.workschedule.data.schedulesgenerator.scheduletype.ScheduleType
 import com.github.googelfist.workschedule.data.schedulesgenerator.scheduletype.TwoInTwoWorkScheduleImpl
+import com.github.googelfist.workschedule.domain.DefaultScheduleGenerator
 import com.github.googelfist.workschedule.domain.PreferenceRepository
-import com.github.googelfist.workschedule.domain.ScheduleGenerator
+import com.github.googelfist.workschedule.domain.WorkScheduleGenerator
 import com.github.googelfist.workschedule.domain.usecase.FormatDateUseCase
-import com.github.googelfist.workschedule.domain.usecase.GenerateDefaultMontUseCaseImpl
-import com.github.googelfist.workschedule.domain.usecase.GenerateMonthUseCase
+import com.github.googelfist.workschedule.domain.usecase.GenerateCurrentMonthUseCase
 import com.github.googelfist.workschedule.domain.usecase.GenerateNextMonthUseCase
 import com.github.googelfist.workschedule.domain.usecase.GeneratePreviousMonthUseCase
-import com.github.googelfist.workschedule.domain.usecase.GenerateWorkMonthUseCaseImpl
-import com.github.googelfist.workschedule.domain.usecase.GetActualDateFirstWorkUseCase
-import com.github.googelfist.workschedule.domain.usecase.GetDateNowUseCase
+import com.github.googelfist.workschedule.domain.usecase.defaultgenerate.FormatDefaultDateUseCaseImpl
+import com.github.googelfist.workschedule.domain.usecase.defaultgenerate.GenerateDefaultCurrentMontUseCaseImpl
+import com.github.googelfist.workschedule.domain.usecase.defaultgenerate.GenerateDefaultNextMonthUseCaseImpl
+import com.github.googelfist.workschedule.domain.usecase.defaultgenerate.GenerateDefaultPreviousMonthUseCaseImpl
 import com.github.googelfist.workschedule.domain.usecase.preference.LoadPreferencesUseCase
-import com.github.googelfist.workschedule.domain.usecase.preference.SavePreferenceUseCase
+import com.github.googelfist.workschedule.domain.usecase.workgenerate.FormatWorkDateUseCaseImpl
+import com.github.googelfist.workschedule.domain.usecase.workgenerate.GenerateWorkCurrentMonthUseCaseImpl
+import com.github.googelfist.workschedule.domain.usecase.workgenerate.GenerateWorkNextMonthUseCaseImpl
+import com.github.googelfist.workschedule.domain.usecase.workgenerate.GenerateWorkPreviousMonthUseCaseImpl
 import com.github.googelfist.workschedule.presentation.MainViewModel
 
 class MainViewModelFactory(context: Context) : ViewModelProvider.Factory {
 
     private val repository: PreferenceRepository = PreferenceRepositoryImpl(context)
     private val loadPreferencesUseCase = LoadPreferencesUseCase(repository)
-    private val formatDateUseCase = FormatDateUseCase()
-    private val getDateNowUseCase = GetDateNowUseCase()
-    private val daysFabric: DaysFabric = DaysFabricImpl()
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
@@ -47,57 +54,69 @@ class MainViewModelFactory(context: Context) : ViewModelProvider.Factory {
     }
 
     private fun setupDefaultSchedule(): MainViewModel {
-        val default: ScheduleType = DefaultScheduleImpl()
+        val daysFabric: DefaultDaysFabric = DefaultDaysFabricImpl()
+        val daysGenerator: DefaultDaysGenerator = DefaultDaysGeneratorImpl(daysFabric)
+        val formatter: DateFormatter = DateFormatterImpl()
 
-        val daysGenerator: DaysGenerator =
-            DaysGeneratorImpl(daysFabric = daysFabric, scheduleType = default)
+        val scheduleGenerator: DefaultScheduleGenerator =
+            DefaultScheduleGeneratorImp(daysGenerator, formatter)
 
-        val generator: ScheduleGenerator = ScheduleGeneratorImpl(daysGenerator)
+        val generateMonthUseCase: GenerateCurrentMonthUseCase =
+            GenerateDefaultCurrentMontUseCaseImpl(scheduleGenerator = scheduleGenerator)
 
-        val generateMonthUseCase: GenerateMonthUseCase =
-            GenerateDefaultMontUseCaseImpl(
-                scheduleGenerator = generator,
-                formatDateUseCase = formatDateUseCase
-            )
+        val generateNextMonthUseCase: GenerateNextMonthUseCase =
+            GenerateDefaultNextMonthUseCaseImpl(scheduleGenerator)
 
-        val generateNextMonthUseCase = GenerateNextMonthUseCase(generateMonthUseCase)
-        val generatePreviousMonthUseCase = GeneratePreviousMonthUseCase(generateMonthUseCase)
+        val generatePreviousMonthUseCase: GeneratePreviousMonthUseCase =
+            GenerateDefaultPreviousMonthUseCaseImpl(scheduleGenerator)
+
+        val formatDateUseCase: FormatDateUseCase = FormatDefaultDateUseCaseImpl(scheduleGenerator)
 
         return MainViewModel(
-            getDateNowUseCase = getDateNowUseCase,
-            generateMonthUseCase = generateMonthUseCase,
+            generateCurrentMonthUseCase = generateMonthUseCase,
             generateNextMonthUseCase = generateNextMonthUseCase,
-            generatePreviousMonthUseCase = generatePreviousMonthUseCase
+            generatePreviousMonthUseCase = generatePreviousMonthUseCase,
+            formatDateUseCase = formatDateUseCase
         )
     }
 
     private fun setupTwoInTwoSchedule(): MainViewModel {
+        val daysFabric: WorkDaysFabric = WorkDaysFabricImpl()
         val twoInTwo: ScheduleType = TwoInTwoWorkScheduleImpl()
+        val formatter: DateFormatter = DateFormatterImpl()
 
-        val daysGenerator: DaysGenerator =
-            DaysGeneratorImpl(daysFabric = daysFabric, scheduleType = twoInTwo)
+        val daysGenerator: WorkDaysGenerator =
+            WorkDaysGeneratorImpl(daysFabric = daysFabric, scheduleType = twoInTwo)
 
-        val scheduleGenerator: ScheduleGenerator = ScheduleGeneratorImpl(daysGenerator)
-        val savePreferenceUseCase = SavePreferenceUseCase(repository)
-        val getActualDateFirstWorkUseCase = GetActualDateFirstWorkUseCase()
+        val scheduleGenerator: WorkScheduleGenerator = WorkScheduleGeneratorImpl(
+            daysGenerator = daysGenerator,
+            formatter = formatter,
+            scheduleType = twoInTwo
+        )
 
-        val generateMonthUseCase: GenerateMonthUseCase =
-            GenerateWorkMonthUseCaseImpl(
+        val generateCurrentMonthUseCase: GenerateCurrentMonthUseCase =
+            GenerateWorkCurrentMonthUseCaseImpl(
                 scheduleGenerator = scheduleGenerator,
-                formatDateUseCase = formatDateUseCase,
-                loadPreferencesUseCase = loadPreferencesUseCase,
-                savePreferenceUseCase = savePreferenceUseCase,
-                getActualDateFirstWorkUseCase = getActualDateFirstWorkUseCase
+                loadPreferencesUseCase = loadPreferencesUseCase
             )
 
-        val generateNextMonthUseCase = GenerateNextMonthUseCase(generateMonthUseCase)
-        val generatePreviousMonthUseCase = GeneratePreviousMonthUseCase(generateMonthUseCase)
+        val generateNextMonthUseCase: GenerateNextMonthUseCase = GenerateWorkNextMonthUseCaseImpl(
+            scheduleGenerator = scheduleGenerator,
+            loadPreferencesUseCase = loadPreferencesUseCase
+        )
+        val generatePreviousMonthUseCase: GeneratePreviousMonthUseCase =
+            GenerateWorkPreviousMonthUseCaseImpl(
+                scheduleGenerator = scheduleGenerator,
+                loadPreferencesUseCase = loadPreferencesUseCase
+            )
+
+        val formatDateUseCase: FormatDateUseCase = FormatWorkDateUseCaseImpl(scheduleGenerator)
 
         return MainViewModel(
-            getDateNowUseCase = getDateNowUseCase,
-            generateMonthUseCase = generateMonthUseCase,
+            generateCurrentMonthUseCase = generateCurrentMonthUseCase,
             generateNextMonthUseCase = generateNextMonthUseCase,
-            generatePreviousMonthUseCase = generatePreviousMonthUseCase
+            generatePreviousMonthUseCase = generatePreviousMonthUseCase,
+            formatDateUseCase = formatDateUseCase
         )
     }
 

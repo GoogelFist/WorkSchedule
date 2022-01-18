@@ -7,7 +7,7 @@ import com.github.googelfist.workschedule.domain.models.days.InActiveDay
 import com.github.googelfist.workschedule.domain.models.days.Today
 import java.time.LocalDate
 
-class DaysFabricImpl : DaysFabric {
+class WorkDaysFabricImpl : WorkDaysFabric {
 
     override fun getWorkDay(
         dateInMonth: LocalDate,
@@ -70,30 +70,6 @@ class DaysFabricImpl : DaysFabric {
                 year = dateInMonth.year,
                 isWork = false,
                 isWeekend = true
-            )
-        }
-    }
-
-    override fun getDefaultDay(dateInMonth: LocalDate, activeDate: LocalDate): Day {
-
-        return when {
-            isInActiveDay(dateInMonth, activeDate) -> InActiveDay(
-                value = dateInMonth.dayOfMonth,
-                month = dateInMonth.monthValue,
-                year = dateInMonth.year
-            )
-
-            isToday(dateInMonth) ->
-                Today(
-                    value = dateInMonth.dayOfMonth,
-                    month = dateInMonth.monthValue,
-                    year = dateInMonth.year
-                )
-
-            else -> ActiveDay(
-                value = dateInMonth.dayOfMonth,
-                month = dateInMonth.monthValue,
-                year = dateInMonth.year
             )
         }
     }

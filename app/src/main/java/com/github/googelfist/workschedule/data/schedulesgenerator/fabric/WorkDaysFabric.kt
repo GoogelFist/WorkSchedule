@@ -4,13 +4,11 @@ import com.github.googelfist.workschedule.data.schedulesgenerator.scheduletype.S
 import com.github.googelfist.workschedule.domain.models.days.Day
 import java.time.LocalDate
 
-interface DaysFabric {
+interface WorkDaysFabric {
     fun getWorkDay(
         dateInMonth: LocalDate,
         activeDate: LocalDate,
         firstWorkDate: LocalDate,
         scheduleType: ScheduleType
     ): Day
-
-    fun getDefaultDay(dateInMonth: LocalDate, activeDate: LocalDate): Day
 }
