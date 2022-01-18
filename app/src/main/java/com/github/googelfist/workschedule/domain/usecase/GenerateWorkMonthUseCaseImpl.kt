@@ -19,7 +19,7 @@ class GenerateWorkMonthUseCaseImpl(
         val actualFirstWorkDate = getActualDateFirstWorkUseCase(date, preference)
         savePreferenceUseCase(preference.copy(actualFirstWorkDate = actualFirstWorkDate.toString()))
 
-        val currentMonth = scheduleGenerator.generateSchedule(date, actualFirstWorkDate)
+        val currentMonth = scheduleGenerator.generateWorkSchedule(date, actualFirstWorkDate)
         val formatCurrentDate = formatDateUseCase(date)
 
         return MonthDTO(formatCurrentDate, date, currentMonth)

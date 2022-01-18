@@ -1,19 +1,21 @@
 package com.github.googelfist.workschedule.data.schedulesgenerator.work.fabric
 
+import com.github.googelfist.workschedule.data.schedulesgenerator.work.scheduletype.ScheduleType
 import com.github.googelfist.workschedule.domain.models.days.ActiveDay
 import com.github.googelfist.workschedule.domain.models.days.Day
 import com.github.googelfist.workschedule.domain.models.days.InActiveDay
 import com.github.googelfist.workschedule.domain.models.days.Today
 import java.time.LocalDate
 
-class TwoInTwoWorkDaysFabricImpl : WorkDaysFabric {
+class DaysFabricImpl : DaysFabric {
 
-    override fun getDay(
+    override fun getWorkDay(
         dateInMonth: LocalDate,
         activeDate: LocalDate,
-        firstWorkDate: LocalDate
+        firstWorkDate: LocalDate,
+        scheduleType: ScheduleType
     ): Day {
-        val workSchedule = getWorkSchedule(firstWorkDate)
+        val workSchedule = scheduleType.getWorkSchedule(firstWorkDate)
 
         return when {
             isWorkDay(workSchedule, dateInMonth) && isInActiveDay(
@@ -72,16 +74,28 @@ class TwoInTwoWorkDaysFabricImpl : WorkDaysFabric {
         }
     }
 
-    private fun getWorkSchedule(date: LocalDate): Set<LocalDate> {
-        var lowDate = date.minusDays(RANGE_HALF_LENGTH)
-        val dateSet = mutableSetOf<LocalDate>()
+    override fun getDefaultDay(dateInMonth: LocalDate, activeDate: LocalDate): Day {
 
-        (ZERO..RANGE_LENGTH step STEP).forEach { _ ->
-            dateSet.add(lowDate)
-            dateSet.add(lowDate.plusDays(ONE_VALUE))
-            lowDate = lowDate.plusDays(STEP.toLong())
+        return when {
+            isInActiveDay(dateInMonth, activeDate) -> InActiveDay(
+                value = dateInMonth.dayOfMonth,
+                month = dateInMonth.monthValue,
+                year = dateInMonth.year
+            )
+
+            isToday(dateInMonth) ->
+                Today(
+                    value = dateInMonth.dayOfMonth,
+                    month = dateInMonth.monthValue,
+                    year = dateInMonth.year
+                )
+
+            else -> ActiveDay(
+                value = dateInMonth.dayOfMonth,
+                month = dateInMonth.monthValue,
+                year = dateInMonth.year
+            )
         }
-        return dateSet
     }
 
     private fun isActiveDay(dateInMonth: LocalDate, date: LocalDate): Boolean {
@@ -99,13 +113,5 @@ class TwoInTwoWorkDaysFabricImpl : WorkDaysFabric {
 
     private fun isWorkDay(workDates: Set<LocalDate>, dateInMonth: LocalDate): Boolean {
         return workDates.contains(dateInMonth)
-    }
-
-    companion object {
-        private const val STEP = 4
-        private const val ONE_VALUE = 1L
-        private const val RANGE_LENGTH = 80
-        private const val RANGE_HALF_LENGTH = RANGE_LENGTH / 2L
-        private const val ZERO = 0
     }
 }

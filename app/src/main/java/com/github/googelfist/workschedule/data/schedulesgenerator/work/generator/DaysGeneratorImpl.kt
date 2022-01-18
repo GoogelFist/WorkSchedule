@@ -1,32 +1,48 @@
 package com.github.googelfist.workschedule.data.schedulesgenerator.work.generator
 
-import com.github.googelfist.workschedule.data.schedulesgenerator.work.fabric.WorkDaysFabric
+import com.github.googelfist.workschedule.data.schedulesgenerator.work.fabric.DaysFabric
+import com.github.googelfist.workschedule.data.schedulesgenerator.work.scheduletype.ScheduleType
 import com.github.googelfist.workschedule.domain.models.days.Day
 import java.time.LocalDate
 
-class WorkDaysGeneratorImpl(private val workDaysFabric: WorkDaysFabric) : WorkDaysGenerator {
+class DaysGeneratorImpl(
+    private val daysFabric: DaysFabric,
+    private val scheduleType: ScheduleType
+) : DaysGenerator {
 
-    override fun generateDays(activeDate: LocalDate, firstWorkDate: LocalDate): List<Day> {
+    override fun generateWorkDays(activeDate: LocalDate, firstWorkDate: LocalDate): List<Day> {
         var firstDay = getFirstDate(activeDate)
 
         val dayList = mutableListOf<Day>()
         repeat(MAX_DAY_COUNT) {
-            dayList.add(workDaysFabric.getDay(firstDay, activeDate, firstWorkDate))
+            dayList.add(daysFabric.getWorkDay(firstDay, activeDate, firstWorkDate, scheduleType))
 
             firstDay = firstDay.plusDays(ONE_VALUE)
         }
         return dayList
     }
 
-    private fun getFirstDate(date: LocalDate): LocalDate {
+    override fun generateDefaultDays(activeDate: LocalDate): List<Day> {
+        var firstDay = getFirstDate(activeDate)
+
+        val dayList = mutableListOf<Day>()
+        repeat(MAX_DAY_COUNT) {
+            dayList.add(daysFabric.getDefaultDay(firstDay, activeDate))
+
+            firstDay = firstDay.plusDays(ONE_VALUE)
+        }
+        return dayList
+    }
+
+    private fun getFirstDate(firstWorkDate: LocalDate): LocalDate {
         val datesListOfRange = mutableListOf<LocalDate>()
-        var dateMinRange = date.minusDays(RANGE_HALF_LENGTH)
+        var dateMinRange = firstWorkDate.minusDays(RANGE_HALF_LENGTH)
         repeat(RANGE_LENGTH) {
             datesListOfRange.add(dateMinRange)
             dateMinRange = dateMinRange.plusDays(ONE_VALUE)
         }
 
-        val currentMonth = date.month
+        val currentMonth = firstWorkDate.month
         val firstMonday = datesListOfRange.filter { it.month == currentMonth }
             .find { it.dayOfWeek.value == MONDAY }
             ?: throw NoSuchElementException("First monday of active month not found")
