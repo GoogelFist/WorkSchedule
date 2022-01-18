@@ -6,17 +6,11 @@ import java.time.LocalDate
 
 interface WorkScheduleGenerator {
 
-    fun generateWorkCurrentSchedule(
-        firstWorkDate: LocalDate
-    ): LiveData<List<Day>>
+    fun generateWorkCurrentSchedule(firstWorkDate: LocalDate): LiveData<List<Day>>
 
-    fun generateWorkNexSchedule(
-        firstWorkDate: LocalDate
-    ): LiveData<List<Day>>
+    fun generateWorkNexSchedule(firstWorkDate: LocalDate): LiveData<List<Day>>
 
-    fun generateWorkPreviousSchedule(
-        firstWorkDate: LocalDate
-    ): LiveData<List<Day>>
+    fun generateWorkPreviousSchedule(firstWorkDate: LocalDate): LiveData<List<Day>>
 
     fun getActiveFormatDate(): LiveData<String>
 }
