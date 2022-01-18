@@ -1,7 +1,7 @@
-package com.github.googelfist.workschedule.data.schedulesgenerator.work.daysgenerator
+package com.github.googelfist.workschedule.data.schedulesgenerator.daysgenerator
 
-import com.github.googelfist.workschedule.data.schedulesgenerator.work.fabric.DaysFabric
-import com.github.googelfist.workschedule.data.schedulesgenerator.work.scheduletype.ScheduleType
+import com.github.googelfist.workschedule.data.schedulesgenerator.fabric.DaysFabric
+import com.github.googelfist.workschedule.data.schedulesgenerator.scheduletype.ScheduleType
 import com.github.googelfist.workschedule.domain.models.days.Day
 import java.time.LocalDate
 

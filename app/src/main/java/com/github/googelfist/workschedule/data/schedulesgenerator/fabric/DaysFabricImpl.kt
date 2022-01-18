@@ -1,6 +1,6 @@
-package com.github.googelfist.workschedule.data.schedulesgenerator.work.fabric
+package com.github.googelfist.workschedule.data.schedulesgenerator.fabric
 
-import com.github.googelfist.workschedule.data.schedulesgenerator.work.scheduletype.ScheduleType
+import com.github.googelfist.workschedule.data.schedulesgenerator.scheduletype.ScheduleType
 import com.github.googelfist.workschedule.domain.models.days.ActiveDay
 import com.github.googelfist.workschedule.domain.models.days.Day
 import com.github.googelfist.workschedule.domain.models.days.InActiveDay
