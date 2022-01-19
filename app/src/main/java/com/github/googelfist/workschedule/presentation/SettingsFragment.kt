@@ -1,8 +1,10 @@
-package com.github.googelfist.workschedule.presentation.settings
+package com.github.googelfist.workschedule.presentation
 
 import android.app.DatePickerDialog
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.view.View
+import androidx.activity.addCallback
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.github.googelfist.workschedule.R
@@ -14,6 +16,13 @@ class SettingsFragment :
     SharedPreferences.OnSharedPreferenceChangeListener {
 
     private lateinit var settings: SharedPreferences
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            startActivity(MainActivity.newIntent(requireContext()))
+        }
+    }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.preference, rootKey)
@@ -83,5 +92,9 @@ class SettingsFragment :
     companion object {
         private const val PREFERENCE_DEFAULT_VALUE = "Choose start work date"
         private const val ONE_VALUE = 1
+
+        fun newInstance(): SettingsFragment {
+            return SettingsFragment()
+        }
     }
 }
