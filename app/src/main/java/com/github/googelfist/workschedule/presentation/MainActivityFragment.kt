@@ -44,7 +44,7 @@ class MainActivityFragment : Fragment() {
         )[MainViewModel::class.java]
 
         viewModel.dayListLD.observe(viewLifecycleOwner) { dayListAdapter.submitList(it) }
-        viewModel.formatDateLD.observe(viewLifecycleOwner) { binding.tvYearMonth.text = it }
+        viewModel.formatDateLD.observe(viewLifecycleOwner) { binding.includeNavigationPanel.tvYearMonth.text = it }
 
         setupButtons()
     }
@@ -93,11 +93,11 @@ class MainActivityFragment : Fragment() {
     }
 
     private fun setupButtons() {
-        binding.ivMonthUp.setOnClickListener { viewModel.onGeneratePreviousMonth() }
-        binding.ivMonthDown.setOnClickListener { viewModel.onGenerateNextMonth() }
-        binding.ivCurrentMonth.setOnClickListener { viewModel.onGenerateCurrentMonth() }
+        binding.includeNavigationPanel.ivMonthUp.setOnClickListener { viewModel.onGeneratePreviousMonth() }
+        binding.includeNavigationPanel.ivMonthDown.setOnClickListener { viewModel.onGenerateNextMonth() }
+        binding.includeNavigationPanel.ivCurrentMonth.setOnClickListener { viewModel.onGenerateCurrentMonth() }
 
-        binding.ivSettings.setOnClickListener {
+        binding.includeNavigationPanel.ivSettings.setOnClickListener {
             requireActivity().supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.main_activity_container, SettingsFragment.newInstance())
