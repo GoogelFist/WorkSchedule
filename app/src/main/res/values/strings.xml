@@ -2,9 +2,9 @@
     <!-- manifest values -->
     <string name="app_name">Work Schedule</string>
     <!-- main activity values -->
-    <string name="description_image_view_for_up_navigation">Image view for up navigation</string>
-    <string name="description_image_view_for_down_navigation">Image view for down navigation</string>
-    <string name="description_image_view_for_settings">Image view for settings</string>
+    <string name="description_image_view_for_up_navigation">Up navigation</string>
+    <string name="description_image_view_for_down_navigation">Down navigation</string>
+    <string name="description_image_view_for_settings">Settings</string>
     <string name="monday">Mo</string>
     <string name="tuesday">Tu</string>
     <string name="wednesday">We</string>
