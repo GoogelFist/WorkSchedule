@@ -32,6 +32,8 @@ open class RecyclerViewSwipeListener :
     open fun onSwipeLeft() {}
     open fun onSwipeUp() {}
     open fun onSwipeDown() {}
-}
 
-private const val SWIPE_VELOCITY_THRESHOLD = 1500
+    companion object {
+        private const val SWIPE_VELOCITY_THRESHOLD = 1500
+    }
+}
