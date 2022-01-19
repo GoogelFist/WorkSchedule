@@ -65,11 +65,11 @@ class MainActivityFragment : Fragment() {
 
         rvDayList.onFlingListener = object : RecyclerViewSwipeListener() {
             override fun onSwipeUp() {
-                viewModel.onGenerateNextMonth()
+                viewModel.onGeneratePreviousMonth()
             }
 
             override fun onSwipeDown() {
-                viewModel.onGeneratePreviousMonth()
+                viewModel.onGenerateNextMonth()
             }
         }
         dayListAdapter.onDayClickListener = {
