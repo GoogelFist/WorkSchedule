@@ -1,6 +1,7 @@
 package com.github.googelfist.workschedule.presentation
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -83,6 +84,13 @@ class MainActivity : AppCompatActivity() {
 
         binding.ivSettings.setOnClickListener {
             startActivity(Intent(this, SettingsActivity::class.java))
+        }
+    }
+
+    companion object {
+
+        fun newIntent(context: Context): Intent {
+            return Intent(context, MainActivity::class.java)
         }
     }
 }

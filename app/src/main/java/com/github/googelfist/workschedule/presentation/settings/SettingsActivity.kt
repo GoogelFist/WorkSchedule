@@ -1,6 +1,5 @@
 package com.github.googelfist.workschedule.presentation.settings
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.github.googelfist.workschedule.R
@@ -18,7 +17,7 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     override fun onPause() {
-        startActivity(Intent(this, MainActivity::class.java))
+        startActivity(MainActivity.newIntent(this))
         super.onPause()
     }
 }
