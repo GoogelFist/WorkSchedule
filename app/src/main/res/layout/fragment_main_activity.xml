@@ -6,29 +6,29 @@
         android:layout_height="match_parent"
         tools:context=".presentation.MainActivityFragment">
 
-    <include
-            android:id="@+id/include_navigation_panel"
-            layout="@layout/navigation_panel"
-            android:layout_width="match_parent"
+    <TextView
+            android:id="@+id/tv_year_month"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="16sp"
+            android:textStyle="bold"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="8dp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="December 2021" />
 
     <include
             android:id="@+id/include_week_days"
             layout="@layout/week_days"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/include_navigation_panel" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_year_month" />
 
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_day_list"
@@ -45,6 +45,14 @@
             tools:itemCount="42"
             tools:listitem="@layout/active_day" />
 
-
+    <include
+            android:id="@+id/include_navigation_panel"
+            layout="@layout/navigation_panel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rv_day_list" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

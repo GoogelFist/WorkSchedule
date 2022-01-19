@@ -44,7 +44,7 @@ class MainActivityFragment : Fragment() {
         )[MainViewModel::class.java]
 
         viewModel.dayListLD.observe(viewLifecycleOwner) { dayListAdapter.submitList(it) }
-        viewModel.formatDateLD.observe(viewLifecycleOwner) { binding.includeNavigationPanel.tvYearMonth.text = it }
+        viewModel.formatDateLD.observe(viewLifecycleOwner) { binding.tvYearMonth.text = it }
 
         setupButtons()
     }
