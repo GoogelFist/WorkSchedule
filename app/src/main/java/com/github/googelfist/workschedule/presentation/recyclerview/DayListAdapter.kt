@@ -77,8 +77,8 @@ class DayListAdapter : ListAdapter<Day, DayViewHolder>(DayDiffCallback()) {
         const val TODAY_WEEKEND_TYPE = 501
         const val TODAY_WORK_TYPE = 502
 
-        const val ACTIVE_DAY_POOL_SIZE = 31
-        const val INACTIVE_DAY_POOL_SIZE = 14
+        const val ACTIVE_DAY_POOL_SIZE = 40
+        const val INACTIVE_DAY_POOL_SIZE = 20
         const val TODAY_DAY_POOL_SIZE = 1
     }
 }
