@@ -22,9 +22,7 @@ import com.github.googelfist.workschedule.domain.DefaultScheduleGenerator
 import com.github.googelfist.workschedule.domain.PreferenceRepository
 import com.github.googelfist.workschedule.domain.WorkScheduleGenerator
 import com.github.googelfist.workschedule.domain.usecase.FormatDateUseCase
-import com.github.googelfist.workschedule.domain.usecase.GenerateCurrentMonthUseCase
-import com.github.googelfist.workschedule.domain.usecase.GenerateNextMonthUseCase
-import com.github.googelfist.workschedule.domain.usecase.GeneratePreviousMonthUseCase
+import com.github.googelfist.workschedule.domain.usecase.GenerateMonthUseCase
 import com.github.googelfist.workschedule.domain.usecase.defaultgenerate.FormatDefaultDateUseCaseImpl
 import com.github.googelfist.workschedule.domain.usecase.defaultgenerate.GenerateDefaultCurrentMontUseCaseImpl
 import com.github.googelfist.workschedule.domain.usecase.defaultgenerate.GenerateDefaultNextMonthUseCaseImpl
@@ -61,13 +59,13 @@ class MainViewModelFactory(context: Context) : ViewModelProvider.Factory {
         val scheduleGenerator: DefaultScheduleGenerator =
             DefaultScheduleGeneratorImp(daysGenerator, formatter)
 
-        val generateMonthUseCase: GenerateCurrentMonthUseCase =
+        val generateMonthUseCase: GenerateMonthUseCase =
             GenerateDefaultCurrentMontUseCaseImpl(scheduleGenerator = scheduleGenerator)
 
-        val generateNextMonthUseCase: GenerateNextMonthUseCase =
+        val generateNextMonthUseCase: GenerateMonthUseCase =
             GenerateDefaultNextMonthUseCaseImpl(scheduleGenerator)
 
-        val generatePreviousMonthUseCase: GeneratePreviousMonthUseCase =
+        val generatePreviousMonthUseCase: GenerateMonthUseCase =
             GenerateDefaultPreviousMonthUseCaseImpl(scheduleGenerator)
 
         val formatDateUseCase: FormatDateUseCase = FormatDefaultDateUseCaseImpl(scheduleGenerator)
@@ -94,17 +92,17 @@ class MainViewModelFactory(context: Context) : ViewModelProvider.Factory {
             scheduleType = twoInTwo
         )
 
-        val generateCurrentMonthUseCase: GenerateCurrentMonthUseCase =
+        val generateCurrentMonthUseCase: GenerateMonthUseCase =
             GenerateWorkCurrentMonthUseCaseImpl(
                 scheduleGenerator = scheduleGenerator,
                 loadPreferencesUseCase = loadPreferencesUseCase
             )
 
-        val generateNextMonthUseCase: GenerateNextMonthUseCase = GenerateWorkNextMonthUseCaseImpl(
+        val generateNextMonthUseCase: GenerateMonthUseCase = GenerateWorkNextMonthUseCaseImpl(
             scheduleGenerator = scheduleGenerator,
             loadPreferencesUseCase = loadPreferencesUseCase
         )
-        val generatePreviousMonthUseCase: GeneratePreviousMonthUseCase =
+        val generatePreviousMonthUseCase: GenerateMonthUseCase =
             GenerateWorkPreviousMonthUseCaseImpl(
                 scheduleGenerator = scheduleGenerator,
                 loadPreferencesUseCase = loadPreferencesUseCase

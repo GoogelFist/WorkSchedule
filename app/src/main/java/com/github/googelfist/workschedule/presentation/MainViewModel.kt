@@ -2,14 +2,12 @@ package com.github.googelfist.workschedule.presentation
 
 import androidx.lifecycle.ViewModel
 import com.github.googelfist.workschedule.domain.usecase.FormatDateUseCase
-import com.github.googelfist.workschedule.domain.usecase.GenerateCurrentMonthUseCase
-import com.github.googelfist.workschedule.domain.usecase.GenerateNextMonthUseCase
-import com.github.googelfist.workschedule.domain.usecase.GeneratePreviousMonthUseCase
+import com.github.googelfist.workschedule.domain.usecase.GenerateMonthUseCase
 
 class MainViewModel(
-    private val generateCurrentMonthUseCase: GenerateCurrentMonthUseCase,
-    private val generateNextMonthUseCase: GenerateNextMonthUseCase,
-    private val generatePreviousMonthUseCase: GeneratePreviousMonthUseCase,
+    private val generateCurrentMonthUseCase: GenerateMonthUseCase,
+    private val generateNextMonthUseCase: GenerateMonthUseCase,
+    private val generatePreviousMonthUseCase: GenerateMonthUseCase,
     formatDateUseCase: FormatDateUseCase
 ) : ViewModel() {
 
