@@ -46,7 +46,7 @@ class SettingsFragment :
 
     override fun onPause() {
         preferenceManager.sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
-        startActivity(MainActivity.newIntent(requireContext()))
+        startActivity(requireActivity().intent)
         super.onPause()
     }
 
