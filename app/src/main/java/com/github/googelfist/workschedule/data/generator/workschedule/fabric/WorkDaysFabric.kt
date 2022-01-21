@@ -1,6 +1,6 @@
-package com.github.googelfist.workschedule.data.schedulesgenerator.fabric
+package com.github.googelfist.workschedule.data.generator.workschedule.fabric
 
-import com.github.googelfist.workschedule.data.schedulesgenerator.scheduletype.ScheduleType
+import com.github.googelfist.workschedule.data.generator.scheduletype.ScheduleTyper
 import com.github.googelfist.workschedule.domain.models.days.Day
 import java.time.LocalDate
 
@@ -9,6 +9,6 @@ interface WorkDaysFabric {
         dateInMonth: LocalDate,
         activeDate: LocalDate,
         firstWorkDate: LocalDate,
-        scheduleType: ScheduleType
+        scheduleTyper: ScheduleTyper
     ): Day
 }

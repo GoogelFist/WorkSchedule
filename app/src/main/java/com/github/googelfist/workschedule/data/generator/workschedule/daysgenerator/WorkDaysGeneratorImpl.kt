@@ -1,13 +1,13 @@
-package com.github.googelfist.workschedule.data.schedulesgenerator.daysgenerator
+package com.github.googelfist.workschedule.data.generator.workschedule.daysgenerator
 
-import com.github.googelfist.workschedule.data.schedulesgenerator.fabric.WorkDaysFabric
-import com.github.googelfist.workschedule.data.schedulesgenerator.scheduletype.ScheduleType
+import com.github.googelfist.workschedule.data.generator.scheduletype.ScheduleTyper
+import com.github.googelfist.workschedule.data.generator.workschedule.fabric.WorkDaysFabric
 import com.github.googelfist.workschedule.domain.models.days.Day
 import java.time.LocalDate
 
 class WorkDaysGeneratorImpl(
     private val daysFabric: WorkDaysFabric,
-    private val scheduleType: ScheduleType
+    private val scheduleTyper: ScheduleTyper
 ) : WorkDaysGenerator {
 
     override fun generateWorkDays(activeDate: LocalDate, firstWorkDate: LocalDate): List<Day> {
@@ -15,7 +15,7 @@ class WorkDaysGeneratorImpl(
 
         val dayList = mutableListOf<Day>()
         repeat(MAX_DAY_COUNT) {
-            dayList.add(daysFabric.getWorkDay(firstDay, activeDate, firstWorkDate, scheduleType))
+            dayList.add(daysFabric.getWorkDay(firstDay, activeDate, firstWorkDate, scheduleTyper))
 
             firstDay = firstDay.plusDays(ONE_VALUE)
         }

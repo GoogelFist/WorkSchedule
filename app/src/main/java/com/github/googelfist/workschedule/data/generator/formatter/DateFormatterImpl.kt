@@ -1,4 +1,4 @@
-package com.github.googelfist.workschedule.data.schedulesgenerator.formatter
+package com.github.googelfist.workschedule.data.generator.formatter
 
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter

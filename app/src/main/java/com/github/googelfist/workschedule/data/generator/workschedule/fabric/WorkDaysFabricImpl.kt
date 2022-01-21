@@ -1,6 +1,6 @@
-package com.github.googelfist.workschedule.data.schedulesgenerator.fabric
+package com.github.googelfist.workschedule.data.generator.workschedule.fabric
 
-import com.github.googelfist.workschedule.data.schedulesgenerator.scheduletype.ScheduleType
+import com.github.googelfist.workschedule.data.generator.scheduletype.ScheduleTyper
 import com.github.googelfist.workschedule.domain.models.days.Day
 import com.github.googelfist.workschedule.domain.models.days.workday.WorkActiveDay
 import com.github.googelfist.workschedule.domain.models.days.workday.WorkInActiveDay
@@ -13,9 +13,9 @@ class WorkDaysFabricImpl : WorkDaysFabric {
         dateInMonth: LocalDate,
         activeDate: LocalDate,
         firstWorkDate: LocalDate,
-        scheduleType: ScheduleType
+        scheduleTyper: ScheduleTyper
     ): Day {
-        val workSchedule = scheduleType.getWorkSchedule(firstWorkDate)
+        val workSchedule = scheduleTyper.getWorkSchedule(firstWorkDate)
 
         return when {
             isWorkDay(workSchedule, dateInMonth) && isInActiveDay(

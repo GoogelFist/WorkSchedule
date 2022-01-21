@@ -1,10 +1,10 @@
-package com.github.googelfist.workschedule.data.schedulesgenerator
+package com.github.googelfist.workschedule.data.generator.workschedule
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.github.googelfist.workschedule.data.schedulesgenerator.daysgenerator.WorkDaysGenerator
-import com.github.googelfist.workschedule.data.schedulesgenerator.formatter.DateFormatter
-import com.github.googelfist.workschedule.data.schedulesgenerator.scheduletype.ScheduleType
+import com.github.googelfist.workschedule.data.generator.formatter.DateFormatter
+import com.github.googelfist.workschedule.data.generator.scheduletype.ScheduleTyper
+import com.github.googelfist.workschedule.data.generator.workschedule.daysgenerator.WorkDaysGenerator
 import com.github.googelfist.workschedule.domain.WorkScheduleGenerator
 import com.github.googelfist.workschedule.domain.models.days.Day
 import java.time.LocalDate
@@ -12,7 +12,7 @@ import java.time.LocalDate
 class WorkScheduleGeneratorImpl(
     private val daysGenerator: WorkDaysGenerator,
     private val formatter: DateFormatter,
-    private val scheduleType: ScheduleType
+    private val scheduleTyper: ScheduleTyper
 ) : WorkScheduleGenerator {
     private val dayListLD = MutableLiveData<List<Day>>()
     private var dayList = listOf<Day>()
@@ -24,7 +24,7 @@ class WorkScheduleGeneratorImpl(
     ): LiveData<List<Day>> {
         val currentDate = LocalDate.now()
         date = currentDate
-        val actualFirstDate = scheduleType.getActualFirstDate(date, firstWorkDate)
+        val actualFirstDate = scheduleTyper.getActualFirstDate(date, firstWorkDate)
         dayList = daysGenerator.generateWorkDays(date, actualFirstDate)
         dayListLD.value = dayList
         formatDateLD.value = formatter.format(date)
@@ -35,7 +35,7 @@ class WorkScheduleGeneratorImpl(
         firstWorkDate: LocalDate
     ): LiveData<List<Day>> {
         date = date.plusMonths(ONE_VALUE)
-        val actualFirstDate = scheduleType.getActualFirstDate(date, firstWorkDate)
+        val actualFirstDate = scheduleTyper.getActualFirstDate(date, firstWorkDate)
         dayList = daysGenerator.generateWorkDays(date, actualFirstDate)
         dayListLD.value = dayList
         formatDateLD.value = formatter.format(date)
@@ -46,7 +46,7 @@ class WorkScheduleGeneratorImpl(
         firstWorkDate: LocalDate
     ): LiveData<List<Day>> {
         date = date.minusMonths(ONE_VALUE)
-        val actualFirstDate = scheduleType.getActualFirstDate(date, firstWorkDate)
+        val actualFirstDate = scheduleTyper.getActualFirstDate(date, firstWorkDate)
         dayList = daysGenerator.generateWorkDays(date, actualFirstDate)
         dayListLD.value = dayList
         formatDateLD.value = formatter.format(date)

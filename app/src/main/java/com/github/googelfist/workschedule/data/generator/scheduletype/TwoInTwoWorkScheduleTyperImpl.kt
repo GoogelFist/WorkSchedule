@@ -1,8 +1,8 @@
-package com.github.googelfist.workschedule.data.schedulesgenerator.scheduletype
+package com.github.googelfist.workschedule.data.generator.scheduletype
 
 import java.time.LocalDate
 
-class TwoInTwoWorkScheduleImpl : ScheduleType {
+class TwoInTwoWorkScheduleTyperImpl : ScheduleTyper {
 
     override fun getWorkSchedule(date: LocalDate): Set<LocalDate> {
         var lowDate = date.minusDays(RANGE_HALF_LENGTH)

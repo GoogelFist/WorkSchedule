@@ -2,13 +2,13 @@ package com.github.googelfist.workschedule.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.github.googelfist.workschedule.data.schedulesgenerator.DefaultScheduleGeneratorImp
-import com.github.googelfist.workschedule.data.schedulesgenerator.daysgenerator.DefaultDaysGenerator
-import com.github.googelfist.workschedule.data.schedulesgenerator.daysgenerator.DefaultDaysGeneratorImpl
-import com.github.googelfist.workschedule.data.schedulesgenerator.fabric.DefaultDaysFabric
-import com.github.googelfist.workschedule.data.schedulesgenerator.fabric.DefaultDaysFabricImpl
-import com.github.googelfist.workschedule.data.schedulesgenerator.formatter.DateFormatter
-import com.github.googelfist.workschedule.data.schedulesgenerator.formatter.DateFormatterImpl
+import com.github.googelfist.workschedule.data.generator.defaultschedule.DefaultScheduleGeneratorImp
+import com.github.googelfist.workschedule.data.generator.defaultschedule.daysgenerator.DefaultDaysGenerator
+import com.github.googelfist.workschedule.data.generator.defaultschedule.daysgenerator.DefaultDaysGeneratorImpl
+import com.github.googelfist.workschedule.data.generator.defaultschedule.fabric.DefaultDaysFabric
+import com.github.googelfist.workschedule.data.generator.defaultschedule.fabric.DefaultDaysFabricImpl
+import com.github.googelfist.workschedule.data.generator.formatter.DateFormatter
+import com.github.googelfist.workschedule.data.generator.formatter.DateFormatterImpl
 import com.github.googelfist.workschedule.domain.DefaultScheduleGenerator
 import com.github.googelfist.workschedule.domain.usecase.FormatDateUseCase
 import com.github.googelfist.workschedule.domain.usecase.GenerateMonthUseCase

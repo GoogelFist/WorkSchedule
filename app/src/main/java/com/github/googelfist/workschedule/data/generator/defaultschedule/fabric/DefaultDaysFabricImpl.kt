@@ -1,4 +1,4 @@
-package com.github.googelfist.workschedule.data.schedulesgenerator.fabric
+package com.github.googelfist.workschedule.data.generator.defaultschedule.fabric
 
 import com.github.googelfist.workschedule.domain.models.days.Day
 import com.github.googelfist.workschedule.domain.models.days.defaultday.DefaultActiveDay
