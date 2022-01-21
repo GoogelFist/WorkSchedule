@@ -102,7 +102,6 @@ class DefaultScheduleFragment : Fragment() {
                 .beginTransaction()
                 .replace(R.id.main_activity_container, SettingsFragment.newInstance())
                 .setReorderingAllowed(true)
-                .addToBackStack(null)
                 .commit()
         }
     }
