@@ -1,7 +1,5 @@
 package com.github.googelfist.workschedule.presentation
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -49,9 +47,5 @@ class MainActivity : AppCompatActivity() {
     companion object {
         private const val DEFAULT = "Default"
         private const val TWO_IN_TWO = "2 / 2"
-
-        fun newIntent(context: Context): Intent {
-            return Intent(context, MainActivity::class.java)
-        }
     }
 }
