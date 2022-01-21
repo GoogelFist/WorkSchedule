@@ -11,11 +11,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.github.googelfist.workschedule.R
 import com.github.googelfist.workschedule.databinding.FragmentMainActivityBinding
-import com.github.googelfist.workschedule.di.MainViewModelFactory
-import com.github.googelfist.workschedule.presentation.recyclerview.DayListAdapter
+import com.github.googelfist.workschedule.di.DefaultScheduleViewModelFactory
+import com.github.googelfist.workschedule.presentation.recyclerview.DefaultDayListAdapter
 import com.github.googelfist.workschedule.presentation.recyclerview.RecyclerViewSwipeListener
 
-class MainActivityFragment : Fragment() {
+class DefaultScheduleFragment : Fragment() {
 
     private var _binding: FragmentMainActivityBinding? = null
     private val binding: FragmentMainActivityBinding
@@ -23,7 +23,7 @@ class MainActivityFragment : Fragment() {
 
     private lateinit var viewModel: MainViewModel
 
-    private lateinit var dayListAdapter: DayListAdapter
+    private lateinit var dayListAdapter: DefaultDayListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,7 +40,7 @@ class MainActivityFragment : Fragment() {
 
         viewModel = ViewModelProvider(
             requireActivity(),
-            MainViewModelFactory(requireContext())
+            DefaultScheduleViewModelFactory()
         )[MainViewModel::class.java]
 
         viewModel.dayListLD.observe(viewLifecycleOwner) { dayListAdapter.submitList(it) }
@@ -58,7 +58,7 @@ class MainActivityFragment : Fragment() {
     private fun setupRecyclerView() {
         val rvDayList = binding.rvDayList
 
-        dayListAdapter = DayListAdapter()
+        dayListAdapter = DefaultDayListAdapter()
         rvDayList.adapter = dayListAdapter
 
         setRecyclerViewPool(rvDayList)
@@ -79,16 +79,16 @@ class MainActivityFragment : Fragment() {
 
     private fun setRecyclerViewPool(rvDayList: RecyclerView) {
         rvDayList.recycledViewPool.setMaxRecycledViews(
-            DayListAdapter.ACTIVE_DAY_TYPE,
-            DayListAdapter.ACTIVE_DAY_POOL_SIZE
+            DefaultDayListAdapter.ACTIVE_DAY_TYPE,
+            DefaultDayListAdapter.ACTIVE_DAY_POOL_SIZE
         )
         rvDayList.recycledViewPool.setMaxRecycledViews(
-            DayListAdapter.INACTIVE_DAY_TYPE,
-            DayListAdapter.INACTIVE_DAY_POOL_SIZE
+            DefaultDayListAdapter.INACTIVE_DAY_TYPE,
+            DefaultDayListAdapter.INACTIVE_DAY_POOL_SIZE
         )
         rvDayList.recycledViewPool.setMaxRecycledViews(
-            DayListAdapter.TODAY_TYPE,
-            DayListAdapter.TODAY_DAY_POOL_SIZE
+            DefaultDayListAdapter.TODAY_TYPE,
+            DefaultDayListAdapter.TODAY_DAY_POOL_SIZE
         )
     }
 
@@ -102,13 +102,14 @@ class MainActivityFragment : Fragment() {
                 .beginTransaction()
                 .replace(R.id.main_activity_container, SettingsFragment.newInstance())
                 .setReorderingAllowed(true)
+                .addToBackStack(null)
                 .commit()
         }
     }
 
     companion object {
-        fun newInstance(): MainActivityFragment {
-            return MainActivityFragment()
+        fun newInstance(): DefaultScheduleFragment {
+            return DefaultScheduleFragment()
         }
     }
 }

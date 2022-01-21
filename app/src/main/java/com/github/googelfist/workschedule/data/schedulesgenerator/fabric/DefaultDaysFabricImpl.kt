@@ -1,9 +1,9 @@
 package com.github.googelfist.workschedule.data.schedulesgenerator.fabric
 
-import com.github.googelfist.workschedule.domain.models.days.ActiveDay
 import com.github.googelfist.workschedule.domain.models.days.Day
-import com.github.googelfist.workschedule.domain.models.days.InActiveDay
-import com.github.googelfist.workschedule.domain.models.days.Today
+import com.github.googelfist.workschedule.domain.models.days.defaultday.DefaultActiveDay
+import com.github.googelfist.workschedule.domain.models.days.defaultday.DefaultInActiveDay
+import com.github.googelfist.workschedule.domain.models.days.defaultday.DefaultToday
 import java.time.LocalDate
 
 class DefaultDaysFabricImpl : DefaultDaysFabric {
@@ -11,20 +11,19 @@ class DefaultDaysFabricImpl : DefaultDaysFabric {
     override fun getDefaultDay(dateInMonth: LocalDate, activeDate: LocalDate): Day {
 
         return when {
-            isInActiveDay(dateInMonth, activeDate) -> InActiveDay(
+            isInActiveDay(dateInMonth, activeDate) -> DefaultInActiveDay(
                 value = dateInMonth.dayOfMonth,
                 month = dateInMonth.monthValue,
                 year = dateInMonth.year
             )
 
-            isToday(dateInMonth) ->
-                Today(
-                    value = dateInMonth.dayOfMonth,
-                    month = dateInMonth.monthValue,
-                    year = dateInMonth.year
-                )
+            isToday(dateInMonth) -> DefaultToday(
+                value = dateInMonth.dayOfMonth,
+                month = dateInMonth.monthValue,
+                year = dateInMonth.year
+            )
 
-            else -> ActiveDay(
+            else -> DefaultActiveDay(
                 value = dateInMonth.dayOfMonth,
                 month = dateInMonth.monthValue,
                 year = dateInMonth.year

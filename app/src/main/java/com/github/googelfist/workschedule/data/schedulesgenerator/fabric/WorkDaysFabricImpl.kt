@@ -1,10 +1,10 @@
 package com.github.googelfist.workschedule.data.schedulesgenerator.fabric
 
 import com.github.googelfist.workschedule.data.schedulesgenerator.scheduletype.ScheduleType
-import com.github.googelfist.workschedule.domain.models.days.ActiveDay
 import com.github.googelfist.workschedule.domain.models.days.Day
-import com.github.googelfist.workschedule.domain.models.days.InActiveDay
-import com.github.googelfist.workschedule.domain.models.days.Today
+import com.github.googelfist.workschedule.domain.models.days.workday.WorkActiveDay
+import com.github.googelfist.workschedule.domain.models.days.workday.WorkInActiveDay
+import com.github.googelfist.workschedule.domain.models.days.workday.WorkToday
 import java.time.LocalDate
 
 class WorkDaysFabricImpl : WorkDaysFabric {
@@ -21,7 +21,7 @@ class WorkDaysFabricImpl : WorkDaysFabric {
             isWorkDay(workSchedule, dateInMonth) && isInActiveDay(
                 dateInMonth,
                 activeDate
-            ) -> InActiveDay(
+            ) -> WorkInActiveDay(
                 value = dateInMonth.dayOfMonth,
                 month = dateInMonth.monthValue,
                 year = dateInMonth.year,
@@ -29,7 +29,7 @@ class WorkDaysFabricImpl : WorkDaysFabric {
                 isWeekend = false
             )
 
-            isInActiveDay(dateInMonth, activeDate) -> InActiveDay(
+            isInActiveDay(dateInMonth, activeDate) -> WorkInActiveDay(
                 value = dateInMonth.dayOfMonth,
                 month = dateInMonth.monthValue,
                 year = dateInMonth.year,
@@ -38,7 +38,7 @@ class WorkDaysFabricImpl : WorkDaysFabric {
             )
 
             isWorkDay(workSchedule, dateInMonth) && isToday(dateInMonth) ->
-                Today(
+                WorkToday(
                     value = dateInMonth.dayOfMonth,
                     month = dateInMonth.monthValue,
                     year = dateInMonth.year,
@@ -47,7 +47,7 @@ class WorkDaysFabricImpl : WorkDaysFabric {
                 )
 
             isToday(dateInMonth) ->
-                Today(
+                WorkToday(
                     value = dateInMonth.dayOfMonth,
                     month = dateInMonth.monthValue,
                     year = dateInMonth.year,
@@ -56,7 +56,7 @@ class WorkDaysFabricImpl : WorkDaysFabric {
                 )
 
             isWorkDay(workSchedule, dateInMonth) && isActiveDay(dateInMonth, activeDate) ->
-                ActiveDay(
+                WorkActiveDay(
                     value = dateInMonth.dayOfMonth,
                     month = dateInMonth.monthValue,
                     year = dateInMonth.year,
@@ -64,7 +64,7 @@ class WorkDaysFabricImpl : WorkDaysFabric {
                     isWeekend = false
                 )
 
-            else -> ActiveDay(
+            else -> WorkActiveDay(
                 value = dateInMonth.dayOfMonth,
                 month = dateInMonth.monthValue,
                 year = dateInMonth.year,

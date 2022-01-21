@@ -4,12 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.github.googelfist.workschedule.R
-import com.github.googelfist.workschedule.domain.models.days.ActiveDay
 import com.github.googelfist.workschedule.domain.models.days.Day
-import com.github.googelfist.workschedule.domain.models.days.InActiveDay
-import com.github.googelfist.workschedule.domain.models.days.Today
+import com.github.googelfist.workschedule.domain.models.days.workday.WorkActiveDay
+import com.github.googelfist.workschedule.domain.models.days.workday.WorkInActiveDay
+import com.github.googelfist.workschedule.domain.models.days.workday.WorkToday
 
-class DayListAdapter : ListAdapter<Day, DayViewHolder>(DayDiffCallback()) {
+class WorkDayListAdapter : ListAdapter<Day, DayViewHolder>(DayDiffCallback()) {
 
     lateinit var onDayClickListener: ((Day) -> Unit)
 
@@ -17,16 +17,12 @@ class DayListAdapter : ListAdapter<Day, DayViewHolder>(DayDiffCallback()) {
         val layout = when (viewType) {
             TODAY_WORK_TYPE -> R.layout.today_work
             TODAY_WEEKEND_TYPE -> R.layout.today_weekend
-            TODAY_TYPE -> R.layout.today
 
             ACTIVE_WORK_DAY_TYPE -> R.layout.active_work_day
             INACTIVE_WORK_DAY_TYPE -> R.layout.inactive_work_day
 
             ACTIVE_WEEKEND_DAY_TYPE -> R.layout.active_weekend_day
             INACTIVE_WEEKEND_DAY_TYPE -> R.layout.inactive_weekend_day
-
-            INACTIVE_DAY_TYPE -> R.layout.inactive_day
-            ACTIVE_DAY_TYPE -> R.layout.active_day
 
             else -> throw IllegalArgumentException("Unknown view type: $viewType")
         }
@@ -47,38 +43,37 @@ class DayListAdapter : ListAdapter<Day, DayViewHolder>(DayDiffCallback()) {
         val day = getItem(position)
 
         return when {
-            day is Today && day.isWork -> TODAY_WORK_TYPE
-            day is Today && day.isWeekend -> TODAY_WEEKEND_TYPE
-            day is Today -> TODAY_TYPE
+            day is WorkToday && day.isWork -> TODAY_WORK_TYPE
+            day is WorkToday && day.isWeekend -> TODAY_WEEKEND_TYPE
 
-            day is ActiveDay && day.isWork -> ACTIVE_WORK_DAY_TYPE
-            day is InActiveDay && day.isWork -> INACTIVE_WORK_DAY_TYPE
+            day is WorkActiveDay && day.isWork -> ACTIVE_WORK_DAY_TYPE
+            day is WorkInActiveDay && day.isWork -> INACTIVE_WORK_DAY_TYPE
 
-            day is ActiveDay && day.isWeekend -> ACTIVE_WEEKEND_DAY_TYPE
-            day is InActiveDay && day.isWeekend -> INACTIVE_WEEKEND_DAY_TYPE
+            day is WorkActiveDay && day.isWeekend -> ACTIVE_WEEKEND_DAY_TYPE
+            day is WorkInActiveDay && day.isWeekend -> INACTIVE_WEEKEND_DAY_TYPE
 
-            day is InActiveDay -> INACTIVE_DAY_TYPE
-
-            else -> ACTIVE_DAY_TYPE
+            else -> throw NoSuchElementException("Unknown view type")
         }
     }
 
     companion object {
-        const val ACTIVE_DAY_TYPE = 201
-        const val INACTIVE_DAY_TYPE = 200
 
         const val ACTIVE_WEEKEND_DAY_TYPE = 301
+        const val ACTIVE_WEEKEND_DAY_POOL_SIZE = 15
+
         const val INACTIVE_WEEKEND_DAY_TYPE = 300
+        const val INACTIVE_WEEKEND_DAY_POOL_SIZE = 6
 
         const val ACTIVE_WORK_DAY_TYPE = 401
+        const val ACTIVE_WORK_DAY_POOL_SIZE = 15
+
         const val INACTIVE_WORK_DAY_TYPE = 400
+        const val INACTIVE_WORK_DAY_POOL_SIZE = 6
 
-        const val TODAY_TYPE = 500
         const val TODAY_WEEKEND_TYPE = 501
-        const val TODAY_WORK_TYPE = 502
+        const val TODAY_WEEKEND_DAY_POOL_SIZE = 1
 
-        const val ACTIVE_DAY_POOL_SIZE = 40
-        const val INACTIVE_DAY_POOL_SIZE = 20
-        const val TODAY_DAY_POOL_SIZE = 1
+        const val TODAY_WORK_TYPE = 502
+        const val TODAY_WORK_DAY_POOL_SIZE = 1
     }
 }

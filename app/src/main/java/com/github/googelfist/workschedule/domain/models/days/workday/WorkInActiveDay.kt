@@ -1,6 +1,8 @@
-package com.github.googelfist.workschedule.domain.models.days
+package com.github.googelfist.workschedule.domain.models.days.workday
 
-data class InActiveDay(
+import com.github.googelfist.workschedule.domain.models.days.Day
+
+data class WorkInActiveDay(
     override val value: Int,
     override val month: Int,
     override val year: Int,
