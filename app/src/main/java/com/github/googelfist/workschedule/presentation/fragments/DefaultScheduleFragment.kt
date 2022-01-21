@@ -1,4 +1,4 @@
-package com.github.googelfist.workschedule.presentation
+package com.github.googelfist.workschedule.presentation.fragments
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.github.googelfist.workschedule.R
 import com.github.googelfist.workschedule.databinding.FragmentMainActivityBinding
 import com.github.googelfist.workschedule.di.DefaultScheduleViewModelFactory
+import com.github.googelfist.workschedule.presentation.MainViewModel
 import com.github.googelfist.workschedule.presentation.recyclerview.DefaultDayListAdapter
 import com.github.googelfist.workschedule.presentation.recyclerview.RecyclerViewSwipeListener
 

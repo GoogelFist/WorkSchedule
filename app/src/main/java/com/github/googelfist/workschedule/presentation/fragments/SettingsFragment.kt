@@ -1,4 +1,4 @@
-package com.github.googelfist.workschedule.presentation
+package com.github.googelfist.workschedule.presentation.fragments
 
 import android.app.DatePickerDialog
 import android.content.SharedPreferences
