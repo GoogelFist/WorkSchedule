@@ -83,6 +83,8 @@ class WorkScheduleFragment : Fragment() {
         dayListAdapter = WorkDayListAdapter()
         rvDayList.adapter = dayListAdapter
 
+        rvDayList.itemAnimator = null
+
         setRecyclerViewPool(rvDayList)
 
         rvDayList.onFlingListener = object : RecyclerViewSwipeListener() {

@@ -62,6 +62,8 @@ class DefaultScheduleFragment : Fragment() {
         dayListAdapter = DefaultDayListAdapter()
         rvDayList.adapter = dayListAdapter
 
+        rvDayList.itemAnimator = null
+
         setRecyclerViewPool(rvDayList)
 
         rvDayList.onFlingListener = object : RecyclerViewSwipeListener() {
