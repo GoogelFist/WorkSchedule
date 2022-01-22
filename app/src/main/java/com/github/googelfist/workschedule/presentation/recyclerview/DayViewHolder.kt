@@ -6,5 +6,5 @@ import androidx.recyclerview.widget.RecyclerView
 import com.github.googelfist.workschedule.R
 
 class DayViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    val day: TextView = view.findViewById(R.id.tv_calendar_cell)
+    val day: TextView = view.findViewById(R.id.cv_calendar_cell)
 }

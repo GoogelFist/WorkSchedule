@@ -18,4 +18,18 @@
         <item name="colorAccent">@color/design_default_color_primary</item>
     </style>
 
+    <style name="DefaultSchedule">
+        <item name="android:layout_width">30dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">22sp</item>
+    </style>
+
+    <style name="WorkSchedule">
+        <item name="android:layout_width">30dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">22sp</item>
+    </style>
+
 </resources>
