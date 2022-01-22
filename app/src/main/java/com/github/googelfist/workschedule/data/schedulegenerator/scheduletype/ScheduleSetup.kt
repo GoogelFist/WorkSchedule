@@ -1,8 +1,8 @@
-package com.github.googelfist.workschedule.data.generator.scheduletype
+package com.github.googelfist.workschedule.data.schedulegenerator.scheduletype
 
 import java.time.LocalDate
 
-interface ScheduleTyper {
+interface ScheduleSetup {
 
     fun getWorkSchedule(date: LocalDate): Set<LocalDate>
 

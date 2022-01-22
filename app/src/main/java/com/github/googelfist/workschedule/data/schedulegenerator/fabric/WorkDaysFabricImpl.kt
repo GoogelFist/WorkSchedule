@@ -1,6 +1,7 @@
-package com.github.googelfist.workschedule.data.generator.workschedule.fabric
+package com.github.googelfist.workschedule.data.schedulegenerator.fabric
 
-import com.github.googelfist.workschedule.data.generator.scheduletype.ScheduleTyper
+import com.github.googelfist.workschedule.data.schedulegenerator.scheduletype.ScheduleSetup
+import com.github.googelfist.workschedule.domain.PreferenceRepository
 import com.github.googelfist.workschedule.domain.models.days.Day
 import com.github.googelfist.workschedule.domain.models.days.workday.WorkActiveDay
 import com.github.googelfist.workschedule.domain.models.days.workday.WorkInActiveDay
@@ -12,10 +13,12 @@ class WorkDaysFabricImpl : WorkDaysFabric {
     override fun getWorkDay(
         dateInMonth: LocalDate,
         activeDate: LocalDate,
-        firstWorkDate: LocalDate,
-        scheduleTyper: ScheduleTyper
+        preferenceRepository: PreferenceRepository,
+        scheduleSetup: ScheduleSetup
     ): Day {
-        val workSchedule = scheduleTyper.getWorkSchedule(firstWorkDate)
+        val firstWorkDay = getFirstWorkDate(preferenceRepository)
+        val actualFirstWorkDay = scheduleSetup.getActualFirstDate(dateInMonth, firstWorkDay)
+        val workSchedule = scheduleSetup.getWorkSchedule(actualFirstWorkDay)
 
         return when {
             isWorkDay(workSchedule, dateInMonth) && isInActiveDay(
@@ -72,6 +75,11 @@ class WorkDaysFabricImpl : WorkDaysFabric {
                 isWeekend = true
             )
         }
+    }
+
+    private fun getFirstWorkDate(preferenceRepository: PreferenceRepository): LocalDate {
+        val firstWorkDatePreference = preferenceRepository.loadPreference().firstWorkDate
+        return LocalDate.parse(firstWorkDatePreference)
     }
 
     private fun isActiveDay(dateInMonth: LocalDate, date: LocalDate): Boolean {
