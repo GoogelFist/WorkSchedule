@@ -21,7 +21,7 @@ class ScheduleActivity : AppCompatActivity() {
             PreferenceViewModelFactory(application)
         )[PreferenceViewModel::class.java]
 
-        val scheduleType = preferenceViewModel.scheduleTypeLD
+        val scheduleType = preferenceViewModel.scheduleType
 
         when (scheduleType) {
             TWO_IN_TWO -> launchTwoInTwoSchedule()
