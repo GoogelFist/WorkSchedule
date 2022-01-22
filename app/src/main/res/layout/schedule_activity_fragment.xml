@@ -17,6 +17,17 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="December 2021" />
 
+    <ImageView
+            android:id="@+id/iv_settings"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:contentDescription="@string/description_image_view_for_settings"
+            android:src="@drawable/ic_baseline_settings_24"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
     <include
             android:id="@+id/include_week_days"
             layout="@layout/week_days"

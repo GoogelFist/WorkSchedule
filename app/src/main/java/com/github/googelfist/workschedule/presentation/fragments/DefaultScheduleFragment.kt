@@ -100,7 +100,7 @@ class DefaultScheduleFragment : Fragment() {
         binding.includeNavigationPanel.ivMonthDown.setOnClickListener { viewModel.onGenerateNextMonth() }
         binding.includeNavigationPanel.ivCurrentMonth.setOnClickListener { viewModel.onGenerateCurrentMonth() }
 
-        binding.includeNavigationPanel.ivSettings.setOnClickListener {
+        binding.ivSettings.setOnClickListener {
             requireActivity().supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.schedule_activity_container, PreferenceFragment.newInstance())
