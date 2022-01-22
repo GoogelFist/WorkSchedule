@@ -1,9 +1,9 @@
 package com.github.googelfist.workschedule.presentation
 
 import androidx.lifecycle.ViewModel
-import com.github.googelfist.workschedule.domain.usecase.preference.LoadPreferencesUseCase
+import com.github.googelfist.workschedule.domain.usecase.GetScheduleTypeUseCase
 
-class PreferenceViewModel(loadPreferencesUseCase: LoadPreferencesUseCase) : ViewModel() {
+class PreferenceViewModel(getScheduleTypeUseCase: GetScheduleTypeUseCase) : ViewModel() {
 
-    val preferencesLD = loadPreferencesUseCase.invoke()
+    val scheduleTypeLD = getScheduleTypeUseCase.invoke()
 }
