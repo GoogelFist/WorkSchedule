@@ -1,4 +1,4 @@
-package com.github.googelfist.workschedule.data.schedulegenerator.scheduletype
+package com.github.googelfist.workschedule.data.schedulegenerator.schedulesetup
 
 import java.time.LocalDate
 

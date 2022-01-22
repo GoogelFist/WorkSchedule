@@ -12,8 +12,8 @@ import com.github.googelfist.workschedule.data.schedulegenerator.fabric.WorkDays
 import com.github.googelfist.workschedule.data.schedulegenerator.fabric.WorkDaysFabricImpl
 import com.github.googelfist.workschedule.data.schedulegenerator.formatter.DateFormatter
 import com.github.googelfist.workschedule.data.schedulegenerator.formatter.DateFormatterImpl
-import com.github.googelfist.workschedule.data.schedulegenerator.scheduletype.ScheduleSetup
-import com.github.googelfist.workschedule.data.schedulegenerator.scheduletype.TwoInTwoWorkScheduleSetup
+import com.github.googelfist.workschedule.data.schedulegenerator.schedulesetup.ScheduleSetup
+import com.github.googelfist.workschedule.data.schedulegenerator.schedulesetup.TwoInTwoWorkScheduleSetup
 import com.github.googelfist.workschedule.domain.PreferenceRepository
 import com.github.googelfist.workschedule.domain.ScheduleGenerator
 import com.github.googelfist.workschedule.domain.usecase.FormatDateUseCase
