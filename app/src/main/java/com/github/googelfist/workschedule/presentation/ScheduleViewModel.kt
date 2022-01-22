@@ -6,7 +6,7 @@ import com.github.googelfist.workschedule.domain.usecase.generate.GenerateCurren
 import com.github.googelfist.workschedule.domain.usecase.generate.GenerateNextMonthUseCase
 import com.github.googelfist.workschedule.domain.usecase.generate.GeneratePreviousMonthUseCase
 
-class MainViewModel(
+class ScheduleViewModel(
     private val generateCurrentMonthUseCase: GenerateCurrentMonthUseCase,
     private val generateNextMonthUseCase: GenerateNextMonthUseCase,
     private val generatePreviousMonthUseCase: GeneratePreviousMonthUseCase,

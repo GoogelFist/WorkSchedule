@@ -10,19 +10,19 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.github.googelfist.workschedule.R
-import com.github.googelfist.workschedule.databinding.FragmentMainActivityBinding
+import com.github.googelfist.workschedule.databinding.ScheduleActivityFragmentBinding
 import com.github.googelfist.workschedule.di.TwoInTwoScheduleViewModelFactory
-import com.github.googelfist.workschedule.presentation.MainViewModel
+import com.github.googelfist.workschedule.presentation.ScheduleViewModel
 import com.github.googelfist.workschedule.presentation.recyclerview.RecyclerViewSwipeListener
 import com.github.googelfist.workschedule.presentation.recyclerview.WorkDayListAdapter
 
 class WorkScheduleFragment : Fragment() {
 
-    private var _binding: FragmentMainActivityBinding? = null
-    private val binding: FragmentMainActivityBinding
+    private var _binding: ScheduleActivityFragmentBinding? = null
+    private val binding: ScheduleActivityFragmentBinding
         get() = _binding!!
 
-    private lateinit var viewModel: MainViewModel
+    private lateinit var viewModel: ScheduleViewModel
 
     private lateinit var dayListAdapter: WorkDayListAdapter
 
@@ -38,7 +38,7 @@ class WorkScheduleFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentMainActivityBinding.inflate(inflater, container, false)
+        _binding = ScheduleActivityFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -72,7 +72,7 @@ class WorkScheduleFragment : Fragment() {
             viewModel = ViewModelProvider(
                 requireActivity(),
                 TwoInTwoScheduleViewModelFactory(requireContext())
-            )[MainViewModel::class.java]
+            )[ScheduleViewModel::class.java]
         } else throw IllegalArgumentException("View model not initialize")
     }
 
@@ -134,7 +134,7 @@ class WorkScheduleFragment : Fragment() {
         binding.includeNavigationPanel.ivSettings.setOnClickListener {
             requireActivity().supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.main_activity_container, SettingsFragment.newInstance())
+                .replace(R.id.schedule_activity_container, SettingsFragment.newInstance())
                 .setReorderingAllowed(true)
                 .commit()
         }

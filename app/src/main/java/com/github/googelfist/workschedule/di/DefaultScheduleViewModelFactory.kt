@@ -14,7 +14,7 @@ import com.github.googelfist.workschedule.domain.usecase.FormatDateUseCase
 import com.github.googelfist.workschedule.domain.usecase.generate.GenerateCurrentMonthUseCase
 import com.github.googelfist.workschedule.domain.usecase.generate.GenerateNextMonthUseCase
 import com.github.googelfist.workschedule.domain.usecase.generate.GeneratePreviousMonthUseCase
-import com.github.googelfist.workschedule.presentation.MainViewModel
+import com.github.googelfist.workschedule.presentation.ScheduleViewModel
 
 class DefaultScheduleViewModelFactory : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
@@ -22,7 +22,7 @@ class DefaultScheduleViewModelFactory : ViewModelProvider.Factory {
         return getDefaultScheduleViewModel() as T
     }
 
-    private fun getDefaultScheduleViewModel(): MainViewModel {
+    private fun getDefaultScheduleViewModel(): ScheduleViewModel {
         val daysFabric: DaysFabric = DefaultDaysFabricImpl()
         val daysGenerator: DaysGenerator = DaysGeneratorImpl(daysFabric)
         val formatter: DateFormatter = DateFormatterImpl()
@@ -35,7 +35,7 @@ class DefaultScheduleViewModelFactory : ViewModelProvider.Factory {
         val generatePreviousMonthUseCase = GeneratePreviousMonthUseCase(scheduleGenerator)
         val formatDateUseCase = FormatDateUseCase(scheduleGenerator)
 
-        return MainViewModel(
+        return ScheduleViewModel(
             generateCurrentMonthUseCase = generateMonthUseCase,
             generateNextMonthUseCase = generateNextMonthUseCase,
             generatePreviousMonthUseCase = generatePreviousMonthUseCase,

@@ -8,13 +8,13 @@ import com.github.googelfist.workschedule.di.PreferenceViewModelFactory
 import com.github.googelfist.workschedule.presentation.fragments.DefaultScheduleFragment
 import com.github.googelfist.workschedule.presentation.fragments.WorkScheduleFragment
 
-class MainActivity : AppCompatActivity() {
+class ScheduleActivity : AppCompatActivity() {
 
     private lateinit var preferenceViewModel: PreferenceViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.schedule_activity_container)
 
         preferenceViewModel = ViewModelProvider(
             this,
@@ -33,14 +33,14 @@ class MainActivity : AppCompatActivity() {
     private fun launchTwoInTwoSchedule() {
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.main_activity_container, WorkScheduleFragment.newTwoInTwoFragment())
+            .replace(R.id.schedule_activity_container, WorkScheduleFragment.newTwoInTwoFragment())
             .commit()
     }
 
     private fun launchDefaultSchedule() {
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.main_activity_container, DefaultScheduleFragment.newInstance())
+            .replace(R.id.schedule_activity_container, DefaultScheduleFragment.newInstance())
             .commit()
     }
 

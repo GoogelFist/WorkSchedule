@@ -20,7 +20,7 @@ import com.github.googelfist.workschedule.domain.usecase.FormatDateUseCase
 import com.github.googelfist.workschedule.domain.usecase.generate.GenerateCurrentMonthUseCase
 import com.github.googelfist.workschedule.domain.usecase.generate.GenerateNextMonthUseCase
 import com.github.googelfist.workschedule.domain.usecase.generate.GeneratePreviousMonthUseCase
-import com.github.googelfist.workschedule.presentation.MainViewModel
+import com.github.googelfist.workschedule.presentation.ScheduleViewModel
 
 class TwoInTwoScheduleViewModelFactory(context: Context) : ViewModelProvider.Factory {
 
@@ -31,7 +31,7 @@ class TwoInTwoScheduleViewModelFactory(context: Context) : ViewModelProvider.Fac
         return getTwoInTwoScheduleViewModel() as T
     }
 
-    private fun getTwoInTwoScheduleViewModel(): MainViewModel {
+    private fun getTwoInTwoScheduleViewModel(): ScheduleViewModel {
         val daysFabric: WorkDaysFabric = WorkDaysFabricImpl()
         val scheduleSetup: ScheduleSetup = TwoInTwoWorkScheduleSetup()
 
@@ -54,7 +54,7 @@ class TwoInTwoScheduleViewModelFactory(context: Context) : ViewModelProvider.Fac
         val generatePreviousMonthUseCase = GeneratePreviousMonthUseCase(scheduleGenerator)
         val formatDateUseCase = FormatDateUseCase(scheduleGenerator)
 
-        return MainViewModel(
+        return ScheduleViewModel(
             generateCurrentMonthUseCase = generateCurrentMonthUseCase,
             generateNextMonthUseCase = generateNextMonthUseCase,
             generatePreviousMonthUseCase = generatePreviousMonthUseCase,

@@ -10,19 +10,19 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.github.googelfist.workschedule.R
-import com.github.googelfist.workschedule.databinding.FragmentMainActivityBinding
+import com.github.googelfist.workschedule.databinding.ScheduleActivityFragmentBinding
 import com.github.googelfist.workschedule.di.DefaultScheduleViewModelFactory
-import com.github.googelfist.workschedule.presentation.MainViewModel
+import com.github.googelfist.workschedule.presentation.ScheduleViewModel
 import com.github.googelfist.workschedule.presentation.recyclerview.DefaultDayListAdapter
 import com.github.googelfist.workschedule.presentation.recyclerview.RecyclerViewSwipeListener
 
 class DefaultScheduleFragment : Fragment() {
 
-    private var _binding: FragmentMainActivityBinding? = null
-    private val binding: FragmentMainActivityBinding
+    private var _binding: ScheduleActivityFragmentBinding? = null
+    private val binding: ScheduleActivityFragmentBinding
         get() = _binding!!
 
-    private lateinit var viewModel: MainViewModel
+    private lateinit var viewModel: ScheduleViewModel
 
     private lateinit var dayListAdapter: DefaultDayListAdapter
 
@@ -31,7 +31,7 @@ class DefaultScheduleFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentMainActivityBinding.inflate(inflater, container, false)
+        _binding = ScheduleActivityFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -42,7 +42,7 @@ class DefaultScheduleFragment : Fragment() {
         viewModel = ViewModelProvider(
             requireActivity(),
             DefaultScheduleViewModelFactory()
-        )[MainViewModel::class.java]
+        )[ScheduleViewModel::class.java]
 
         viewModel.dayListLD.observe(viewLifecycleOwner) { dayListAdapter.submitList(it) }
         viewModel.formatDateLD.observe(viewLifecycleOwner) { binding.tvYearMonth.text = it }
@@ -101,7 +101,7 @@ class DefaultScheduleFragment : Fragment() {
         binding.includeNavigationPanel.ivSettings.setOnClickListener {
             requireActivity().supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.main_activity_container, SettingsFragment.newInstance())
+                .replace(R.id.schedule_activity_container, SettingsFragment.newInstance())
                 .setReorderingAllowed(true)
                 .commit()
         }
