@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+        xmlns:app="http://schemas.android.com/apk/res-auto">
     android:layout_height="match_parent"
     android:layout_width="match_parent">
 
     <PreferenceCategory
-        app:key="@string/first_work_date_category_key"
-        app:title="@string/first_work_date_title">
+            app:key="@string/first_work_date_category_key"
+            app:title="@string/first_work_date_title">
 
         <Preference
-            android:icon="@drawable/ic_baseline_calendar_today_24"
-            android:key="@string/p_date_picker_key"
-            android:summary="@string/p_date_picker_summary"
-            android:title="@string/p_date_picker_title"
-            app:useSimpleSummaryProvider="true" />
+                android:icon="@drawable/ic_baseline_calendar_today_24"
+                android:key="@string/p_date_picker_key"
+                android:summary="@string/p_date_picker_summary"
+                android:title="@string/p_date_picker_title"
+                app:useSimpleSummaryProvider="true" />
 
     </PreferenceCategory>
 
     <PreferenceCategory
-        app:key="@string/schedule_type_category_key"
-        app:title="@string/schedule_type_title">
+            app:key="@string/schedule_type_category_key"
+            app:title="@string/schedule_type_title">
 
-        <DropDownPreference
-            android:entryValues="@array/preference_dropdown_items"
-            android:icon="@drawable/ic_baseline_calendar_view_day_24"
-            android:key="@string/dd_schedule_type_key"
-            android:summary="@string/dd_schedule_type_summary"
-            android:title="@string/dd_schedule_type_title"
-            android:enabled="false"
-            app:entries="@array/preference_dropdown_items"
-            app:useSimpleSummaryProvider="true"/>
+        <ListPreference
+                android:enabled="false"
+                android:entryValues="@array/preference_dropdown_items"
+                android:icon="@drawable/ic_baseline_calendar_view_day_24"
+                android:key="@string/dd_schedule_type_key"
+                android:summary="@string/dd_schedule_type_summary"
+                android:title="@string/dd_schedule_type_title"
+                app:entries="@array/preference_dropdown_items"
+                app:useSimpleSummaryProvider="true" />
     </PreferenceCategory>
 
 </PreferenceScreen>

@@ -3,7 +3,5 @@
     <string-array name="preference_dropdown_items">
         <item>Default</item>
         <item>2 / 2 </item>
-        <item>nothing</item>
-        <item>nothing</item>
     </string-array>
 </resources>

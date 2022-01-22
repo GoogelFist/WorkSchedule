@@ -5,17 +5,6 @@
         android:layout_height="wrap_content">
 
     <ImageView
-            android:id="@+id/iv_settings"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginEnd="16dp"
-            android:contentDescription="@string/description_image_view_for_settings"
-            android:src="@drawable/ic_baseline_settings_24"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/iv_current_month"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
             android:id="@+id/iv_current_month"
             android:layout_width="30dp"
             android:layout_height="30dp"
