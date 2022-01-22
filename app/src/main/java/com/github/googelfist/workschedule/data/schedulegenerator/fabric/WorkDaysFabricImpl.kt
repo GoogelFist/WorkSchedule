@@ -1,11 +1,11 @@
 package com.github.googelfist.workschedule.data.schedulegenerator.fabric
 
+import com.github.googelfist.workschedule.data.schedulegenerator.models.Day
+import com.github.googelfist.workschedule.data.schedulegenerator.models.workday.WorkActiveDay
+import com.github.googelfist.workschedule.data.schedulegenerator.models.workday.WorkInActiveDay
+import com.github.googelfist.workschedule.data.schedulegenerator.models.workday.WorkToday
 import com.github.googelfist.workschedule.data.schedulegenerator.scheduletype.ScheduleSetup
 import com.github.googelfist.workschedule.domain.PreferenceRepository
-import com.github.googelfist.workschedule.domain.models.Day
-import com.github.googelfist.workschedule.domain.models.workday.WorkActiveDay
-import com.github.googelfist.workschedule.domain.models.workday.WorkInActiveDay
-import com.github.googelfist.workschedule.domain.models.workday.WorkToday
 import java.time.LocalDate
 
 class WorkDaysFabricImpl : WorkDaysFabric {

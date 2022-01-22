@@ -1,6 +1,6 @@
-package com.github.googelfist.workschedule.domain.models.workday
+package com.github.googelfist.workschedule.data.schedulegenerator.models.workday
 
-import com.github.googelfist.workschedule.domain.models.Day
+import com.github.googelfist.workschedule.data.schedulegenerator.models.Day
 
 data class WorkActiveDay(
     override val value: Int,

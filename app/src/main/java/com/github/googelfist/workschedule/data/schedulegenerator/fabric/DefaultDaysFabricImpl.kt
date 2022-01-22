@@ -1,9 +1,9 @@
 package com.github.googelfist.workschedule.data.schedulegenerator.fabric
 
-import com.github.googelfist.workschedule.domain.models.Day
-import com.github.googelfist.workschedule.domain.models.defaultday.DefaultActiveDay
-import com.github.googelfist.workschedule.domain.models.defaultday.DefaultInActiveDay
-import com.github.googelfist.workschedule.domain.models.defaultday.DefaultToday
+import com.github.googelfist.workschedule.data.schedulegenerator.models.Day
+import com.github.googelfist.workschedule.data.schedulegenerator.models.defaultday.DefaultActiveDay
+import com.github.googelfist.workschedule.data.schedulegenerator.models.defaultday.DefaultInActiveDay
+import com.github.googelfist.workschedule.data.schedulegenerator.models.defaultday.DefaultToday
 import java.time.LocalDate
 
 class DefaultDaysFabricImpl : DaysFabric {
