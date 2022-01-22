@@ -3,7 +3,7 @@ package com.github.googelfist.workschedule.domain
 import androidx.lifecycle.LiveData
 import com.github.googelfist.workschedule.domain.models.days.Day
 
-interface DefaultScheduleGenerator {
+interface ScheduleGenerator {
 
     fun generateCurrentSchedule(): LiveData<List<Day>>
 

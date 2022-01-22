@@ -1,18 +1,17 @@
-package com.github.googelfist.workschedule.data.generator.defaultschedule
+package com.github.googelfist.workschedule.data.schedulegenerator
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.github.googelfist.workschedule.data.generator.defaultschedule.daysgenerator.DefaultDaysGenerator
-import com.github.googelfist.workschedule.data.generator.formatter.DateFormatter
-import com.github.googelfist.workschedule.domain.DefaultScheduleGenerator
+import com.github.googelfist.workschedule.data.schedulegenerator.daysgenerator.DaysGenerator
+import com.github.googelfist.workschedule.data.schedulegenerator.formatter.DateFormatter
+import com.github.googelfist.workschedule.domain.ScheduleGenerator
 import com.github.googelfist.workschedule.domain.models.days.Day
 import java.time.LocalDate
 
-class DefaultScheduleGeneratorImp(
-    private val daysGenerator: DefaultDaysGenerator,
+class WorkScheduleGeneratorImpl(
+    private val daysGenerator: DaysGenerator,
     private val formatter: DateFormatter
-) :
-    DefaultScheduleGenerator {
+) : ScheduleGenerator {
 
     private val dayListLD = MutableLiveData<List<Day>>()
     private var dayList = listOf<Day>()
