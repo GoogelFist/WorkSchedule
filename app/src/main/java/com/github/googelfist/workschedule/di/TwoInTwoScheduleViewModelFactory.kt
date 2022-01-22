@@ -1,6 +1,6 @@
 package com.github.googelfist.workschedule.di
 
-import android.content.Context
+import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.github.googelfist.workschedule.data.repository.PreferenceRepositoryImpl
@@ -22,9 +22,9 @@ import com.github.googelfist.workschedule.domain.usecase.generate.GenerateNextMo
 import com.github.googelfist.workschedule.domain.usecase.generate.GeneratePreviousMonthUseCase
 import com.github.googelfist.workschedule.presentation.ScheduleViewModel
 
-class TwoInTwoScheduleViewModelFactory(context: Context) : ViewModelProvider.Factory {
+class TwoInTwoScheduleViewModelFactory(application: Application) : ViewModelProvider.Factory {
 
-    private val repository: PreferenceRepository = PreferenceRepositoryImpl(context)
+    private val repository: PreferenceRepository = PreferenceRepositoryImpl(application)
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {

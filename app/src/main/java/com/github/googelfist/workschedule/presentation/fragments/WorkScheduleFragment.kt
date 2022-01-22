@@ -71,7 +71,7 @@ class WorkScheduleFragment : Fragment() {
         if (scheduleType == TWO_IN_TWO) {
             viewModel = ViewModelProvider(
                 requireActivity(),
-                TwoInTwoScheduleViewModelFactory(requireContext())
+                TwoInTwoScheduleViewModelFactory(requireActivity().application)
             )[ScheduleViewModel::class.java]
         } else throw IllegalArgumentException("View model not initialize")
     }

@@ -18,7 +18,7 @@ class ScheduleActivity : AppCompatActivity() {
 
         preferenceViewModel = ViewModelProvider(
             this,
-            PreferenceViewModelFactory(this)
+            PreferenceViewModelFactory(application)
         )[PreferenceViewModel::class.java]
 
         val scheduleType = preferenceViewModel.preferencesLD.scheduleType
