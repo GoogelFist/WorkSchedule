@@ -101,7 +101,7 @@ class DefaultScheduleFragment : Fragment() {
         binding.includeNavigationPanel.ivSettings.setOnClickListener {
             requireActivity().supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.schedule_activity_container, SettingsFragment.newInstance())
+                .replace(R.id.schedule_activity_container, PreferenceFragment.newInstance())
                 .setReorderingAllowed(true)
                 .commit()
         }

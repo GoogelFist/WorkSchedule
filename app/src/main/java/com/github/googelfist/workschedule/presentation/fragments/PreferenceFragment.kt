@@ -9,7 +9,7 @@ import com.github.googelfist.workschedule.R
 import java.time.LocalDate
 import java.util.Calendar
 
-class SettingsFragment :
+class PreferenceFragment :
     PreferenceFragmentCompat(),
     SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -85,8 +85,8 @@ class SettingsFragment :
         private const val PREFERENCE_DEFAULT_VALUE = "Choose start work date"
         private const val ONE_VALUE = 1
 
-        fun newInstance(): SettingsFragment {
-            return SettingsFragment()
+        fun newInstance(): PreferenceFragment {
+            return PreferenceFragment()
         }
     }
 }
