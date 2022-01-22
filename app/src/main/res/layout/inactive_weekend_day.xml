@@ -11,7 +11,7 @@
     <TextView
             android:id="@+id/cv_calendar_cell"
             style="@style/WorkSchedule"
-            android:background="#2699CC00"
+            android:background="#4099CC00"
             android:textColor="?attr/colorControlNormal"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
