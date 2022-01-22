@@ -1,4 +1,4 @@
-package com.github.googelfist.workschedule.domain.models.days
+package com.github.googelfist.workschedule.domain.models
 
 open class Day(
     open val value: Int,

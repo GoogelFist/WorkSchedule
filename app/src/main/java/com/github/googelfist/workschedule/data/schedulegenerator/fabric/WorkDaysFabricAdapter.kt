@@ -2,7 +2,7 @@ package com.github.googelfist.workschedule.data.schedulegenerator.fabric
 
 import com.github.googelfist.workschedule.data.schedulegenerator.scheduletype.ScheduleSetup
 import com.github.googelfist.workschedule.domain.PreferenceRepository
-import com.github.googelfist.workschedule.domain.models.days.Day
+import com.github.googelfist.workschedule.domain.models.Day
 import java.time.LocalDate
 
 class WorkDaysFabricAdapter(

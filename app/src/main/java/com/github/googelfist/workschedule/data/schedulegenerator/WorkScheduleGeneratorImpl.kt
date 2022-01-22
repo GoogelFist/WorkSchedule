@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.github.googelfist.workschedule.data.schedulegenerator.daysgenerator.DaysGenerator
 import com.github.googelfist.workschedule.data.schedulegenerator.formatter.DateFormatter
 import com.github.googelfist.workschedule.domain.ScheduleGenerator
-import com.github.googelfist.workschedule.domain.models.days.Day
+import com.github.googelfist.workschedule.domain.models.Day
 import java.time.LocalDate
 
 class WorkScheduleGeneratorImpl(

@@ -1,6 +1,6 @@
-package com.github.googelfist.workschedule.domain.models.days.defaultday
+package com.github.googelfist.workschedule.domain.models.defaultday
 
-import com.github.googelfist.workschedule.domain.models.days.Day
+import com.github.googelfist.workschedule.domain.models.Day
 
 data class DefaultActiveDay(
     override val value: Int,

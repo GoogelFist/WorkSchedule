@@ -2,7 +2,7 @@ package com.github.googelfist.workschedule.domain.usecase.generate
 
 import androidx.lifecycle.LiveData
 import com.github.googelfist.workschedule.domain.ScheduleGenerator
-import com.github.googelfist.workschedule.domain.models.days.Day
+import com.github.googelfist.workschedule.domain.models.Day
 
 class GenerateNextMonthUseCase(private val scheduleGenerator: ScheduleGenerator) {
 
