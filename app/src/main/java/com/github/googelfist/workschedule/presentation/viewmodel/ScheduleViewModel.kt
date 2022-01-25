@@ -1,4 +1,4 @@
-package com.github.googelfist.workschedule.presentation
+package com.github.googelfist.workschedule.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.github.googelfist.workschedule.domain.usecase.FormatDateUseCase

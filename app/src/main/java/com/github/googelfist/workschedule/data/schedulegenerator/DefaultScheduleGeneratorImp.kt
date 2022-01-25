@@ -7,8 +7,9 @@ import com.github.googelfist.workschedule.data.schedulegenerator.formatter.DateF
 import com.github.googelfist.workschedule.data.schedulegenerator.models.Day
 import com.github.googelfist.workschedule.domain.ScheduleGenerator
 import java.time.LocalDate
+import javax.inject.Inject
 
-class DefaultScheduleGeneratorImp(
+class DefaultScheduleGeneratorImp @Inject constructor(
     private val daysGenerator: DaysGenerator,
     private val formatter: DateFormatter
 ) : ScheduleGenerator {

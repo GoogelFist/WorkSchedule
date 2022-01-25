@@ -11,10 +11,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.github.googelfist.workschedule.R
 import com.github.googelfist.workschedule.databinding.ScheduleActivityFragmentBinding
-import com.github.googelfist.workschedule.di.TwoInTwoScheduleViewModelFactory
-import com.github.googelfist.workschedule.presentation.ScheduleViewModel
+import com.github.googelfist.workschedule.di.workschedule.DaggerWorkComponent
 import com.github.googelfist.workschedule.presentation.recyclerview.RecyclerViewSwipeListener
 import com.github.googelfist.workschedule.presentation.recyclerview.WorkDayListAdapter
+import com.github.googelfist.workschedule.presentation.viewmodel.ScheduleViewModel
+import com.github.googelfist.workschedule.presentation.viewmodel.factory.TwoInTwoScheduleViewModelFactory
+import javax.inject.Inject
 
 class WorkScheduleFragment : Fragment() {
 
@@ -22,15 +24,26 @@ class WorkScheduleFragment : Fragment() {
     private val binding: ScheduleActivityFragmentBinding
         get() = _binding!!
 
-    private lateinit var viewModel: ScheduleViewModel
+    private val component by lazy {
+        DaggerWorkComponent
+            .builder()
+            .context(requireActivity().application)
+            .build()
+    }
 
-    private lateinit var dayListAdapter: WorkDayListAdapter
+    private val viewModel: ScheduleViewModel by lazy { initializeViewModel() }
+
+    @Inject
+    lateinit var twoInTwoScheduleViewModelFactory: TwoInTwoScheduleViewModelFactory
+
+    lateinit var dayListAdapter: WorkDayListAdapter
 
     private var scheduleType: String = UNKNOWN_TYPE
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         parseParams()
+        component.inject(this)
     }
 
     override fun onCreateView(
@@ -44,10 +57,10 @@ class WorkScheduleFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initializeViewModel()
+
+        setupRecyclerView()
         viewModel.dayListLD.observe(viewLifecycleOwner) { dayListAdapter.submitList(it) }
         viewModel.formatDateLD.observe(viewLifecycleOwner) { binding.tvYearMonth.text = it }
-        setupRecyclerView()
         setupButtons()
     }
 
@@ -67,11 +80,11 @@ class WorkScheduleFragment : Fragment() {
         }
     }
 
-    private fun initializeViewModel() {
+    private fun initializeViewModel(): ScheduleViewModel {
         if (scheduleType == TWO_IN_TWO) {
-            viewModel = ViewModelProvider(
+            return ViewModelProvider(
                 requireActivity(),
-                TwoInTwoScheduleViewModelFactory(requireActivity().application)
+                twoInTwoScheduleViewModelFactory
             )[ScheduleViewModel::class.java]
         } else throw IllegalArgumentException("View model not initialize")
     }

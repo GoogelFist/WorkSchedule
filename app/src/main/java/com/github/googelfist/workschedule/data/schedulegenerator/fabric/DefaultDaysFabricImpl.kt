@@ -5,8 +5,9 @@ import com.github.googelfist.workschedule.data.schedulegenerator.models.defaultd
 import com.github.googelfist.workschedule.data.schedulegenerator.models.defaultday.DefaultInActiveDay
 import com.github.googelfist.workschedule.data.schedulegenerator.models.defaultday.DefaultToday
 import java.time.LocalDate
+import javax.inject.Inject
 
-class DefaultDaysFabricImpl : DaysFabric {
+class DefaultDaysFabricImpl @Inject constructor() : DaysFabric {
 
     override fun getDay(dateInMonth: LocalDate, activeDate: LocalDate): Day {
 

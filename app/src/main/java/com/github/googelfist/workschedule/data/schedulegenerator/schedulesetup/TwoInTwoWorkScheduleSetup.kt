@@ -1,8 +1,9 @@
 package com.github.googelfist.workschedule.data.schedulegenerator.schedulesetup
 
 import java.time.LocalDate
+import javax.inject.Inject
 
-class TwoInTwoWorkScheduleSetup : ScheduleSetup {
+class TwoInTwoWorkScheduleSetup @Inject constructor() : ScheduleSetup {
 
     override fun getWorkSchedule(date: LocalDate): Set<LocalDate> {
         var lowDate = date.minusDays(RANGE_HALF_LENGTH)

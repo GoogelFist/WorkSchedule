@@ -7,8 +7,9 @@ import com.github.googelfist.workschedule.data.schedulegenerator.models.workday.
 import com.github.googelfist.workschedule.data.schedulegenerator.schedulesetup.ScheduleSetup
 import com.github.googelfist.workschedule.domain.PreferenceRepository
 import java.time.LocalDate
+import javax.inject.Inject
 
-class WorkDaysFabricImpl : WorkDaysFabric {
+class WorkDaysFabricImpl @Inject constructor() : WorkDaysFabric {
 
     override fun getWorkDay(
         dateInMonth: LocalDate,
