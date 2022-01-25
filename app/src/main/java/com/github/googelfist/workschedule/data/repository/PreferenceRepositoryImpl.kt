@@ -6,8 +6,10 @@ import android.content.SharedPreferences
 import com.github.googelfist.workschedule.R
 import com.github.googelfist.workschedule.data.repository.model.Preferences
 import com.github.googelfist.workschedule.domain.PreferenceRepository
+import javax.inject.Inject
 
-class PreferenceRepositoryImpl(private val application: Application) : PreferenceRepository {
+class PreferenceRepositoryImpl @Inject constructor(private val application: Application) :
+    PreferenceRepository {
 
     private val sharedPreferences: SharedPreferences =
         application.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE)

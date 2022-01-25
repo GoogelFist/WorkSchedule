@@ -4,30 +4,36 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.github.googelfist.workschedule.R
-import com.github.googelfist.workschedule.di.PreferenceViewModelFactory
 import com.github.googelfist.workschedule.presentation.fragments.DefaultScheduleFragment
 import com.github.googelfist.workschedule.presentation.fragments.WorkScheduleFragment
+import com.github.googelfist.workschedule.presentation.viewmodel.PreferenceViewModel
+import com.github.googelfist.workschedule.presentation.viewmodel.factory.PreferenceViewModelFactory
+import javax.inject.Inject
 
 class ScheduleActivity : AppCompatActivity() {
 
-    private lateinit var preferenceViewModel: PreferenceViewModel
+    @Inject
+    lateinit var preferenceViewModelFactory: PreferenceViewModelFactory
+
+    private val preferenceViewModel: PreferenceViewModel by lazy {
+        ViewModelProvider(
+            this,
+            preferenceViewModelFactory
+        )[PreferenceViewModel::class.java]
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        component.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.schedule_activity_container)
 
-        preferenceViewModel = ViewModelProvider(
-            this,
-            PreferenceViewModelFactory(application)
-        )[PreferenceViewModel::class.java]
-
-        val scheduleType = preferenceViewModel.scheduleType
-
-        when (scheduleType) {
-            TWO_IN_TWO -> launchTwoInTwoSchedule()
-            DEFAULT -> launchDefaultSchedule()
-            else -> launchDefaultSchedule()
-        }
+        preferenceViewModel.onScheduleTypeChange().observe(this, {
+            when (it) {
+                DEFAULT -> launchDefaultSchedule()
+                TWO_IN_TWO -> launchTwoInTwoSchedule()
+                else -> throw IllegalArgumentException("Unknown schedule type")
+            }
+        })
     }
 
     private fun launchTwoInTwoSchedule() {

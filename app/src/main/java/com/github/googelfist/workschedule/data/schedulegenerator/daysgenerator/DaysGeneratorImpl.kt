@@ -3,10 +3,9 @@ package com.github.googelfist.workschedule.data.schedulegenerator.daysgenerator
 import com.github.googelfist.workschedule.data.schedulegenerator.fabric.DaysFabric
 import com.github.googelfist.workschedule.data.schedulegenerator.models.Day
 import java.time.LocalDate
+import javax.inject.Inject
 
-class DaysGeneratorImpl(
-    private val daysFabric: DaysFabric
-) : DaysGenerator {
+class DaysGeneratorImpl @Inject constructor(private val daysFabric: DaysFabric) : DaysGenerator {
 
     override fun generateMonthDays(activeDate: LocalDate): List<Day> {
         var firstDay = getFirstDate(activeDate)

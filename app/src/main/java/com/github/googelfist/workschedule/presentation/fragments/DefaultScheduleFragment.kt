@@ -1,6 +1,7 @@
 package com.github.googelfist.workschedule.presentation.fragments
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,10 +12,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.github.googelfist.workschedule.R
 import com.github.googelfist.workschedule.databinding.ScheduleActivityFragmentBinding
-import com.github.googelfist.workschedule.di.DefaultScheduleViewModelFactory
-import com.github.googelfist.workschedule.presentation.ScheduleViewModel
+import com.github.googelfist.workschedule.di.defaultschedule.DaggerDefaultComponent
 import com.github.googelfist.workschedule.presentation.recyclerview.DefaultDayListAdapter
 import com.github.googelfist.workschedule.presentation.recyclerview.RecyclerViewSwipeListener
+import com.github.googelfist.workschedule.presentation.viewmodel.ScheduleViewModel
+import com.github.googelfist.workschedule.presentation.viewmodel.factory.DefaultScheduleViewModelFactory
+import javax.inject.Inject
 
 class DefaultScheduleFragment : Fragment() {
 
@@ -22,9 +25,24 @@ class DefaultScheduleFragment : Fragment() {
     private val binding: ScheduleActivityFragmentBinding
         get() = _binding!!
 
-    private lateinit var viewModel: ScheduleViewModel
+    private val component by lazy { DaggerDefaultComponent.create() }
 
-    private lateinit var dayListAdapter: DefaultDayListAdapter
+    @Inject
+    lateinit var defaultScheduleViewModelFactory: DefaultScheduleViewModelFactory
+
+    private val viewModel: ScheduleViewModel by lazy {
+        ViewModelProvider(
+            requireActivity(),
+            defaultScheduleViewModelFactory
+        )[ScheduleViewModel::class.java]
+    }
+
+    lateinit var dayListAdapter: DefaultDayListAdapter
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        component.inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,11 +56,6 @@ class DefaultScheduleFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
-
-        viewModel = ViewModelProvider(
-            requireActivity(),
-            DefaultScheduleViewModelFactory()
-        )[ScheduleViewModel::class.java]
 
         viewModel.dayListLD.observe(viewLifecycleOwner) { dayListAdapter.submitList(it) }
         viewModel.formatDateLD.observe(viewLifecycleOwner) { binding.tvYearMonth.text = it }

@@ -4,8 +4,9 @@ import com.github.googelfist.workschedule.data.schedulegenerator.models.Day
 import com.github.googelfist.workschedule.data.schedulegenerator.schedulesetup.ScheduleSetup
 import com.github.googelfist.workschedule.domain.PreferenceRepository
 import java.time.LocalDate
+import javax.inject.Inject
 
-class WorkDaysFabricAdapter(
+class WorkDaysFabricAdapter @Inject constructor(
     private val workDaysFabric: WorkDaysFabric,
     private val preferenceRepository: PreferenceRepository,
     private val scheduleSetup: ScheduleSetup
