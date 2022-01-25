@@ -31,7 +31,7 @@ class ScheduleActivity : AppCompatActivity() {
             when (it) {
                 DEFAULT -> launchDefaultSchedule()
                 TWO_IN_TWO -> launchTwoInTwoSchedule()
-                else -> throw IllegalArgumentException("Unknown schedule type")
+                else -> launchDefaultSchedule()
             }
         })
     }
