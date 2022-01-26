@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.github.googelfist.workschedule.R
+import com.github.googelfist.workschedule.component
 import com.github.googelfist.workschedule.presentation.fragments.DefaultScheduleFragment
 import com.github.googelfist.workschedule.presentation.fragments.WorkScheduleFragment
 import com.github.googelfist.workschedule.presentation.viewmodel.PreferenceViewModel

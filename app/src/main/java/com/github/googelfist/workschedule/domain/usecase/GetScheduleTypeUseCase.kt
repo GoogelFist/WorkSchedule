@@ -4,10 +4,10 @@ import com.github.googelfist.workschedule.domain.PreferenceRepository
 import javax.inject.Inject
 
 class GetScheduleTypeUseCase @Inject constructor(
-    private val preferenceRepository: PreferenceRepository
+    private val repository: PreferenceRepository
 ) {
 
     operator fun invoke(): String {
-        return preferenceRepository.loadPreference().scheduleType
+        return repository.loadPreference().scheduleType
     }
 }

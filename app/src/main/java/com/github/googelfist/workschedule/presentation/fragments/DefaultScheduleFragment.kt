@@ -25,7 +25,9 @@ class DefaultScheduleFragment : Fragment() {
     private val binding: ScheduleActivityFragmentBinding
         get() = _binding!!
 
-    private val component by lazy { DaggerDefaultComponent.create() }
+    private val component by lazy {
+        DaggerDefaultComponent.builder().context(requireActivity().application).build()
+    }
 
     @Inject
     lateinit var defaultScheduleViewModelFactory: DefaultScheduleViewModelFactory

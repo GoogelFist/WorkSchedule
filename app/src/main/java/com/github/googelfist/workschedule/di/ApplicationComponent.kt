@@ -5,7 +5,7 @@ import com.github.googelfist.workschedule.presentation.ScheduleActivity
 import dagger.BindsInstance
 import dagger.Component
 
-@Component(modules = [RepositoryModule::class])
+@Component(modules = [PreferenceDataSourceModule::class, ApplicationModule::class])
 @ApplicationScope
 interface ApplicationComponent {
 
