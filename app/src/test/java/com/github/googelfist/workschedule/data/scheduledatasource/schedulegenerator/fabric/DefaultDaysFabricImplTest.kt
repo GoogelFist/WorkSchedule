@@ -18,7 +18,7 @@ internal class DefaultDaysFabricImplTest {
 
         val expectedDay =
             DefaultInActiveDay(
-                value = INACTIVE_DAY_VALUE,
+                day = INACTIVE_DAY_VALUE,
                 month = INACTIVE_MONTH_VALUE,
                 year = INACTIVE_YEAR_VALUE
             )
@@ -35,7 +35,7 @@ internal class DefaultDaysFabricImplTest {
         val defaultDaysFabric = DefaultDaysFabricImpl()
 
         val expectedDay = DefaultToday(
-            value = TODAY_DAY_VALUE,
+            day = TODAY_DAY_VALUE,
             month = TODAY_MONTH_VALUE,
             year = TODAY_YEAR_VALUE
         )
@@ -52,7 +52,7 @@ internal class DefaultDaysFabricImplTest {
         val defaultDaysFabric = DefaultDaysFabricImpl()
 
         val expectedDay = DefaultActiveDay(
-            value = ACTIVE_DAY_VALUE,
+            day = ACTIVE_DAY_VALUE,
             month = ACTIVE_MONTH_VALUE,
             year = ACTIVE_YEAR_VALUE
         )

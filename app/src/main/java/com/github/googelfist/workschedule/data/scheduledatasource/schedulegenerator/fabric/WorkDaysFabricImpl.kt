@@ -22,7 +22,7 @@ class WorkDaysFabricImpl @Inject constructor() : WorkDaysFabric {
                 dateInMonth,
                 activeDate
             ) -> WorkInActiveDay(
-                value = dateInMonth.dayOfMonth,
+                day = dateInMonth.dayOfMonth,
                 month = dateInMonth.monthValue,
                 year = dateInMonth.year,
                 isWork = true,
@@ -30,7 +30,7 @@ class WorkDaysFabricImpl @Inject constructor() : WorkDaysFabric {
             )
 
             isInActiveDay(dateInMonth, activeDate) -> WorkInActiveDay(
-                value = dateInMonth.dayOfMonth,
+                day = dateInMonth.dayOfMonth,
                 month = dateInMonth.monthValue,
                 year = dateInMonth.year,
                 isWork = false,
@@ -39,7 +39,7 @@ class WorkDaysFabricImpl @Inject constructor() : WorkDaysFabric {
 
             isWorkDay(workSchedule, dateInMonth) && isToday(dateInMonth) ->
                 WorkToday(
-                    value = dateInMonth.dayOfMonth,
+                    day = dateInMonth.dayOfMonth,
                     month = dateInMonth.monthValue,
                     year = dateInMonth.year,
                     isWork = true,
@@ -48,7 +48,7 @@ class WorkDaysFabricImpl @Inject constructor() : WorkDaysFabric {
 
             isToday(dateInMonth) ->
                 WorkToday(
-                    value = dateInMonth.dayOfMonth,
+                    day = dateInMonth.dayOfMonth,
                     month = dateInMonth.monthValue,
                     year = dateInMonth.year,
                     isWork = false,
@@ -57,7 +57,7 @@ class WorkDaysFabricImpl @Inject constructor() : WorkDaysFabric {
 
             isWorkDay(workSchedule, dateInMonth) && isActiveDay(dateInMonth, activeDate) ->
                 WorkActiveDay(
-                    value = dateInMonth.dayOfMonth,
+                    day = dateInMonth.dayOfMonth,
                     month = dateInMonth.monthValue,
                     year = dateInMonth.year,
                     isWork = true,
@@ -65,7 +65,7 @@ class WorkDaysFabricImpl @Inject constructor() : WorkDaysFabric {
                 )
 
             else -> WorkActiveDay(
-                value = dateInMonth.dayOfMonth,
+                day = dateInMonth.dayOfMonth,
                 month = dateInMonth.monthValue,
                 year = dateInMonth.year,
                 isWork = false,

@@ -13,19 +13,19 @@ class DefaultDaysFabricImpl @Inject constructor() : DaysFabric {
 
         return when {
             isInActiveDay(dateInMonth, activeDate) -> DefaultInActiveDay(
-                value = dateInMonth.dayOfMonth,
+                day = dateInMonth.dayOfMonth,
                 month = dateInMonth.monthValue,
                 year = dateInMonth.year
             )
 
             isToday(dateInMonth) -> DefaultToday(
-                value = dateInMonth.dayOfMonth,
+                day = dateInMonth.dayOfMonth,
                 month = dateInMonth.monthValue,
                 year = dateInMonth.year
             )
 
             else -> DefaultActiveDay(
-                value = dateInMonth.dayOfMonth,
+                day = dateInMonth.dayOfMonth,
                 month = dateInMonth.monthValue,
                 year = dateInMonth.year
             )

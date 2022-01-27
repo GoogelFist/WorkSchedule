@@ -27,7 +27,7 @@ class DefaultDayListAdapter : ListAdapter<Day, DayViewHolder>(DayDiffCallback())
 
     override fun onBindViewHolder(holder: DayViewHolder, position: Int) {
         val day = getItem(position)
-        holder.day.text = day.value.toString()
+        holder.day.text = day.day.toString()
         holder.day.setOnClickListener {
             onDayClickListener.invoke(day)
         }

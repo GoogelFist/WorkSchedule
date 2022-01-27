@@ -3,7 +3,7 @@ package com.github.googelfist.workschedule.data.scheduledatasource.schedulegener
 import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.models.Day
 
 data class DefaultInActiveDay(
-    override val value: Int,
+    override val day: Int,
     override val month: Int,
     override val year: Int
-) : Day(value, month, year)
+) : Day(day, month, year)

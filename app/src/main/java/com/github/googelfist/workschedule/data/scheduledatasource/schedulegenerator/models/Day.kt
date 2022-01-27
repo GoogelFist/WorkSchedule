@@ -1,7 +1,7 @@
 package com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.models
 
 open class Day(
-    open val value: Int,
+    open val day: Int,
     open val month: Int,
     open val year: Int
 ) {
@@ -11,7 +11,7 @@ open class Day(
 
         other as Day
 
-        if (value != other.value) return false
+        if (day != other.day) return false
         if (month != other.month) return false
         if (year != other.year) return false
 
@@ -19,7 +19,7 @@ open class Day(
     }
 
     override fun hashCode(): Int {
-        var result = value
+        var result = day
         result = 31 * result + month
         result = 31 * result + year
         return result
