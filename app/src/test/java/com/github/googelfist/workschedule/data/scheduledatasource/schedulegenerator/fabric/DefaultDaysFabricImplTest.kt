@@ -17,7 +17,11 @@ internal class DefaultDaysFabricImplTest {
         val defaultDaysFabric = DefaultDaysFabricImpl()
 
         val expectedDay =
-            DefaultInActiveDay(INACTIVE_DAY_VALUE, INACTIVE_MONTH_VALUE, INACTIVE_YEAR_VALUE)
+            DefaultInActiveDay(
+                value = INACTIVE_DAY_VALUE,
+                month = INACTIVE_MONTH_VALUE,
+                year = INACTIVE_YEAR_VALUE
+            )
         val actualDay = defaultDaysFabric.getDay(dateInMonth, activeDay)
 
         Assertions.assertEquals(expectedDay, actualDay)
@@ -30,7 +34,11 @@ internal class DefaultDaysFabricImplTest {
 
         val defaultDaysFabric = DefaultDaysFabricImpl()
 
-        val expectedDay = DefaultToday(TODAY_DAY_VALUE, TODAY_MONTH_VALUE, TODAY_YEAR_VALUE)
+        val expectedDay = DefaultToday(
+            value = TODAY_DAY_VALUE,
+            month = TODAY_MONTH_VALUE,
+            year = TODAY_YEAR_VALUE
+        )
         val actualDay = defaultDaysFabric.getDay(dateInMonth, activeDay)
 
         Assertions.assertEquals(expectedDay, actualDay)
@@ -43,7 +51,11 @@ internal class DefaultDaysFabricImplTest {
 
         val defaultDaysFabric = DefaultDaysFabricImpl()
 
-        val expectedDay = DefaultActiveDay(ACTIVE_DAY_VALUE, ACTIVE_MONTH_VALUE, ACTIVE_YEAR_VALUE)
+        val expectedDay = DefaultActiveDay(
+            value = ACTIVE_DAY_VALUE,
+            month = ACTIVE_MONTH_VALUE,
+            year = ACTIVE_YEAR_VALUE
+        )
         val actualDay = defaultDaysFabric.getDay(dateInMonth, activeDay)
 
         Assertions.assertEquals(expectedDay, actualDay)
