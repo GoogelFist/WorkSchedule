@@ -12,11 +12,21 @@ class WorkDaysFabricAdapter @Inject constructor(
     private val scheduleSetup: ScheduleSetup
 ) : DaysFabric {
     override fun getDay(dateInMonth: LocalDate, activeDate: LocalDate): Day {
+        val firstWorkDay = getFirstWorkDate(preferenceDataSource)
+        val actualFirstWorkDay = scheduleSetup.getActualFirstDate(dateInMonth, firstWorkDay)
+        val workSchedule = scheduleSetup.getWorkSchedule(actualFirstWorkDay)
+
         return workDaysFabric.getWorkDay(
             dateInMonth = dateInMonth,
             activeDate = activeDate,
-            preferenceDataSource = preferenceDataSource,
-            scheduleSetup = scheduleSetup
+            firstWorkDay = firstWorkDay,
+            actualFirstWorkDay = actualFirstWorkDay,
+            workSchedule = workSchedule
         )
+    }
+
+    private fun getFirstWorkDate(preferenceDataSource: PreferenceDataSource): LocalDate {
+        val firstWorkDatePreference = preferenceDataSource.loadPreference().firstWorkDate
+        return LocalDate.parse(firstWorkDatePreference)
     }
 }
