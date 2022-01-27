@@ -26,6 +26,7 @@ internal class WorkDaysFabricImplTest {
             isWork = true,
             isWeekend = false
         )
+
         val actualDay = workDaysFabric.getWorkDay(
             dateInMonth = dateInMonth,
             activeDate = activeDay,
@@ -141,6 +142,7 @@ internal class WorkDaysFabricImplTest {
             isWork = true,
             isWeekend = false
         )
+
         val actualDay = workDaysFabric.getWorkDay(
             dateInMonth = dateInMonth,
             activeDate = activeDay,
@@ -169,6 +171,7 @@ internal class WorkDaysFabricImplTest {
             isWork = false,
             isWeekend = true
         )
+
         val actualDay = workDaysFabric.getWorkDay(
             dateInMonth = dateInMonth,
             activeDate = activeDay,
