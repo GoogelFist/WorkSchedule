@@ -6,7 +6,7 @@ import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Scope
 
-@Component(modules = [WorkRepositoryModule::class, TwoInTwoModule::class])
+@Component(modules = [WorkPreferenceDataSourceModule::class, TwoInTwoModule::class])
 @WorkSchedule
 interface WorkComponent {
 

@@ -4,10 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.github.googelfist.workschedule.R
-import com.github.googelfist.workschedule.data.schedulegenerator.models.Day
-import com.github.googelfist.workschedule.data.schedulegenerator.models.defaultday.DefaultActiveDay
-import com.github.googelfist.workschedule.data.schedulegenerator.models.defaultday.DefaultInActiveDay
-import com.github.googelfist.workschedule.data.schedulegenerator.models.defaultday.DefaultToday
+import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.models.Day
+import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.models.defaultday.DefaultActiveDay
+import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.models.defaultday.DefaultInActiveDay
+import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.models.defaultday.DefaultToday
 
 class DefaultDayListAdapter : ListAdapter<Day, DayViewHolder>(DayDiffCallback()) {
 
@@ -27,7 +27,7 @@ class DefaultDayListAdapter : ListAdapter<Day, DayViewHolder>(DayDiffCallback())
 
     override fun onBindViewHolder(holder: DayViewHolder, position: Int) {
         val day = getItem(position)
-        holder.day.text = day.value.toString()
+        holder.day.text = day.day.toString()
         holder.day.setOnClickListener {
             onDayClickListener.invoke(day)
         }

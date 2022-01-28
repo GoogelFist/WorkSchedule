@@ -1,9 +1,8 @@
 package com.github.googelfist.workschedule.domain
 
-import com.github.googelfist.workschedule.data.repository.model.Preferences
+import com.github.googelfist.workschedule.data.preferencedatasource.model.PreferencesData
 
 interface PreferenceRepository {
-    fun loadPreference(): Preferences
 
-    fun savePreference(preference: Preferences)
+    fun loadPreference(): PreferencesData
 }
