@@ -3,6 +3,8 @@ package com.github.googelfist.workschedule.di.defaultschedule
 import com.github.googelfist.workschedule.data.DefaultRepositoryImpl
 import com.github.googelfist.workschedule.data.scheduledatasource.ScheduleGenerator
 import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.DefaultScheduleGeneratorImp
+import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.datecontainer.DateContainer
+import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.datecontainer.DateContainerImpl
 import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.daysgenerator.DaysGenerator
 import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.daysgenerator.DaysGeneratorImpl
 import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.fabric.DaysFabric
@@ -31,4 +33,7 @@ interface DefaultModule {
 
     @Binds
     fun bindDaysFabric(impl: DefaultDaysFabricImpl): DaysFabric
+
+    @Binds
+    fun bindDateContainer(impl: DateContainerImpl): DateContainer
 }

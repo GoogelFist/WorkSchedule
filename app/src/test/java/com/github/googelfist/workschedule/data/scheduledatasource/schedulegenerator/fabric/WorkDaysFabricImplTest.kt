@@ -1,13 +1,24 @@
 package com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.fabric
 
+import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.datecontainer.DateContainer
 import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.models.workday.WorkActiveDay
 import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.models.workday.WorkInActiveDay
 import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.models.workday.WorkToday
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
+import org.mockito.Mockito
+import org.mockito.kotlin.mock
 import java.time.LocalDate
 
 internal class WorkDaysFabricImplTest {
+
+    private val mockDateContainer = mock<DateContainer>()
+
+    @AfterEach
+    fun tearDown() {
+        Mockito.reset(mockDateContainer)
+    }
 
     @Test
     fun `should return work inactive schedule day`() {
@@ -16,8 +27,11 @@ internal class WorkDaysFabricImplTest {
         val workSchedule = mutableSetOf<LocalDate>(dateInMonth)
         val firstWorkDay = LocalDate.parse(FIRST_WORK_DAY)
         val actualFirstWorkDay = LocalDate.parse(ACTUAL_FIRST_WORK_DAY)
+        val nowDate = LocalDate.parse(NOW_DATE)
 
-        val workDaysFabric = WorkDaysFabricImpl()
+        Mockito.`when`(mockDateContainer.getDateNow()).thenReturn(nowDate)
+
+        val workDaysFabric = WorkDaysFabricImpl(mockDateContainer)
 
         val expectedDay = WorkInActiveDay(
             day = INACTIVE_WORK_DAY_VALUE,
@@ -45,8 +59,11 @@ internal class WorkDaysFabricImplTest {
         val workSchedule = mutableSetOf<LocalDate>()
         val firstWorkDay = LocalDate.parse(FIRST_WORK_DAY)
         val actualFirstWorkDay = LocalDate.parse(ACTUAL_FIRST_WORK_DAY)
+        val nowDate = LocalDate.parse(NOW_DATE)
 
-        val workDaysFabric = WorkDaysFabricImpl()
+        Mockito.`when`(mockDateContainer.getDateNow()).thenReturn(nowDate)
+
+        val workDaysFabric = WorkDaysFabricImpl(mockDateContainer)
 
         val expectedDay = WorkInActiveDay(
             day = INACTIVE_WEEKEND_DAY_VALUE,
@@ -74,8 +91,11 @@ internal class WorkDaysFabricImplTest {
         val workSchedule = mutableSetOf<LocalDate>(dateInMonth)
         val firstWorkDay = LocalDate.parse(FIRST_WORK_DAY)
         val actualFirstWorkDay = LocalDate.parse(ACTUAL_FIRST_WORK_DAY)
+        val nowDate = LocalDate.parse(NOW_DATE)
 
-        val workDaysFabric = WorkDaysFabricImpl()
+        Mockito.`when`(mockDateContainer.getDateNow()).thenReturn(nowDate)
+
+        val workDaysFabric = WorkDaysFabricImpl(mockDateContainer)
 
         val expectedDay = WorkToday(
             day = TODAY_WORK_DAY_VALUE,
@@ -103,8 +123,11 @@ internal class WorkDaysFabricImplTest {
         val workSchedule = mutableSetOf<LocalDate>()
         val firstWorkDay = LocalDate.parse(FIRST_WORK_DAY)
         val actualFirstWorkDay = LocalDate.parse(ACTUAL_FIRST_WORK_DAY)
+        val nowDate = LocalDate.parse(NOW_DATE)
 
-        val workDaysFabric = WorkDaysFabricImpl()
+        Mockito.`when`(mockDateContainer.getDateNow()).thenReturn(nowDate)
+
+        val workDaysFabric = WorkDaysFabricImpl(mockDateContainer)
 
         val expectedDay = WorkToday(
             day = TODAY_WEEKEND_DAY_VALUE,
@@ -132,8 +155,11 @@ internal class WorkDaysFabricImplTest {
         val workSchedule = mutableSetOf<LocalDate>(dateInMonth)
         val firstWorkDay = LocalDate.parse(FIRST_WORK_DAY)
         val actualFirstWorkDay = LocalDate.parse(ACTUAL_FIRST_WORK_DAY)
+        val nowDate = LocalDate.parse(NOW_DATE)
 
-        val workDaysFabric = WorkDaysFabricImpl()
+        Mockito.`when`(mockDateContainer.getDateNow()).thenReturn(nowDate)
+
+        val workDaysFabric = WorkDaysFabricImpl(mockDateContainer)
 
         val expectedDay = WorkActiveDay(
             day = ACTIVE_WORK_DAY_VALUE,
@@ -161,8 +187,11 @@ internal class WorkDaysFabricImplTest {
         val workSchedule = mutableSetOf<LocalDate>()
         val firstWorkDay = LocalDate.parse(FIRST_WORK_DAY)
         val actualFirstWorkDay = LocalDate.parse(ACTUAL_FIRST_WORK_DAY)
+        val nowDate = LocalDate.parse(NOW_DATE)
 
-        val workDaysFabric = WorkDaysFabricImpl()
+        Mockito.`when`(mockDateContainer.getDateNow()).thenReturn(nowDate)
+
+        val workDaysFabric = WorkDaysFabricImpl(mockDateContainer)
 
         val expectedDay = WorkActiveDay(
             day = ACTIVE_WEEKEND_DAY_VALUE,
@@ -217,5 +246,6 @@ internal class WorkDaysFabricImplTest {
         private const val CURRENT_DATE = "2022-01-27"
         private const val FIRST_WORK_DAY = "2021-12-26"
         private const val ACTUAL_FIRST_WORK_DAY = "2021-12-29"
+        private const val NOW_DATE = "2022-01-27"
     }
 }

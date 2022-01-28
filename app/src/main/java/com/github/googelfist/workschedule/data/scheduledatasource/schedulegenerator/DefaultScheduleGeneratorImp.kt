@@ -3,25 +3,25 @@ package com.github.googelfist.workschedule.data.scheduledatasource.schedulegener
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.github.googelfist.workschedule.data.scheduledatasource.ScheduleGenerator
+import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.datecontainer.DateContainer
 import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.daysgenerator.DaysGenerator
 import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.formatter.DateFormatter
 import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.models.Day
-import java.time.LocalDate
 import javax.inject.Inject
 
 class DefaultScheduleGeneratorImp @Inject constructor(
     private val daysGenerator: DaysGenerator,
-    private val formatter: DateFormatter
+    private val formatter: DateFormatter,
+    private val dateContainer: DateContainer
 ) : ScheduleGenerator {
 
     private val dayListLD = MutableLiveData<List<Day>>()
     private var dayList = listOf<Day>()
-    private var date = LocalDate.now()
+    private var date = dateContainer.getDateNow()
     private var formatDateLD = MutableLiveData<String>()
 
     override fun generateCurrentSchedule(): LiveData<List<Day>> {
-        val currentDate = LocalDate.now()
-        date = currentDate
+        date = dateContainer.getDateNow()
         dayList = daysGenerator.generateMonthDays(date)
         dayListLD.value = dayList
         formatDateLD.value = formatter.format(date)

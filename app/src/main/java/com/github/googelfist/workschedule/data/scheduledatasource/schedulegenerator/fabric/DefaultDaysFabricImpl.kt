@@ -1,5 +1,6 @@
 package com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.fabric
 
+import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.datecontainer.DateContainer
 import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.models.Day
 import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.models.defaultday.DefaultActiveDay
 import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.models.defaultday.DefaultInActiveDay
@@ -7,7 +8,8 @@ import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenera
 import java.time.LocalDate
 import javax.inject.Inject
 
-class DefaultDaysFabricImpl @Inject constructor() : DaysFabric {
+class DefaultDaysFabricImpl @Inject constructor(private val dateContainer: DateContainer) :
+    DaysFabric {
 
     override fun getDay(dateInMonth: LocalDate, activeDate: LocalDate): Day {
 
@@ -37,7 +39,7 @@ class DefaultDaysFabricImpl @Inject constructor() : DaysFabric {
     }
 
     private fun isToday(dateInMonth: LocalDate): Boolean {
-        val today = LocalDate.now()
+        val today = dateContainer.getDateNow()
         return dateInMonth == today
     }
 }

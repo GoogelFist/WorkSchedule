@@ -3,6 +3,8 @@ package com.github.googelfist.workschedule.di.workschedule
 import com.github.googelfist.workschedule.data.WorkRepositoryImpl
 import com.github.googelfist.workschedule.data.scheduledatasource.ScheduleGenerator
 import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.WorkScheduleGeneratorImpl
+import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.datecontainer.DateContainer
+import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.datecontainer.DateContainerImpl
 import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.daysgenerator.DaysGenerator
 import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.daysgenerator.DaysGeneratorImpl
 import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.fabric.DaysFabric
@@ -41,4 +43,8 @@ interface TwoInTwoModule {
 
     @Binds
     fun bindScheduleSetup(impl: TwoInTwoWorkScheduleSetup): ScheduleSetup
+
+    @Binds
+
+    fun bindDateContainer(impl: DateContainerImpl): DateContainer
 }

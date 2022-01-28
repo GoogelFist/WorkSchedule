@@ -1,5 +1,6 @@
 package com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator
 
+import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.datecontainer.DateContainer
 import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.daysgenerator.DaysGenerator
 import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.formatter.DateFormatter
 import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.models.Day
@@ -15,11 +16,13 @@ internal class WorkScheduleGeneratorImplTest {
 
     private val mockDaysGenerator = mock<DaysGenerator>()
     private val mockFormatter = mock<DateFormatter>()
+    private val mockDateContainer = mock<DateContainer>()
 
     @AfterEach
     fun tearDown() {
         Mockito.reset(mockDaysGenerator)
         Mockito.reset(mockFormatter)
+        Mockito.reset(mockDateContainer)
     }
 
     @Test
@@ -27,12 +30,16 @@ internal class WorkScheduleGeneratorImplTest {
     fun `should return correct Live data when generate current schedule`() {
         val dayList = listOf<Day>()
         val date = LocalDate.parse(ACTUAL_DATE)
+        val nowDate = LocalDate.parse(NOW_DATE)
+
+        Mockito.`when`(mockDateContainer.getDateNow()).thenReturn(nowDate)
 
         Mockito.`when`(mockDaysGenerator.generateMonthDays(date)).thenReturn(dayList)
 
         val workScheduleGenerator = WorkScheduleGeneratorImpl(
             daysGenerator = mockDaysGenerator,
-            formatter = mockFormatter
+            formatter = mockFormatter,
+            dateContainer = mockDateContainer
         )
 
         val expectedDayList: List<Day> = dayList
@@ -49,12 +56,16 @@ internal class WorkScheduleGeneratorImplTest {
     fun `should return correct Live data when generate next schedule`() {
         val dayList = listOf<Day>()
         val date = LocalDate.parse(ACTUAL_DATE).plusMonths(ONE_VALUE)
+        val nowDate = LocalDate.parse(NOW_DATE)
+
+        Mockito.`when`(mockDateContainer.getDateNow()).thenReturn(nowDate)
 
         Mockito.`when`(mockDaysGenerator.generateMonthDays(date)).thenReturn(dayList)
 
         val workScheduleGenerator = WorkScheduleGeneratorImpl(
             daysGenerator = mockDaysGenerator,
-            formatter = mockFormatter
+            formatter = mockFormatter,
+            dateContainer = mockDateContainer
         )
 
         val expectedDayList: List<Day> = dayList
@@ -71,12 +82,16 @@ internal class WorkScheduleGeneratorImplTest {
     fun `should return correct Live data when generate previous schedule`() {
         val dayList = listOf<Day>()
         val date = LocalDate.parse(ACTUAL_DATE).minusMonths(ONE_VALUE)
+        val nowDate = LocalDate.parse(NOW_DATE)
+
+        Mockito.`when`(mockDateContainer.getDateNow()).thenReturn(nowDate)
 
         Mockito.`when`(mockDaysGenerator.generateMonthDays(date)).thenReturn(dayList)
 
         val workScheduleGenerator = WorkScheduleGeneratorImpl(
             daysGenerator = mockDaysGenerator,
-            formatter = mockFormatter
+            formatter = mockFormatter,
+            dateContainer = mockDateContainer
         )
 
         val expectedDayList: List<Day> = dayList
@@ -93,12 +108,17 @@ internal class WorkScheduleGeneratorImplTest {
     fun `should return correct Live data when date formatted`() {
         val date = LocalDate.parse(ACTUAL_DATE)
         val dayList = listOf<Day>()
+        val nowDate = LocalDate.parse(NOW_DATE)
+
+        Mockito.`when`(mockDateContainer.getDateNow()).thenReturn(nowDate)
+
         Mockito.`when`(mockFormatter.format(date)).thenReturn(EXPECTED_FORMATTED_STRING)
         Mockito.`when`(mockDaysGenerator.generateMonthDays(date)).thenReturn(dayList)
 
         val workScheduleGenerator = WorkScheduleGeneratorImpl(
             daysGenerator = mockDaysGenerator,
-            formatter = mockFormatter
+            formatter = mockFormatter,
+            dateContainer = mockDateContainer
         )
 
         workScheduleGenerator.generateCurrentSchedule()
@@ -113,5 +133,7 @@ internal class WorkScheduleGeneratorImplTest {
         private const val EXPECTED_FORMATTED_STRING = "January 2022"
 
         private const val ONE_VALUE = 1L
+
+        private const val NOW_DATE = "2022-01-27"
     }
 }
