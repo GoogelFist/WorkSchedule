@@ -1,29 +1,24 @@
 package com.github.googelfist.workschedule.di.workschedule
 
-import com.github.googelfist.workschedule.data.WorkRepositoryImpl
-import com.github.googelfist.workschedule.data.scheduledatasource.ScheduleGenerator
-import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.WorkScheduleGeneratorImpl
-import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.datecontainer.DateContainer
-import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.datecontainer.DateContainerImpl
-import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.daysgenerator.DaysGenerator
-import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.daysgenerator.DaysGeneratorImpl
-import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.fabric.DaysFabric
-import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.fabric.WorkDaysFabric
-import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.fabric.WorkDaysFabricAdapter
-import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.fabric.WorkDaysFabricImpl
-import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.formatter.DateFormatter
-import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.formatter.DateFormatterImpl
-import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.schedulesetup.ScheduleSetup
-import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.schedulesetup.TwoInTwoWorkScheduleSetup
-import com.github.googelfist.workschedule.domain.ScheduleRepository
+import com.github.googelfist.workschedule.domain.ScheduleGenerator
+import com.github.googelfist.workschedule.domain.schedulegenerator.WorkScheduleGeneratorImpl
+import com.github.googelfist.workschedule.domain.schedulegenerator.datecontainer.DateContainer
+import com.github.googelfist.workschedule.domain.schedulegenerator.datecontainer.DateContainerImpl
+import com.github.googelfist.workschedule.domain.schedulegenerator.daysgenerator.DaysGenerator
+import com.github.googelfist.workschedule.domain.schedulegenerator.daysgenerator.DaysGeneratorImpl
+import com.github.googelfist.workschedule.domain.schedulegenerator.fabric.DaysFabric
+import com.github.googelfist.workschedule.domain.schedulegenerator.fabric.WorkDaysFabric
+import com.github.googelfist.workschedule.domain.schedulegenerator.fabric.WorkDaysFabricAdapter
+import com.github.googelfist.workschedule.domain.schedulegenerator.fabric.WorkDaysFabricImpl
+import com.github.googelfist.workschedule.domain.schedulegenerator.formatter.DateFormatter
+import com.github.googelfist.workschedule.domain.schedulegenerator.formatter.DateFormatterImpl
+import com.github.googelfist.workschedule.domain.schedulegenerator.schedulesetup.ScheduleSetup
+import com.github.googelfist.workschedule.domain.schedulegenerator.schedulesetup.TwoInTwoWorkScheduleSetup
 import dagger.Binds
 import dagger.Module
 
 @Module()
 interface TwoInTwoModule {
-
-    @Binds
-    fun bindRepository(impl: WorkRepositoryImpl): ScheduleRepository
 
     @Binds
     @WorkSchedule
@@ -45,6 +40,5 @@ interface TwoInTwoModule {
     fun bindScheduleSetup(impl: TwoInTwoWorkScheduleSetup): ScheduleSetup
 
     @Binds
-
     fun bindDateContainer(impl: DateContainerImpl): DateContainer
 }

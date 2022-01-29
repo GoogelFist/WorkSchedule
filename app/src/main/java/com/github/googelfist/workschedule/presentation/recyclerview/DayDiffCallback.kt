@@ -1,7 +1,7 @@
 package com.github.googelfist.workschedule.presentation.recyclerview
 
 import androidx.recyclerview.widget.DiffUtil
-import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.models.Day
+import com.github.googelfist.workschedule.domain.schedulegenerator.models.Day
 
 class DayDiffCallback : DiffUtil.ItemCallback<Day>() {
     override fun areItemsTheSame(oldItem: Day, newItem: Day): Boolean {

@@ -1,8 +1,8 @@
 package com.github.googelfist.workschedule.data
 
+import com.github.googelfist.workschedule.InstantTaskExecutorExtension
 import com.github.googelfist.workschedule.data.preferencedatasource.PreferenceDataSource
 import com.github.googelfist.workschedule.data.preferencedatasource.model.PreferencesData
-import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.InstantTaskExecutorExtension
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test

@@ -1,13 +1,13 @@
 package com.github.googelfist.workschedule.domain.usecase.generate
 
 import androidx.lifecycle.LiveData
-import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.models.Day
-import com.github.googelfist.workschedule.domain.ScheduleRepository
+import com.github.googelfist.workschedule.domain.ScheduleGenerator
+import com.github.googelfist.workschedule.domain.schedulegenerator.models.Day
 import javax.inject.Inject
 
-class GenerateNextMonthUseCase @Inject constructor(private val repository: ScheduleRepository) {
+class GenerateNextMonthUseCase @Inject constructor(private val generator: ScheduleGenerator) {
 
     operator fun invoke(): LiveData<List<Day>> {
-        return repository.generateNextSchedule()
+        return generator.generateNextSchedule()
     }
 }
