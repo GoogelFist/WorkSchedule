@@ -4,10 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.github.googelfist.workschedule.R
-import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.models.Day
-import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.models.defaultday.DefaultActiveDay
-import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.models.defaultday.DefaultInActiveDay
-import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.models.defaultday.DefaultToday
+import com.github.googelfist.workschedule.domain.schedulegenerator.models.Day
+import com.github.googelfist.workschedule.domain.schedulegenerator.models.defaultday.DefaultActiveDay
+import com.github.googelfist.workschedule.domain.schedulegenerator.models.defaultday.DefaultInActiveDay
+import com.github.googelfist.workschedule.domain.schedulegenerator.models.defaultday.DefaultToday
 
 class DefaultDayListAdapter : ListAdapter<Day, DayViewHolder>(DayDiffCallback()) {
 

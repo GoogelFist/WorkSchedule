@@ -2,8 +2,8 @@ package com.github.googelfist.workschedule.domain.usecase.generate
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.github.googelfist.workschedule.data.scheduledatasource.schedulegenerator.models.Day
-import com.github.googelfist.workschedule.domain.ScheduleRepository
+import com.github.googelfist.workschedule.domain.ScheduleGenerator
+import com.github.googelfist.workschedule.domain.schedulegenerator.models.Day
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
@@ -12,23 +12,23 @@ import org.mockito.kotlin.mock
 
 internal class GenerateCurrentMonthUseCaseTest {
 
-    private val mockRepository = mock<ScheduleRepository>()
+    private val mockGenerator = mock<ScheduleGenerator>()
 
     @AfterEach
     fun tearDown() {
-        Mockito.reset(mockRepository)
+        Mockito.reset(mockGenerator)
     }
 
     @Test
     fun `should return correct live data when generate current month`() {
         val dayList = listOf<Day>()
         val expectedLD: LiveData<List<Day>> = MutableLiveData(dayList)
-        Mockito.`when`(mockRepository.generateCurrentSchedule()).thenReturn(expectedLD)
+        Mockito.`when`(mockGenerator.generateCurrentSchedule()).thenReturn(expectedLD)
 
-        val generateCurrentMonthUseCase = GenerateCurrentMonthUseCase(mockRepository)
+        val generateCurrentMonthUseCase = GenerateCurrentMonthUseCase(mockGenerator)
         val actualLD = generateCurrentMonthUseCase()
 
-        Mockito.verify(mockRepository).generateCurrentSchedule()
+        Mockito.verify(mockGenerator).generateCurrentSchedule()
 
         Assertions.assertEquals(expectedLD, actualLD)
     }
