@@ -6,9 +6,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.github.googelfist.workschedule.R
 import com.github.googelfist.workschedule.databinding.ScheduleActivityFragmentBinding
@@ -17,6 +18,7 @@ import com.github.googelfist.workschedule.presentation.recyclerview.DefaultDayLi
 import com.github.googelfist.workschedule.presentation.recyclerview.RecyclerViewSwipeListener
 import com.github.googelfist.workschedule.presentation.viewmodel.ScheduleViewModel
 import com.github.googelfist.workschedule.presentation.viewmodel.factory.DefaultScheduleViewModelFactory
+import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
 
 class DefaultScheduleFragment : Fragment() {
@@ -77,6 +79,12 @@ class DefaultScheduleFragment : Fragment() {
         dayListAdapter = DefaultDayListAdapter()
         rvDayList.adapter = dayListAdapter
 
+        val dividerItemDecoration = DividerItemDecoration(requireActivity(), RecyclerView.VERTICAL)
+        val drawable = ContextCompat.getDrawable(requireActivity(), R.drawable.recycler_divider)
+        drawable?.let { dividerItemDecoration.setDrawable(it) }
+
+        rvDayList.addItemDecoration(dividerItemDecoration)
+
         rvDayList.itemAnimator = null
 
         setRecyclerViewPool(rvDayList)
@@ -91,7 +99,7 @@ class DefaultScheduleFragment : Fragment() {
             }
         }
         dayListAdapter.onDayClickListener = {
-            Toast.makeText(requireContext(), "$it", Toast.LENGTH_SHORT).show()
+            Snackbar.make(rvDayList, "$it", Snackbar.LENGTH_SHORT).show()
         }
     }
 
