@@ -28,13 +28,13 @@ class ScheduleActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.schedule_activity_container)
 
-        preferenceViewModel.onScheduleTypeChange().observe(this, {
+        preferenceViewModel.onScheduleTypeChange().observe(this) {
             when (it) {
                 DEFAULT -> launchDefaultSchedule()
                 TWO_IN_TWO -> launchTwoInTwoSchedule()
                 else -> launchDefaultSchedule()
             }
-        })
+        }
     }
 
     private fun launchTwoInTwoSchedule() {
