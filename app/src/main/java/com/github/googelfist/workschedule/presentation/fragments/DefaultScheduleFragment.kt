@@ -119,7 +119,7 @@ class DefaultScheduleFragment : Fragment() {
     private fun setupButtons() {
         binding.includeNavigationPanel.ivMonthUp.setOnClickListener { viewModel.onGeneratePreviousMonth() }
         binding.includeNavigationPanel.ivMonthDown.setOnClickListener { viewModel.onGenerateNextMonth() }
-        binding.includeNavigationPanel.ivCurrentMonth.setOnClickListener { viewModel.onGenerateCurrentMonth() }
+        binding.fbCurrentMonth.setOnClickListener { viewModel.onGenerateCurrentMonth() }
 
         binding.ivSettings.setOnClickListener {
             requireActivity().supportFragmentManager
