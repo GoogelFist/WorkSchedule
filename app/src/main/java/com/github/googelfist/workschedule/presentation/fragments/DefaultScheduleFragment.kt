@@ -85,8 +85,6 @@ class DefaultScheduleFragment : Fragment() {
 
         rvDayList.addItemDecoration(dividerItemDecoration)
 
-        rvDayList.itemAnimator = null
-
         setRecyclerViewPool(rvDayList)
 
         rvDayList.onFlingListener = object : RecyclerViewSwipeListener() {
