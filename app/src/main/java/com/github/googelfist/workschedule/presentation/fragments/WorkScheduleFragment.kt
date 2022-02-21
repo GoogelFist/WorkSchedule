@@ -14,7 +14,6 @@ import com.github.googelfist.workschedule.R
 import com.github.googelfist.workschedule.databinding.ScheduleActivityFragmentBinding
 import com.github.googelfist.workschedule.di.workschedule.DaggerWorkComponent
 import com.github.googelfist.workschedule.di.workschedule.WorkSchedule
-import com.github.googelfist.workschedule.presentation.recyclerview.RecyclerViewSwipeListener
 import com.github.googelfist.workschedule.presentation.recyclerview.WorkDayListAdapter
 import com.github.googelfist.workschedule.presentation.viewmodel.ScheduleViewModel
 import com.github.googelfist.workschedule.presentation.viewmodel.factory.TwoInTwoScheduleViewModelFactory
@@ -110,15 +109,8 @@ class WorkScheduleFragment : Fragment() {
 
         setRecyclerViewPool(rvDayList)
 
-        rvDayList.onFlingListener = object : RecyclerViewSwipeListener() {
-            override fun onSwipeUp() {
-                viewModel.onGeneratePreviousMonth()
-            }
+        rvDayList.itemAnimator = null
 
-            override fun onSwipeDown() {
-                viewModel.onGenerateNextMonth()
-            }
-        }
         dayListAdapter.onDayClickListener = {
             Snackbar.make(rvDayList, "$it", Snackbar.LENGTH_SHORT).show()
         }
