@@ -5,10 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.github.googelfist.workschedule.R
 import com.github.googelfist.workschedule.component
-import com.github.googelfist.workschedule.presentation.fragments.DefaultScheduleFragment
-import com.github.googelfist.workschedule.presentation.fragments.WorkScheduleFragment
 import com.github.googelfist.workschedule.presentation.viewmodel.PreferenceViewModel
 import com.github.googelfist.workschedule.presentation.viewmodel.factory.PreferenceViewModelFactory
+import com.github.googelfist.workschedule.presentation.viewpager.DefaultSchedulePagerFragment
+import com.github.googelfist.workschedule.presentation.viewpager.WorkSchedulePagerFragment
 import javax.inject.Inject
 
 class ScheduleActivity : AppCompatActivity() {
@@ -17,6 +17,7 @@ class ScheduleActivity : AppCompatActivity() {
     lateinit var preferenceViewModelFactory: PreferenceViewModelFactory
 
     private val preferenceViewModel: PreferenceViewModel by lazy {
+        LazyThreadSafetyMode.NONE
         ViewModelProvider(
             this,
             preferenceViewModelFactory
@@ -40,14 +41,14 @@ class ScheduleActivity : AppCompatActivity() {
     private fun launchTwoInTwoSchedule() {
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.schedule_activity_container, WorkScheduleFragment.newTwoInTwoFragment())
+            .replace(R.id.schedule_activity_container, WorkSchedulePagerFragment.newInstance())
             .commit()
     }
 
     private fun launchDefaultSchedule() {
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.schedule_activity_container, DefaultScheduleFragment.newInstance())
+            .replace(R.id.schedule_activity_container, DefaultSchedulePagerFragment.newInstance())
             .commit()
     }
 

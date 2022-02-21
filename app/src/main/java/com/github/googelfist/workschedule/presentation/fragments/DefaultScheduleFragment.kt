@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.github.googelfist.workschedule.R
 import com.github.googelfist.workschedule.databinding.ScheduleActivityFragmentBinding
 import com.github.googelfist.workschedule.di.defaultschedule.DaggerDefaultComponent
+import com.github.googelfist.workschedule.di.defaultschedule.DefaultSchedule
 import com.github.googelfist.workschedule.presentation.recyclerview.DefaultDayListAdapter
 import com.github.googelfist.workschedule.presentation.recyclerview.RecyclerViewSwipeListener
 import com.github.googelfist.workschedule.presentation.viewmodel.ScheduleViewModel
@@ -28,13 +29,16 @@ class DefaultScheduleFragment : Fragment() {
         get() = _binding!!
 
     private val component by lazy {
+        LazyThreadSafetyMode.NONE
         DaggerDefaultComponent.builder().context(requireActivity().application).build()
     }
 
     @Inject
+    @DefaultSchedule
     lateinit var defaultScheduleViewModelFactory: DefaultScheduleViewModelFactory
 
     private val viewModel: ScheduleViewModel by lazy {
+        LazyThreadSafetyMode.NONE
         ViewModelProvider(
             requireActivity(),
             defaultScheduleViewModelFactory
@@ -62,9 +66,6 @@ class DefaultScheduleFragment : Fragment() {
         setupRecyclerView()
 
         viewModel.dayListLD.observe(viewLifecycleOwner) { dayListAdapter.submitList(it) }
-        viewModel.formatDateLD.observe(viewLifecycleOwner) { binding.tvYearMonth.text = it }
-
-        setupButtons()
     }
 
     override fun onDestroy() {
@@ -114,20 +115,6 @@ class DefaultScheduleFragment : Fragment() {
             DefaultDayListAdapter.TODAY_TYPE,
             DefaultDayListAdapter.TODAY_DAY_POOL_SIZE
         )
-    }
-
-    private fun setupButtons() {
-        binding.includeNavigationPanel.ivMonthUp.setOnClickListener { viewModel.onGeneratePreviousMonth() }
-        binding.includeNavigationPanel.ivMonthDown.setOnClickListener { viewModel.onGenerateNextMonth() }
-        binding.fbCurrentMonth.setOnClickListener { viewModel.onGenerateCurrentMonth() }
-
-        binding.ivSettings.setOnClickListener {
-            requireActivity().supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.schedule_activity_container, PreferenceFragment.newInstance())
-                .setReorderingAllowed(true)
-                .commit()
-        }
     }
 
     companion object {
