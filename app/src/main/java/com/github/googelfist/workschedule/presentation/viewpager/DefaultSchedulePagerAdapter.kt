@@ -18,16 +18,16 @@ class DefaultSchedulePagerAdapter(fragment: DefaultSchedulePagerFragment) :
         return fragmentList.size
     }
 
+    override fun createFragment(position: Int): Fragment {
+        return fragmentList[position]
+    }
+
     fun setPreviousFragmentToStart() {
         fragmentList[ZERO_VALUE] = DefaultScheduleFragment.newPreviousMonthInstance()
     }
 
     fun setNextFragmentToEnd() {
         fragmentList[TWO_VALUE] = DefaultScheduleFragment.newNextMonthInstance()
-    }
-
-    override fun createFragment(position: Int): Fragment {
-        return fragmentList[position]
     }
 
     companion object {
