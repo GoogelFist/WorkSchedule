@@ -55,7 +55,7 @@ class DefaultScheduleFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        parseParams()
+        parseFragmentTypeParams()
     }
 
     override fun onCreateView(
@@ -73,11 +73,7 @@ class DefaultScheduleFragment : Fragment() {
 
         viewModel.dayListLD.observe(viewLifecycleOwner) { dayListAdapter.submitList(it) }
 
-        when (fragmentMonth) {
-            PREVIOUS_MONTH -> viewModel.onGeneratePreviousMonth()
-            CURRENT_MONTH -> viewModel.onGenerateCurrentMonth()
-            NEXT_MONTH -> viewModel.onGenerateNextMonth()
-        }
+        initializeFragment()
     }
 
     override fun onDestroy() {
@@ -85,9 +81,23 @@ class DefaultScheduleFragment : Fragment() {
         _binding = null
     }
 
-    private fun parseParams() {
+    private fun parseFragmentTypeParams() {
         val args = requireArguments()
+        if (!args.containsKey(FRAGMENT_MONTH)) {
+            throw IllegalArgumentException("Fragment month is absent")
+        }
         fragmentMonth = args.getString(FRAGMENT_MONTH).toString()
+        if (fragmentMonth != CURRENT_MONTH || fragmentMonth != PREVIOUS_MONTH || fragmentMonth != NEXT_MONTH) {
+            throw IllegalArgumentException("Unknown fragment month $fragmentMonth")
+        }
+    }
+
+    private fun initializeFragment() {
+        when (fragmentMonth) {
+            PREVIOUS_MONTH -> viewModel.onGeneratePreviousMonth()
+            CURRENT_MONTH -> viewModel.onGenerateCurrentMonth()
+            NEXT_MONTH -> viewModel.onGenerateNextMonth()
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -132,10 +142,6 @@ class DefaultScheduleFragment : Fragment() {
         private const val CURRENT_MONTH = "current month"
         private const val NEXT_MONTH = "next month"
         private const val PREVIOUS_MONTH = "previous month"
-
-        fun newInstance(): DefaultScheduleFragment {
-            return DefaultScheduleFragment()
-        }
 
         fun newCurrentMonthInstance(): DefaultScheduleFragment {
             return DefaultScheduleFragment().apply {
