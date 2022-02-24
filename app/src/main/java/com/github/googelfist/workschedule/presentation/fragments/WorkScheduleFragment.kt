@@ -1,6 +1,7 @@
 package com.github.googelfist.workschedule.presentation.fragments
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -47,10 +48,14 @@ class WorkScheduleFragment : Fragment() {
 
     private var scheduleType: String = UNKNOWN_TYPE
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        component.inject(this)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         parseParams()
-        component.inject(this)
     }
 
     override fun onCreateView(
