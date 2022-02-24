@@ -87,7 +87,7 @@ class DefaultScheduleFragment : Fragment() {
             throw IllegalArgumentException("Fragment month is absent")
         }
         fragmentMonth = args.getString(FRAGMENT_MONTH).toString()
-        if (fragmentMonth != CURRENT_MONTH || fragmentMonth != PREVIOUS_MONTH || fragmentMonth != NEXT_MONTH) {
+        if (fragmentMonth != CURRENT_MONTH && fragmentMonth != PREVIOUS_MONTH && fragmentMonth != NEXT_MONTH) {
             throw IllegalArgumentException("Unknown fragment month $fragmentMonth")
         }
     }
