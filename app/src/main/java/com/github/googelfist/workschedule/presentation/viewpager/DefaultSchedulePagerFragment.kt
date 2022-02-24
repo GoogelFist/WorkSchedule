@@ -7,8 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.github.googelfist.workschedule.R
 import com.github.googelfist.workschedule.databinding.PagerFragmentBinding
@@ -73,26 +71,35 @@ class DefaultSchedulePagerFragment : Fragment() {
 
         binding.pager.setCurrentItem(ONE_VALUE, false)
 
-        val recyclerView = binding.pager.getChildAt(ZERO_VALUE) as RecyclerView
-        val layoutManager = recyclerView.layoutManager as LinearLayoutManager
-        val itemCount = binding.pager.adapter?.itemCount ?: ZERO_VALUE
+        binding.pager.setPageTransformer(ZoomOutPageTransformer())
 
-        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
+        with(binding.pager) {
+            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
 
-                val firstItemVisible = layoutManager.findFirstVisibleItemPosition()
-                val lastItemVisible = layoutManager.findLastVisibleItemPosition()
-
-                if (firstItemVisible == (itemCount - ONE_VALUE) && dx > ZERO_VALUE) {
-                    viewModel.onGenerateNextMonth()
-                    recyclerView.scrollToPosition(ONE_VALUE)
-                } else if (lastItemVisible == ZERO_VALUE && dx < ZERO_VALUE) {
-                    viewModel.onGeneratePreviousMonth()
-                    recyclerView.scrollToPosition(itemCount - TWO_VALUE)
+                override fun onPageScrolled(
+                    position: Int,
+                    positionOffset: Float,
+                    positionOffsetPixels: Int
+                ) {
+                    super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+                    if (positionOffsetPixels != ZERO_VALUE) {
+                        return
+                    }
+                    when (position) {
+                        ZERO_VALUE -> {
+                            setCurrentItem(ONE_VALUE, false)
+                            pagerAdapter.setPreviousFragmentToStart()
+                            pagerAdapter.notifyItemChanged(position)
+                        }
+                        TWO_VALUE -> {
+                            setCurrentItem(ONE_VALUE, false)
+                            pagerAdapter.setNextFragmentToEnd()
+                            pagerAdapter.notifyItemChanged(position)
+                        }
+                    }
                 }
-            }
-        })
+            })
+        }
     }
 
     override fun onDestroy() {
@@ -103,7 +110,10 @@ class DefaultSchedulePagerFragment : Fragment() {
     private fun setupButtons() {
         binding.includeNavigationPanel.ivMonthUp.setOnClickListener { viewModel.onGeneratePreviousMonth() }
         binding.includeNavigationPanel.ivMonthDown.setOnClickListener { viewModel.onGenerateNextMonth() }
-        binding.fbCurrentMonth.setOnClickListener { viewModel.onGenerateCurrentMonth() }
+        binding.fbCurrentMonth.setOnClickListener {
+            viewModel.onGenerateCurrentMonth()
+            binding.pager.setCurrentItem(ONE_VALUE, true)
+        }
 
         binding.ivSettings.setOnClickListener {
             requireActivity().supportFragmentManager

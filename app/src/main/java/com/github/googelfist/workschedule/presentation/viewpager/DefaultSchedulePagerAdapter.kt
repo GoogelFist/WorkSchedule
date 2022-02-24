@@ -9,16 +9,29 @@ class DefaultSchedulePagerAdapter(fragment: DefaultSchedulePagerFragment) :
     private val fragmentList = mutableListOf<DefaultScheduleFragment>()
 
     init {
-        fragmentList.add(DefaultScheduleFragment.newInstance())
-        fragmentList.add(DefaultScheduleFragment.newInstance())
-        fragmentList.add(DefaultScheduleFragment.newInstance())
+        fragmentList.add(DefaultScheduleFragment.newPreviousMonthInstance())
+        fragmentList.add(DefaultScheduleFragment.newCurrentMonthInstance())
+        fragmentList.add(DefaultScheduleFragment.newNextMonthInstance())
     }
 
     override fun getItemCount(): Int {
         return fragmentList.size
     }
 
+    fun setPreviousFragmentToStart() {
+        fragmentList[ZERO_VALUE] = DefaultScheduleFragment.newPreviousMonthInstance()
+    }
+
+    fun setNextFragmentToEnd() {
+        fragmentList[TWO_VALUE] = DefaultScheduleFragment.newNextMonthInstance()
+    }
+
     override fun createFragment(position: Int): Fragment {
         return fragmentList[position]
+    }
+
+    companion object {
+        private const val ZERO_VALUE = 0
+        private const val TWO_VALUE = 2
     }
 }

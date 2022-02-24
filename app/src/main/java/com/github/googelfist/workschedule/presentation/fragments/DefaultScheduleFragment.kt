@@ -27,6 +27,8 @@ class DefaultScheduleFragment : Fragment() {
     private val binding: ScheduleActivityFragmentBinding
         get() = _binding!!
 
+    private var fragmentMonth = CURRENT_MONTH
+
     private val component by lazy {
         LazyThreadSafetyMode.NONE
         DaggerDefaultComponent.builder().context(requireActivity().application).build()
@@ -51,6 +53,11 @@ class DefaultScheduleFragment : Fragment() {
         component.inject(this)
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        parseParams()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -65,11 +72,22 @@ class DefaultScheduleFragment : Fragment() {
         setupRecyclerView()
 
         viewModel.dayListLD.observe(viewLifecycleOwner) { dayListAdapter.submitList(it) }
+
+        when (fragmentMonth) {
+            PREVIOUS_MONTH -> viewModel.onGeneratePreviousMonth()
+            CURRENT_MONTH -> viewModel.onGenerateCurrentMonth()
+            NEXT_MONTH -> viewModel.onGenerateNextMonth()
+        }
     }
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    private fun parseParams() {
+        val args = requireArguments()
+        fragmentMonth = args.getString(FRAGMENT_MONTH).toString()
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -110,8 +128,37 @@ class DefaultScheduleFragment : Fragment() {
     }
 
     companion object {
+        private const val FRAGMENT_MONTH = "fragment month"
+        private const val CURRENT_MONTH = "current month"
+        private const val NEXT_MONTH = "next month"
+        private const val PREVIOUS_MONTH = "previous month"
+
         fun newInstance(): DefaultScheduleFragment {
             return DefaultScheduleFragment()
+        }
+
+        fun newCurrentMonthInstance(): DefaultScheduleFragment {
+            return DefaultScheduleFragment().apply {
+                arguments = Bundle().apply {
+                    putString(FRAGMENT_MONTH, CURRENT_MONTH)
+                }
+            }
+        }
+
+        fun newPreviousMonthInstance(): DefaultScheduleFragment {
+            return DefaultScheduleFragment().apply {
+                arguments = Bundle().apply {
+                    putString(FRAGMENT_MONTH, PREVIOUS_MONTH)
+                }
+            }
+        }
+
+        fun newNextMonthInstance(): DefaultScheduleFragment {
+            return DefaultScheduleFragment().apply {
+                arguments = Bundle().apply {
+                    putString(FRAGMENT_MONTH, NEXT_MONTH)
+                }
+            }
         }
     }
 }
