@@ -89,12 +89,16 @@ class DefaultSchedulePagerFragment : Fragment() {
                         ZERO_VALUE -> {
                             setCurrentItem(ONE_VALUE, false)
                             pagerAdapter.setPreviousFragmentToStart()
-                            pagerAdapter.notifyItemChanged(position)
+                            binding.pager.post {
+                                pagerAdapter.notifyItemChanged(position)
+                            }
                         }
                         TWO_VALUE -> {
                             setCurrentItem(ONE_VALUE, false)
                             pagerAdapter.setNextFragmentToEnd()
-                            pagerAdapter.notifyItemChanged(position)
+                            binding.pager.post {
+                                pagerAdapter.notifyItemChanged(position)
+                            }
                         }
                     }
                 }
@@ -110,10 +114,7 @@ class DefaultSchedulePagerFragment : Fragment() {
     private fun setupButtons() {
         binding.includeNavigationPanel.ivMonthUp.setOnClickListener { viewModel.onGeneratePreviousMonth() }
         binding.includeNavigationPanel.ivMonthDown.setOnClickListener { viewModel.onGenerateNextMonth() }
-        binding.fbCurrentMonth.setOnClickListener {
-            viewModel.onGenerateCurrentMonth()
-            binding.pager.setCurrentItem(ONE_VALUE, true)
-        }
+        binding.fbCurrentMonth.setOnClickListener { viewModel.onGenerateCurrentMonth() }
 
         binding.ivSettings.setOnClickListener {
             requireActivity().supportFragmentManager
