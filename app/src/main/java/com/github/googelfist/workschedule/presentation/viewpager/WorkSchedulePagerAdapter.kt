@@ -9,9 +9,9 @@ class WorkSchedulePagerAdapter(fragment: WorkSchedulePagerFragment) :
     private val fragmentList = mutableListOf<WorkScheduleFragment>()
 
     init {
-        fragmentList.add(WorkScheduleFragment.newTwoInTwoFragment())
-        fragmentList.add(WorkScheduleFragment.newTwoInTwoFragment())
-        fragmentList.add(WorkScheduleFragment.newTwoInTwoFragment())
+        fragmentList.add(WorkScheduleFragment.newTwoInTwoPreviousMonthInstance())
+        fragmentList.add(WorkScheduleFragment.newTwoInTwoCurrentMonthInstance())
+        fragmentList.add(WorkScheduleFragment.newTwoInTwoNextMonthInstance())
     }
 
     override fun getItemCount(): Int {
@@ -20,5 +20,18 @@ class WorkSchedulePagerAdapter(fragment: WorkSchedulePagerFragment) :
 
     override fun createFragment(position: Int): Fragment {
         return fragmentList[position]
+    }
+
+    fun setPreviousFragmentToStart() {
+        fragmentList[ZERO_VALUE] = WorkScheduleFragment.newTwoInTwoPreviousMonthInstance()
+    }
+
+    fun setNextFragmentToEnd() {
+        fragmentList[TWO_VALUE] = WorkScheduleFragment.newTwoInTwoNextMonthInstance()
+    }
+
+    companion object {
+        private const val ZERO_VALUE = 0
+        private const val TWO_VALUE = 2
     }
 }

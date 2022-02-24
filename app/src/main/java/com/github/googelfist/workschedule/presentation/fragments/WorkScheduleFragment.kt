@@ -48,6 +48,8 @@ class WorkScheduleFragment : Fragment() {
 
     private var scheduleType: String = UNKNOWN_TYPE
 
+    private var fragmentMonth = CURRENT_MONTH
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         component.inject(this)
@@ -55,7 +57,8 @@ class WorkScheduleFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        parseParams()
+        parseScheduleTypeParams()
+        parseFragmentTypeParams()
     }
 
     override fun onCreateView(
@@ -72,6 +75,8 @@ class WorkScheduleFragment : Fragment() {
 
         setupRecyclerView()
         viewModel.dayListLD.observe(viewLifecycleOwner) { dayListAdapter.submitList(it) }
+
+        initializeFragment()
     }
 
     override fun onDestroy() {
@@ -79,7 +84,7 @@ class WorkScheduleFragment : Fragment() {
         _binding = null
     }
 
-    private fun parseParams() {
+    private fun parseScheduleTypeParams() {
         val args = requireArguments()
         if (!args.containsKey(SCHEDULE_TYPE)) {
             throw IllegalArgumentException("Schedule type is absent")
@@ -90,6 +95,17 @@ class WorkScheduleFragment : Fragment() {
         }
     }
 
+    private fun parseFragmentTypeParams() {
+        val args = requireArguments()
+        if (!args.containsKey(FRAGMENT_MONTH)) {
+            throw IllegalArgumentException("Fragment month is absent")
+        }
+        fragmentMonth = args.getString(FRAGMENT_MONTH).toString()
+        if (fragmentMonth != CURRENT_MONTH && fragmentMonth != PREVIOUS_MONTH && fragmentMonth != NEXT_MONTH) {
+            throw IllegalArgumentException("Unknown fragment month $fragmentMonth")
+        }
+    }
+
     private fun initializeViewModel(): ScheduleViewModel {
         if (scheduleType == TWO_IN_TWO) {
             return ViewModelProvider(
@@ -97,6 +113,14 @@ class WorkScheduleFragment : Fragment() {
                 twoInTwoScheduleViewModelFactory
             )[ScheduleViewModel::class.java]
         } else throw IllegalArgumentException("View model not initialize")
+    }
+
+    private fun initializeFragment() {
+        when (fragmentMonth) {
+            PREVIOUS_MONTH -> viewModel.onGeneratePreviousMonth()
+            CURRENT_MONTH -> viewModel.onGenerateCurrentMonth()
+            NEXT_MONTH -> viewModel.onGenerateNextMonth()
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -153,10 +177,42 @@ class WorkScheduleFragment : Fragment() {
         private const val TWO_IN_TWO = "twoInTwo"
         private const val UNKNOWN_TYPE = "unknown type"
 
+        private const val FRAGMENT_MONTH = "fragment month"
+        private const val CURRENT_MONTH = "current month"
+        private const val NEXT_MONTH = "next month"
+        private const val PREVIOUS_MONTH = "previous month"
+
         fun newTwoInTwoFragment(): WorkScheduleFragment {
             return WorkScheduleFragment().apply {
                 arguments = Bundle().apply {
                     putString(SCHEDULE_TYPE, TWO_IN_TWO)
+                }
+            }
+        }
+
+        fun newTwoInTwoCurrentMonthInstance(): WorkScheduleFragment {
+            return WorkScheduleFragment().apply {
+                arguments = Bundle().apply {
+                    putString(SCHEDULE_TYPE, TWO_IN_TWO)
+                    putString(FRAGMENT_MONTH, CURRENT_MONTH)
+                }
+            }
+        }
+
+        fun newTwoInTwoPreviousMonthInstance(): WorkScheduleFragment {
+            return WorkScheduleFragment().apply {
+                arguments = Bundle().apply {
+                    putString(SCHEDULE_TYPE, TWO_IN_TWO)
+                    putString(FRAGMENT_MONTH, PREVIOUS_MONTH)
+                }
+            }
+        }
+
+        fun newTwoInTwoNextMonthInstance(): WorkScheduleFragment {
+            return WorkScheduleFragment().apply {
+                arguments = Bundle().apply {
+                    putString(SCHEDULE_TYPE, TWO_IN_TWO)
+                    putString(FRAGMENT_MONTH, NEXT_MONTH)
                 }
             }
         }
