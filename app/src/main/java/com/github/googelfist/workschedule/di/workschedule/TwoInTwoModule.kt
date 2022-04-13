@@ -6,14 +6,14 @@ import com.github.googelfist.workschedule.domain.schedulegenerator.datecontainer
 import com.github.googelfist.workschedule.domain.schedulegenerator.datecontainer.DateContainerImpl
 import com.github.googelfist.workschedule.domain.schedulegenerator.daysgenerator.DaysGenerator
 import com.github.googelfist.workschedule.domain.schedulegenerator.daysgenerator.DaysGeneratorImpl
-import com.github.googelfist.workschedule.domain.schedulegenerator.fabric.DaysFabric
-import com.github.googelfist.workschedule.domain.schedulegenerator.fabric.WorkDaysFabric
-import com.github.googelfist.workschedule.domain.schedulegenerator.fabric.WorkDaysFabricAdapter
-import com.github.googelfist.workschedule.domain.schedulegenerator.fabric.WorkDaysFabricImpl
+import com.github.googelfist.workschedule.domain.schedulegenerator.daysgenerator.fabric.DaysFabric
+import com.github.googelfist.workschedule.domain.schedulegenerator.daysgenerator.fabric.WorkDaysFabric
+import com.github.googelfist.workschedule.domain.schedulegenerator.daysgenerator.fabric.WorkDaysFabricAdapter
+import com.github.googelfist.workschedule.domain.schedulegenerator.daysgenerator.fabric.WorkDaysFabricImpl
+import com.github.googelfist.workschedule.domain.schedulegenerator.daysgenerator.schedulesetup.ScheduleSetup
+import com.github.googelfist.workschedule.domain.schedulegenerator.daysgenerator.schedulesetup.TwoInTwoWorkScheduleSetup
 import com.github.googelfist.workschedule.domain.schedulegenerator.formatter.DateFormatter
 import com.github.googelfist.workschedule.domain.schedulegenerator.formatter.DateFormatterImpl
-import com.github.googelfist.workschedule.domain.schedulegenerator.schedulesetup.ScheduleSetup
-import com.github.googelfist.workschedule.domain.schedulegenerator.schedulesetup.TwoInTwoWorkScheduleSetup
 import dagger.Binds
 import dagger.Module
 

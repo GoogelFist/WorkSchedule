@@ -1,4 +1,4 @@
-package com.github.googelfist.workschedule.domain.schedulegenerator.schedulesetup
+package com.github.googelfist.workschedule.domain.schedulegenerator.daysgenerator.schedulesetup
 
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test

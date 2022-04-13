@@ -1,9 +1,7 @@
-package com.github.googelfist.workschedule.domain.schedulegenerator.fabric
+package com.github.googelfist.workschedule.domain.schedulegenerator.daysgenerator.fabric
 
 import com.github.googelfist.workschedule.domain.schedulegenerator.datecontainer.DateContainer
-import com.github.googelfist.workschedule.domain.schedulegenerator.models.defaultday.DefaultActiveDay
-import com.github.googelfist.workschedule.domain.schedulegenerator.models.defaultday.DefaultInActiveDay
-import com.github.googelfist.workschedule.domain.schedulegenerator.models.defaultday.DefaultToday
+import com.github.googelfist.workschedule.domain.schedulegenerator.models.DefaultDay
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
@@ -31,10 +29,12 @@ internal class DefaultDaysFabricImplTest {
         val defaultDaysFabric = DefaultDaysFabricImpl(mockDateContainer)
 
         val expectedDay =
-            DefaultInActiveDay(
+            DefaultDay(
                 day = INACTIVE_DAY_VALUE,
                 month = INACTIVE_MONTH_VALUE,
-                year = INACTIVE_YEAR_VALUE
+                year = INACTIVE_YEAR_VALUE,
+                today = false,
+                currentMonth = false
             )
         val actualDay = defaultDaysFabric.getDay(dateInMonth, activeDay)
 
@@ -51,10 +51,12 @@ internal class DefaultDaysFabricImplTest {
 
         val defaultDaysFabric = DefaultDaysFabricImpl(mockDateContainer)
 
-        val expectedDay = DefaultToday(
+        val expectedDay = DefaultDay(
             day = TODAY_DAY_VALUE,
             month = TODAY_MONTH_VALUE,
-            year = TODAY_YEAR_VALUE
+            year = TODAY_YEAR_VALUE,
+            today = true,
+            currentMonth = true
         )
         val actualDay = defaultDaysFabric.getDay(dateInMonth, activeDay)
 
@@ -71,10 +73,12 @@ internal class DefaultDaysFabricImplTest {
 
         val defaultDaysFabric = DefaultDaysFabricImpl(mockDateContainer)
 
-        val expectedDay = DefaultActiveDay(
+        val expectedDay = DefaultDay(
             day = ACTIVE_DAY_VALUE,
             month = ACTIVE_MONTH_VALUE,
-            year = ACTIVE_YEAR_VALUE
+            year = ACTIVE_YEAR_VALUE,
+            today = false,
+            currentMonth = true
         )
         val actualDay = defaultDaysFabric.getDay(dateInMonth, activeDay)
 

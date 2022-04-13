@@ -1,9 +1,8 @@
-package com.github.googelfist.workschedule.domain.schedulegenerator.fabric
+package com.github.googelfist.workschedule.domain.schedulegenerator.daysgenerator.fabric
 
 import com.github.googelfist.workschedule.domain.schedulegenerator.datecontainer.DateContainer
-import com.github.googelfist.workschedule.domain.schedulegenerator.models.workday.WorkActiveDay
-import com.github.googelfist.workschedule.domain.schedulegenerator.models.workday.WorkInActiveDay
-import com.github.googelfist.workschedule.domain.schedulegenerator.models.workday.WorkToday
+import com.github.googelfist.workschedule.domain.schedulegenerator.models.WeekendDay
+import com.github.googelfist.workschedule.domain.schedulegenerator.models.WorkDay
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
@@ -33,12 +32,12 @@ internal class WorkDaysFabricImplTest {
 
         val workDaysFabric = WorkDaysFabricImpl(mockDateContainer)
 
-        val expectedDay = WorkInActiveDay(
+        val expectedDay = WorkDay(
             day = INACTIVE_WORK_DAY_VALUE,
             month = INACTIVE_WORK_MONTH_VALUE,
             year = INACTIVE_WORK_YEAR_VALUE,
-            isWork = true,
-            isWeekend = false
+            today = false,
+            currentMonth = false
         )
 
         val actualDay = workDaysFabric.getWorkDay(
@@ -65,12 +64,12 @@ internal class WorkDaysFabricImplTest {
 
         val workDaysFabric = WorkDaysFabricImpl(mockDateContainer)
 
-        val expectedDay = WorkInActiveDay(
+        val expectedDay = WeekendDay(
             day = INACTIVE_WEEKEND_DAY_VALUE,
             month = INACTIVE_WEEKEND_MONTH_VALUE,
             year = INACTIVE_WEEKEND_YEAR_VALUE,
-            isWork = false,
-            isWeekend = true
+            today = false,
+            currentMonth = false
         )
 
         val actualDay = workDaysFabric.getWorkDay(
@@ -97,12 +96,12 @@ internal class WorkDaysFabricImplTest {
 
         val workDaysFabric = WorkDaysFabricImpl(mockDateContainer)
 
-        val expectedDay = WorkToday(
+        val expectedDay = WorkDay(
             day = TODAY_WORK_DAY_VALUE,
             month = TODAY_WORK_MONTH_VALUE,
             year = TODAY_WORK_YEAR_VALUE,
-            isWork = true,
-            isWeekend = false
+            today = true,
+            currentMonth = true
         )
 
         val actualDay = workDaysFabric.getWorkDay(
@@ -129,12 +128,12 @@ internal class WorkDaysFabricImplTest {
 
         val workDaysFabric = WorkDaysFabricImpl(mockDateContainer)
 
-        val expectedDay = WorkToday(
+        val expectedDay = WeekendDay(
             day = TODAY_WEEKEND_DAY_VALUE,
             month = TODAY_WEEKEND_MONTH_VALUE,
             year = TODAY_WEEKEND_YEAR_VALUE,
-            isWork = false,
-            isWeekend = true
+            today = true,
+            currentMonth = true
         )
 
         val actualDay = workDaysFabric.getWorkDay(
@@ -161,12 +160,12 @@ internal class WorkDaysFabricImplTest {
 
         val workDaysFabric = WorkDaysFabricImpl(mockDateContainer)
 
-        val expectedDay = WorkActiveDay(
+        val expectedDay = WorkDay(
             day = ACTIVE_WORK_DAY_VALUE,
             month = ACTIVE_WORK_MONTH_VALUE,
             year = ACTIVE_WORK_YEAR_VALUE,
-            isWork = true,
-            isWeekend = false
+            today = false,
+            currentMonth = true
         )
 
         val actualDay = workDaysFabric.getWorkDay(
@@ -193,12 +192,12 @@ internal class WorkDaysFabricImplTest {
 
         val workDaysFabric = WorkDaysFabricImpl(mockDateContainer)
 
-        val expectedDay = WorkActiveDay(
+        val expectedDay = WeekendDay(
             day = ACTIVE_WEEKEND_DAY_VALUE,
             month = ACTIVE_WEEKEND_MONTH_VALUE,
             year = ACTIVE_WEEKEND_YEAR_VALUE,
-            isWork = false,
-            isWeekend = true
+            today = false,
+            currentMonth = true
         )
 
         val actualDay = workDaysFabric.getWorkDay(
