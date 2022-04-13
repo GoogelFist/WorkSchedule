@@ -5,9 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.github.googelfist.workschedule.R
 import com.github.googelfist.workschedule.domain.schedulegenerator.models.Day
-import com.github.googelfist.workschedule.domain.schedulegenerator.models.defaultday.DefaultActiveDay
-import com.github.googelfist.workschedule.domain.schedulegenerator.models.defaultday.DefaultInActiveDay
-import com.github.googelfist.workschedule.domain.schedulegenerator.models.defaultday.DefaultToday
+import com.github.googelfist.workschedule.domain.schedulegenerator.models.DefaultDay
 
 class DefaultDayListAdapter : ListAdapter<Day, DayViewHolder>(DayDiffCallback()) {
 
@@ -27,7 +25,7 @@ class DefaultDayListAdapter : ListAdapter<Day, DayViewHolder>(DayDiffCallback())
 
     override fun onBindViewHolder(holder: DayViewHolder, position: Int) {
         val day = getItem(position)
-        holder.day.text = day.day.toString()
+        holder.day.text = day.getDayValue().toString()
         holder.day.setOnClickListener {
             onDayClickListener.invoke(day)
         }
@@ -36,10 +34,10 @@ class DefaultDayListAdapter : ListAdapter<Day, DayViewHolder>(DayDiffCallback())
     override fun getItemViewType(position: Int): Int {
         val day = getItem(position)
 
-        return when (day) {
-            is DefaultInActiveDay -> INACTIVE_DAY_TYPE
-            is DefaultToday -> TODAY_TYPE
-            is DefaultActiveDay -> ACTIVE_DAY_TYPE
+        return when {
+            day is DefaultDay && !day.isCurrentMonth() -> INACTIVE_DAY_TYPE
+            day is DefaultDay && day.isToday() -> TODAY_TYPE
+            day is DefaultDay && day.isCurrentMonth() -> ACTIVE_DAY_TYPE
             else -> throw NoSuchElementException("Unknown view type")
         }
     }

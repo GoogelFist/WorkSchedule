@@ -5,9 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.github.googelfist.workschedule.R
 import com.github.googelfist.workschedule.domain.schedulegenerator.models.Day
-import com.github.googelfist.workschedule.domain.schedulegenerator.models.workday.WorkActiveDay
-import com.github.googelfist.workschedule.domain.schedulegenerator.models.workday.WorkInActiveDay
-import com.github.googelfist.workschedule.domain.schedulegenerator.models.workday.WorkToday
+import com.github.googelfist.workschedule.domain.schedulegenerator.models.WeekendDay
+import com.github.googelfist.workschedule.domain.schedulegenerator.models.WorkDay
 
 class WorkDayListAdapter : ListAdapter<Day, DayViewHolder>(DayDiffCallback()) {
 
@@ -33,7 +32,7 @@ class WorkDayListAdapter : ListAdapter<Day, DayViewHolder>(DayDiffCallback()) {
 
     override fun onBindViewHolder(holder: DayViewHolder, position: Int) {
         val day = getItem(position)
-        holder.day.text = day.day.toString()
+        holder.day.text = day.getDayValue().toString()
         holder.day.setOnClickListener {
             onDayClickListener.invoke(day)
         }
@@ -43,14 +42,14 @@ class WorkDayListAdapter : ListAdapter<Day, DayViewHolder>(DayDiffCallback()) {
         val day = getItem(position)
 
         return when {
-            day is WorkToday && day.isWork -> TODAY_WORK_TYPE
-            day is WorkToday && day.isWeekend -> TODAY_WEEKEND_TYPE
+            day is WorkDay && day.isToday() -> TODAY_WORK_TYPE
+            day is WeekendDay && day.isToday() -> TODAY_WEEKEND_TYPE
 
-            day is WorkActiveDay && day.isWork -> ACTIVE_WORK_DAY_TYPE
-            day is WorkInActiveDay && day.isWork -> INACTIVE_WORK_DAY_TYPE
+            day is WorkDay && day.isCurrentMonth() -> ACTIVE_WORK_DAY_TYPE
+            day is WorkDay && !day.isCurrentMonth() -> INACTIVE_WORK_DAY_TYPE
 
-            day is WorkActiveDay && day.isWeekend -> ACTIVE_WEEKEND_DAY_TYPE
-            day is WorkInActiveDay && day.isWeekend -> INACTIVE_WEEKEND_DAY_TYPE
+            day is WeekendDay && day.isCurrentMonth() -> ACTIVE_WEEKEND_DAY_TYPE
+            day is WeekendDay && !day.isCurrentMonth() -> INACTIVE_WEEKEND_DAY_TYPE
 
             else -> throw NoSuchElementException("Unknown view type")
         }
