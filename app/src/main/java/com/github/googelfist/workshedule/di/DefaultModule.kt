@@ -10,6 +10,7 @@ import com.github.googelfist.workshedule.domain.formatter.DateFormatter
 import com.github.googelfist.workshedule.domain.formatter.DateFormatterImpl
 import dagger.Binds
 import dagger.Module
+import javax.inject.Singleton
 
 @Module
 interface DefaultModule {
@@ -24,5 +25,6 @@ interface DefaultModule {
     fun bindDateFormatter(impl: DateFormatterImpl): DateFormatter
 
     @Binds
+    @Singleton
     fun bindMonthGenerator(impl: DefaultMonthGeneratorImpl): MonthGenerator
 }
