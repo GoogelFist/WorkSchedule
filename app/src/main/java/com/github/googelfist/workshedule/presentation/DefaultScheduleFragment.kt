@@ -13,16 +13,18 @@ import javax.inject.Inject
 
 class DefaultScheduleFragment : Fragment() {
 
-    @Inject
-    lateinit var mainViewModelFactory: MainViewModelFactory
-
     private var _binding: DefaultScheduleFragmentBinding? = null
     private val binding: DefaultScheduleFragmentBinding
         get() = _binding!!
 
+    @Inject
+    lateinit var mainViewModelFactory: MainViewModelFactory
+
     private val mainViewModel by activityViewModels<MainViewModel> {
         mainViewModelFactory
     }
+
+    lateinit var dayListAdapter: DefaultDayListAdapter
 
     override fun onAttach(context: Context) {
         context.component.inject(this)
@@ -42,22 +44,17 @@ class DefaultScheduleFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         mainViewModel.month.observe(viewLifecycleOwner) {
-            binding.textView.text = it.getFormattedDate()
+            dayListAdapter.submitList(it.getDaysList())
         }
 
-        setupButtons()
+        setupRecyclerView()
     }
 
-    private fun setupButtons() {
-        binding.button1.setOnClickListener {
-            mainViewModel.onGeneratePreviousMonth()
-        }
-        binding.button2.setOnClickListener {
-            mainViewModel.onGenerateCurrentMonth()
-        }
-        binding.button3.setOnClickListener {
-            mainViewModel.onGenerateNextMonth()
-        }
+    private fun setupRecyclerView() {
+        val recyclerView = binding.defaultDayRecyclerView
+
+        dayListAdapter = DefaultDayListAdapter()
+        recyclerView.adapter = dayListAdapter
     }
 
     override fun onDestroy() {
