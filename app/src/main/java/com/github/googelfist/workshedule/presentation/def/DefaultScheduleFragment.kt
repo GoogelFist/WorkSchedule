@@ -21,11 +21,11 @@ class DefaultScheduleFragment : Fragment() {
     @Inject
     lateinit var defaultViewModelFactory: DefaultViewModelFactory
 
-    private val mainViewModel by activityViewModels<DefaultViewModel> {
+    private val defaultViewModel by activityViewModels<DefaultViewModel> {
         defaultViewModelFactory
     }
 
-    lateinit var dayListAdapter: DefaultDayListAdapter
+    private lateinit var dayListAdapter: DefaultDayListAdapter
 
     override fun onAttach(context: Context) {
         context.component.inject(this)
@@ -44,11 +44,29 @@ class DefaultScheduleFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mainViewModel.month.observe(viewLifecycleOwner) {
-            dayListAdapter.submitList(it.getDaysList())
-        }
+        observeViewModel()
+        setupButtons()
 
         setupRecyclerView()
+    }
+
+    private fun observeViewModel() {
+        defaultViewModel.month.observe(viewLifecycleOwner) {
+            dayListAdapter.submitList(it.getDaysList())
+            binding.defaultDateTextView.text = it.getFormattedDate()
+        }
+    }
+
+    private fun setupButtons() {
+        binding.defaultPreviousButton.setOnClickListener {
+            defaultViewModel.onGeneratePreviousMonth()
+        }
+        binding.defaultCurrentButton.setOnClickListener {
+            defaultViewModel.onGenerateCurrentMonth()
+        }
+        binding.defaultNextButton.setOnClickListener {
+            defaultViewModel.onGenerateNextMonth()
+        }
     }
 
     private fun setupRecyclerView() {

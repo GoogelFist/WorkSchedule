@@ -19,10 +19,10 @@ class TwoInTwoScheduleFragment : Fragment() {
         get() = _binding!!
 
     @Inject
-    lateinit var twoInTwoViewModel: TwoInTwoViewModelFactory
+    lateinit var twoInTwoViewModelFactory: TwoInTwoViewModelFactory
 
-    private val mainViewModel by activityViewModels<TwoInTwoViewModel> {
-        twoInTwoViewModel
+    private val twoInTwoViewModel by activityViewModels<TwoInTwoViewModel> {
+        twoInTwoViewModelFactory
     }
 
     lateinit var dayListAdapter: TwoInTwoDayListAdapter
@@ -44,11 +44,30 @@ class TwoInTwoScheduleFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mainViewModel.month.observe(viewLifecycleOwner) {
-            dayListAdapter.submitList(it.getDaysList())
-        }
+        observeViewModel()
 
         setupRecyclerView()
+
+        setupButtons()
+    }
+
+    private fun setupButtons() {
+        binding.twoInTwoPreviousButton.setOnClickListener {
+            twoInTwoViewModel.onGeneratePreviousMonth()
+        }
+        binding.twoInTwoCurrentButton.setOnClickListener {
+            twoInTwoViewModel.onGenerateCurrentMonth()
+        }
+        binding.twoInTwoNextButton.setOnClickListener {
+            twoInTwoViewModel.onGenerateNextMonth()
+        }
+    }
+
+    private fun observeViewModel() {
+        twoInTwoViewModel.month.observe(viewLifecycleOwner) {
+            dayListAdapter.submitList(it.getDaysList())
+            binding.twoInTwoDateTextView.text = it.getFormattedDate()
+        }
     }
 
     private fun setupRecyclerView() {

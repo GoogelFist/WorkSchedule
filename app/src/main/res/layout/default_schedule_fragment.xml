@@ -5,6 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/default_date_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/default_day_recycler_view"
         android:layout_width="match_parent"
@@ -12,9 +18,36 @@
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/default_date_text_view"
         app:spanCount="7"
         tools:itemCount="42"
         tools:listitem="@layout/day_item_current_month" />
+
+    <Button
+        android:id="@+id/default_previous_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="previous"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/default_day_recycler_view" />
+
+    <Button
+        android:id="@+id/default_current_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="current"
+        app:layout_constraintEnd_toEndOf="@+id/default_previous_button"
+        app:layout_constraintStart_toStartOf="@+id/default_previous_button"
+        app:layout_constraintTop_toBottomOf="@+id/default_previous_button" />
+
+    <Button
+        android:id="@+id/default_next_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="next"
+        app:layout_constraintEnd_toEndOf="@+id/default_previous_button"
+        app:layout_constraintStart_toStartOf="@+id/default_previous_button"
+        app:layout_constraintTop_toBottomOf="@+id/default_current_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
