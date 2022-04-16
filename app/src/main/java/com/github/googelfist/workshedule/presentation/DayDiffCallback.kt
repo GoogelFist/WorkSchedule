@@ -1,7 +1,7 @@
 package com.github.googelfist.workshedule.presentation
 
 import androidx.recyclerview.widget.DiffUtil
-import com.github.googelfist.workshedule.domain.models.Day
+import com.github.googelfist.workshedule.domain.models.day.Day
 
 class DayDiffCallback : DiffUtil.ItemCallback<Day>() {
     override fun areItemsTheSame(oldItem: Day, newItem: Day): Boolean {

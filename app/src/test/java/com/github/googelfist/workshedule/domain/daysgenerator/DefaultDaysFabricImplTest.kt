@@ -1,6 +1,8 @@
 package com.github.googelfist.workshedule.domain.daysgenerator
 
-import com.github.googelfist.workshedule.domain.models.DefaultDay
+import com.github.googelfist.workshedule.domain.models.day.DefaultDay
+import com.github.googelfist.workshedule.domain.monthgenerator.DateNowContainer
+import com.github.googelfist.workshedule.domain.monthgenerator.def.fabric.DefaultDaysFabricImpl
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
@@ -35,7 +37,7 @@ internal class DefaultDaysFabricImplTest {
                 today = false,
                 currentMonth = false
             )
-        val actualDay = defaultDaysFabric.getDay(dateInMonth, activeDay)
+        val actualDay = defaultDaysFabric.getDefaultDay(dateInMonth, activeDay)
 
         Assertions.assertEquals(expectedDay, actualDay)
     }
@@ -57,7 +59,7 @@ internal class DefaultDaysFabricImplTest {
             today = true,
             currentMonth = true
         )
-        val actualDay = defaultDaysFabric.getDay(dateInMonth, activeDay)
+        val actualDay = defaultDaysFabric.getDefaultDay(dateInMonth, activeDay)
 
         Assertions.assertEquals(expectedDay, actualDay)
     }
@@ -79,7 +81,7 @@ internal class DefaultDaysFabricImplTest {
             today = false,
             currentMonth = true
         )
-        val actualDay = defaultDaysFabric.getDay(dateInMonth, activeDay)
+        val actualDay = defaultDaysFabric.getDefaultDay(dateInMonth, activeDay)
 
         Assertions.assertEquals(expectedDay, actualDay)
     }
