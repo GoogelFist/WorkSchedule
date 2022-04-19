@@ -8,6 +8,9 @@ import com.github.googelfist.workshedule.R
 import com.github.googelfist.workshedule.domain.models.day.Day
 import com.github.googelfist.workshedule.domain.models.day.DefaultDay
 import com.github.googelfist.workshedule.presentation.DayDiffCallback
+import com.github.googelfist.workshedule.presentation.def.recycler.holder.DefaultDayCurrentMonthViewHolder
+import com.github.googelfist.workshedule.presentation.def.recycler.holder.DefaultDayNotCurrentMonthViewHolder
+import com.github.googelfist.workshedule.presentation.def.recycler.holder.DefaultDayTodayViewHolder
 
 class DefaultDayListAdapter : ListAdapter<Day, RecyclerView.ViewHolder>(DayDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

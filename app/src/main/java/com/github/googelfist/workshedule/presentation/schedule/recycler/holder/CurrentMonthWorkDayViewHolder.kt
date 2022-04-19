@@ -1,4 +1,4 @@
-package com.github.googelfist.workshedule.presentation.schedule.recycler
+package com.github.googelfist.workshedule.presentation.schedule.recycler.holder
 
 import android.view.View
 import android.widget.TextView

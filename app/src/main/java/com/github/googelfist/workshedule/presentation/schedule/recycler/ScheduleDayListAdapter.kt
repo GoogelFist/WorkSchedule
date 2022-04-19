@@ -9,6 +9,12 @@ import com.github.googelfist.workshedule.domain.models.day.Day
 import com.github.googelfist.workshedule.domain.models.day.WeekendDay
 import com.github.googelfist.workshedule.domain.models.day.WorkDay
 import com.github.googelfist.workshedule.presentation.DayDiffCallback
+import com.github.googelfist.workshedule.presentation.schedule.recycler.holder.CurrentMonthWeekendDayViewHolder
+import com.github.googelfist.workshedule.presentation.schedule.recycler.holder.CurrentMonthWorkDayViewHolder
+import com.github.googelfist.workshedule.presentation.schedule.recycler.holder.NotCurrentMonthWeekendDayViewHolder
+import com.github.googelfist.workshedule.presentation.schedule.recycler.holder.NotCurrentMonthWorkDayViewHolder
+import com.github.googelfist.workshedule.presentation.schedule.recycler.holder.TodayWeekendViewHolder
+import com.github.googelfist.workshedule.presentation.schedule.recycler.holder.TodayWorkViewHolder
 
 class ScheduleDayListAdapter : ListAdapter<Day, RecyclerView.ViewHolder>(DayDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
