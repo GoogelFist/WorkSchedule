@@ -7,4 +7,9 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="weekend_not_current_month">#4099CC00</color>
+    <color name="weekend_current_month">#BF99CC00</color>
+    <color name="work_not_current_month">#40FF4444</color>
+    <color name="work_current_month">#BFFF4444</color>
 </resources>

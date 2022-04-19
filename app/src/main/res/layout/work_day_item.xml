@@ -9,15 +9,16 @@
     app:cardUseCompatPadding="true">
 
     <TextView
-        android:id="@+id/text_view_weekend_current_month_day_item"
+        android:id="@+id/text_view_work_day_item"
         android:layout_width="30dp"
         android:layout_height="wrap_content"
-        android:background="#BF99CC00"
         android:gravity="center"
         android:textColor="@color/black"
         android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        tools:background="@drawable/today_work_background"
         tools:text="1" />
+
 </androidx.cardview.widget.CardView>

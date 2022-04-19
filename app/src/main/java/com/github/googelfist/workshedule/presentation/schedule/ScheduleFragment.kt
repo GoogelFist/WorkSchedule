@@ -8,14 +8,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.github.googelfist.workshedule.component
-import com.github.googelfist.workshedule.databinding.TwoInTwoScheduleFragmentBinding
+import com.github.googelfist.workshedule.databinding.ScheduleFragmentBinding
 import com.github.googelfist.workshedule.presentation.schedule.recycler.ScheduleDayListAdapter
 import javax.inject.Inject
 
 class ScheduleFragment : Fragment() {
 
-    private var _binding: TwoInTwoScheduleFragmentBinding? = null
-    private val binding: TwoInTwoScheduleFragmentBinding
+    private var _binding: ScheduleFragmentBinding? = null
+    private val binding: ScheduleFragmentBinding
         get() = _binding!!
 
     @Inject
@@ -37,7 +37,7 @@ class ScheduleFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = TwoInTwoScheduleFragmentBinding.inflate(inflater, container, false)
+        _binding = ScheduleFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
 
