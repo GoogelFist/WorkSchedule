@@ -3,30 +3,48 @@ package com.github.googelfist.workshedule.presentation.def.recycler
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.github.googelfist.workshedule.R
 import com.github.googelfist.workshedule.domain.models.day.Day
 import com.github.googelfist.workshedule.domain.models.day.DefaultDay
 import com.github.googelfist.workshedule.presentation.DayDiffCallback
 
-class DefaultDayListAdapter : ListAdapter<Day, DefaultDayViewHolder>(DayDiffCallback()) {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DefaultDayViewHolder {
-        val layout = when (viewType) {
-            TODAY_TYPE -> R.layout.day_itemt_today
-            NOT_CURRENT_MONTH_DAY_TYPE -> R.layout.day_itemt_not_current_month
-            CURRENT_MONTH_DAY_TYPE -> R.layout.day_item_current_month
-            else -> throw IllegalArgumentException("Unknown view type: $viewType")
-        }
+class DefaultDayListAdapter : ListAdapter<Day, RecyclerView.ViewHolder>(DayDiffCallback()) {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
-        val view = LayoutInflater.from(parent.context).inflate(layout, parent, false)
-        return DefaultDayViewHolder(view)
+        when (viewType) {
+            NOT_CURRENT_MONTH_DAY_TYPE -> {
+                val layout = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.default_day_item_not_current_month, parent, false)
+                return DefaultDayNotCurrentMonthViewHolder(layout)
+            }
+
+            TODAY_TYPE -> {
+                val layout = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.default_day_itemt_today, parent, false)
+                return DefaultDayTodayViewHolder(layout)
+            }
+
+            CURRENT_MONTH_DAY_TYPE -> {
+                val layout = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.default_day_item_current_month, parent, false)
+                return DefaultDayCurrentMonthViewHolder(layout)
+            }
+
+            else -> {
+                throw NoSuchElementException("Unknown view type: $viewType")
+            }
+        }
     }
 
-    override fun onBindViewHolder(holderDefault: DefaultDayViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val day = getItem(position)
-        holderDefault.bind(day)
-//        holder.day.setOnClickListener {
-//            onDayClickListener.invoke(day)
-//        }
+        when (holder) {
+            is DefaultDayNotCurrentMonthViewHolder -> holder.bind(day)
+            is DefaultDayTodayViewHolder -> holder.bind(day)
+            is DefaultDayCurrentMonthViewHolder -> holder.bind(day)
+            else -> throw NoSuchElementException("Unknown view holder type")
+        }
     }
 
     override fun getItemViewType(position: Int): Int {

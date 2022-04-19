@@ -1,4 +1,4 @@
-package com.github.googelfist.workshedule.presentation.twointwo
+package com.github.googelfist.workshedule.presentation.schedule
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,7 +8,7 @@ import com.github.googelfist.workshedule.domain.usecases.twointwo.GenerateCurren
 import com.github.googelfist.workshedule.domain.usecases.twointwo.GenerateNextMonthTwoInTwoUseCase
 import com.github.googelfist.workshedule.domain.usecases.twointwo.GeneratePreviousMonthTwoInTwoUseCase
 
-class TwoInTwoViewModel(
+class ScheduleViewModel(
     private val generatePreviousMonthTwoInTwoUseCase: GeneratePreviousMonthTwoInTwoUseCase,
     private val generateCurrentMonthTwoInTwoUseCase: GenerateCurrentMonthTwoInTwoUseCase,
     private val generateNextMonthTwoInTwoUseCase: GenerateNextMonthTwoInTwoUseCase

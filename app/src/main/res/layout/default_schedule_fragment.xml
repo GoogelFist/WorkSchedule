@@ -21,7 +21,7 @@
         app:layout_constraintTop_toBottomOf="@+id/default_date_text_view"
         app:spanCount="7"
         tools:itemCount="42"
-        tools:listitem="@layout/day_item_current_month" />
+        tools:listitem="@layout/weekend_day_item_current_month" />
 
     <Button
         android:id="@+id/default_previous_button"

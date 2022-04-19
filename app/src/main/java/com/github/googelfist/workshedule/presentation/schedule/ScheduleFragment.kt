@@ -1,4 +1,4 @@
-package com.github.googelfist.workshedule.presentation.twointwo
+package com.github.googelfist.workshedule.presentation.schedule
 
 import android.content.Context
 import android.os.Bundle
@@ -9,23 +9,23 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.github.googelfist.workshedule.component
 import com.github.googelfist.workshedule.databinding.TwoInTwoScheduleFragmentBinding
-import com.github.googelfist.workshedule.presentation.twointwo.recycler.TwoInTwoDayListAdapter
+import com.github.googelfist.workshedule.presentation.schedule.recycler.ScheduleDayListAdapter
 import javax.inject.Inject
 
-class TwoInTwoScheduleFragment : Fragment() {
+class ScheduleFragment : Fragment() {
 
     private var _binding: TwoInTwoScheduleFragmentBinding? = null
     private val binding: TwoInTwoScheduleFragmentBinding
         get() = _binding!!
 
     @Inject
-    lateinit var twoInTwoViewModelFactory: TwoInTwoViewModelFactory
+    lateinit var scheduleViewModelFactory: ScheduleViewModelFactory
 
-    private val twoInTwoViewModel by activityViewModels<TwoInTwoViewModel> {
-        twoInTwoViewModelFactory
+    private val twoInTwoViewModel by activityViewModels<ScheduleViewModel> {
+        scheduleViewModelFactory
     }
 
-    lateinit var dayListAdapter: TwoInTwoDayListAdapter
+    lateinit var scheduleDayListAdapter: ScheduleDayListAdapter
 
     override fun onAttach(context: Context) {
         context.component.inject(this)
@@ -65,7 +65,7 @@ class TwoInTwoScheduleFragment : Fragment() {
 
     private fun observeViewModel() {
         twoInTwoViewModel.month.observe(viewLifecycleOwner) {
-            dayListAdapter.submitList(it.getDaysList())
+            scheduleDayListAdapter.submitList(it.getDaysList())
             binding.twoInTwoDateTextView.text = it.getFormattedDate()
         }
     }
@@ -73,8 +73,8 @@ class TwoInTwoScheduleFragment : Fragment() {
     private fun setupRecyclerView() {
         val recyclerView = binding.twoInTwoDayRecyclerView
 
-        dayListAdapter = TwoInTwoDayListAdapter()
-        recyclerView.adapter = dayListAdapter
+        scheduleDayListAdapter = ScheduleDayListAdapter()
+        recyclerView.adapter = scheduleDayListAdapter
     }
 
     override fun onDestroy() {
@@ -84,8 +84,8 @@ class TwoInTwoScheduleFragment : Fragment() {
 
     companion object {
 
-        fun getNewInstance(): TwoInTwoScheduleFragment {
-            return TwoInTwoScheduleFragment()
+        fun getNewInstance(): ScheduleFragment {
+            return ScheduleFragment()
         }
     }
 }

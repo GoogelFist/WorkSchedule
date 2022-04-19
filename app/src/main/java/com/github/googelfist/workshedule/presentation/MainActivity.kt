@@ -6,13 +6,13 @@ import com.github.googelfist.workshedule.R
 import com.github.googelfist.workshedule.component
 import com.github.googelfist.workshedule.databinding.ActivityMainBinding
 import com.github.googelfist.workshedule.presentation.def.DefaultScheduleFragment
-import com.github.googelfist.workshedule.presentation.twointwo.TwoInTwoScheduleFragment
+import com.github.googelfist.workshedule.presentation.schedule.ScheduleFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
-    private val mode = DEFAULT_MODE
-//    private val mode = TWO_IN_TWO_MODE
+    //    private val mode = DEFAULT_MODE
+    private val mode = TWO_IN_TWO_MODE
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
                     .beginTransaction()
                     .replace(
                         R.id.fragment_recycler_view_container,
-                        TwoInTwoScheduleFragment.getNewInstance()
+                        ScheduleFragment.getNewInstance()
                     )
                     .setReorderingAllowed(true)
                     .commit()

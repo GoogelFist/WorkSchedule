@@ -1,4 +1,4 @@
-package com.github.googelfist.workshedule.presentation.twointwo
+package com.github.googelfist.workshedule.presentation.schedule
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -7,13 +7,13 @@ import com.github.googelfist.workshedule.domain.usecases.twointwo.GenerateNextMo
 import com.github.googelfist.workshedule.domain.usecases.twointwo.GeneratePreviousMonthTwoInTwoUseCase
 import javax.inject.Inject
 
-class TwoInTwoViewModelFactory @Inject constructor(
+class ScheduleViewModelFactory @Inject constructor(
     private val generatePreviousMonthTwoInTwoUseCase: GeneratePreviousMonthTwoInTwoUseCase,
     private val generateCurrentMonthTwoInTwoUseCase: GenerateCurrentMonthTwoInTwoUseCase,
     private val generateNextMonthTwoInTwoUseCase: GenerateNextMonthTwoInTwoUseCase
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return TwoInTwoViewModel(
+        return ScheduleViewModel(
             generatePreviousMonthTwoInTwoUseCase = generatePreviousMonthTwoInTwoUseCase,
             generateCurrentMonthTwoInTwoUseCase = generateCurrentMonthTwoInTwoUseCase,
             generateNextMonthTwoInTwoUseCase = generateNextMonthTwoInTwoUseCase
