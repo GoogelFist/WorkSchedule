@@ -9,16 +9,16 @@
     app:cardUseCompatPadding="true">
 
     <TextView
-        android:id="@+id/text_view_default_today_day_item"
+        android:id="@+id/text_view_default_day_item"
         android:layout_width="30dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/today_default_background"
         android:gravity="center"
         android:textColor="@android:color/black"
         android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="1" />
+        tools:text="1"
+        tools:background="@drawable/today_default_background" />
 
 </androidx.cardview.widget.CardView>

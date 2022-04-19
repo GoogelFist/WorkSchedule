@@ -17,28 +17,36 @@ class WeekendViewHolder(private val view: View) : RecyclerView.ViewHolder(view) 
     fun bind(day: Day) {
 
         when {
-            day is WeekendDay && !day.currentMonth -> {
-                weekendDayTextView.setBackgroundColor(
-                    ContextCompat.getColor(
-                        view.context,
-                        R.color.weekend_not_current_month
-                    )
-                )
-            }
-            day is WeekendDay && day.today -> {
-                weekendDayTextView.background =
-                    ContextCompat.getDrawable(view.context, R.drawable.today_weekend_background)
-            }
-            day is WeekendDay && day.currentMonth -> {
-                weekendDayTextView.setBackgroundColor(
-                    ContextCompat.getColor(
-                        view.context,
-                        R.color.weekend_current_month
-                    )
-                )
-            }
+            day is WeekendDay && !day.currentMonth -> setNotCurrentMonthView(day)
+            day is WeekendDay && day.today -> setTodayView(day)
+            day is WeekendDay && day.currentMonth -> setCurrentMonthView(day)
+            else -> throw NoSuchElementException("Unknown day type")
         }
+    }
 
+    private fun setNotCurrentMonthView(day: Day) {
+        weekendDayTextView.setBackgroundColor(
+            ContextCompat.getColor(view.context, R.color.weekend_not_current_month)
+        )
+        weekendDayTextView.setTextColor(
+            ContextCompat.getColor(view.context, R.color.not_current_month_text_color)
+        )
+        weekendDayTextView.text = day.getDayValue().toString()
+    }
+
+    private fun setTodayView(day: Day) {
+        weekendDayTextView.background =
+            ContextCompat.getDrawable(view.context, R.drawable.today_weekend_background)
+
+        weekendDayTextView.setTextColor(ContextCompat.getColor(view.context, R.color.black))
+        weekendDayTextView.text = day.getDayValue().toString()
+    }
+
+    private fun setCurrentMonthView(day: Day) {
+        weekendDayTextView.setBackgroundColor(
+            ContextCompat.getColor(view.context, R.color.weekend_current_month)
+        )
+        weekendDayTextView.setTextColor(ContextCompat.getColor(view.context, R.color.black))
         weekendDayTextView.text = day.getDayValue().toString()
     }
 }
