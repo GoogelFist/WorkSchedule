@@ -8,10 +8,9 @@ import javax.inject.Inject
 class WorkTwoInTwoDaysGeneratorImpl @Inject constructor(private val daysFabric: WorkTwoInTwoDaysFabric) :
     WorkTwoInTwoDaysGenerator {
 
-    override fun generateDays(date: LocalDate): List<Day> {
+    override fun generateDays(date: LocalDate, firstWorkDate: LocalDate): List<Day> {
         var firstMondayInMonth = getDateOfFirstMonday(date)
 
-        val firstWorkDate = getFirstWorkDay()
         val actualFirstWorkDate = getActualFirstWorkDay(date, firstWorkDate)
         val workSchedule = getWorkSchedule(actualFirstWorkDate)
 
@@ -29,12 +28,6 @@ class WorkTwoInTwoDaysGeneratorImpl @Inject constructor(private val daysFabric: 
         val dayOfWeek = firstDayOfMonth.dayOfWeek.value - ONE_VALUE
 
         return firstDayOfMonth.minusDays(dayOfWeek)
-    }
-
-    // TODO:  hardcoded value
-    private fun getFirstWorkDay(): LocalDate {
-        return LocalDate.of(2022, 4, 16)
-//        return LocalDate.of(2022, 4, 17)
     }
 
     private fun getActualFirstWorkDay(activeDate: LocalDate, firstWorkDate: LocalDate): LocalDate {

@@ -7,6 +7,7 @@ import com.github.googelfist.workshedule.domain.models.month.Month
 import com.github.googelfist.workshedule.domain.usecases.twointwo.GenerateCurrentMonthTwoInTwoUseCase
 import com.github.googelfist.workshedule.domain.usecases.twointwo.GenerateNextMonthTwoInTwoUseCase
 import com.github.googelfist.workshedule.domain.usecases.twointwo.GeneratePreviousMonthTwoInTwoUseCase
+import java.time.LocalDate
 
 class ScheduleViewModel(
     private val generatePreviousMonthTwoInTwoUseCase: GeneratePreviousMonthTwoInTwoUseCase,
@@ -18,19 +19,19 @@ class ScheduleViewModel(
     val month: LiveData<Month>
         get() = _month
 
-    init {
-        onGenerateCurrentMonth()
+//    init {
+//        onGenerateCurrentMonth()
+//    }
+
+    fun onGenerateCurrentMonth(firstWorkDate: LocalDate) {
+        _month.value = generateCurrentMonthTwoInTwoUseCase(firstWorkDate)
     }
 
-    fun onGenerateCurrentMonth() {
-        _month.value = generateCurrentMonthTwoInTwoUseCase()
+    fun onGeneratePreviousMonth(firstWorkDate: LocalDate) {
+        _month.value = generatePreviousMonthTwoInTwoUseCase(firstWorkDate)
     }
 
-    fun onGeneratePreviousMonth() {
-        _month.value = generatePreviousMonthTwoInTwoUseCase()
-    }
-
-    fun onGenerateNextMonth() {
-        _month.value = generateNextMonthTwoInTwoUseCase()
+    fun onGenerateNextMonth(firstWorkDate: LocalDate) {
+        _month.value = generateNextMonthTwoInTwoUseCase(firstWorkDate)
     }
 }

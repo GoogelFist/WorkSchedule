@@ -5,6 +5,7 @@ import com.github.googelfist.workshedule.domain.models.month.Month
 import com.github.googelfist.workshedule.domain.models.month.WorkMonth
 import com.github.googelfist.workshedule.domain.monthgenerator.DateNowContainer
 import com.github.googelfist.workshedule.domain.monthgenerator.twointwo.daygenerator.WorkTwoInTwoDaysGenerator
+import java.time.LocalDate
 import javax.inject.Inject
 
 class WorkTwoInTwoMonthGeneratorImpl @Inject constructor(
@@ -15,23 +16,23 @@ class WorkTwoInTwoMonthGeneratorImpl @Inject constructor(
 
     private var date = dateNowContainer.getDate()
 
-    override fun generateCurrentMonth(): Month {
+    override fun generateCurrentMonth(firstWorkDate: LocalDate): Month {
         date = dateNowContainer.getDate()
-        val dayList = workDaysGenerator.generateDays(date)
+        val dayList = workDaysGenerator.generateDays(date, firstWorkDate)
         val formattedDate = formatter.formatDate(date)
         return WorkMonth(formattedDate, dayList)
     }
 
-    override fun generatePreviousMonth(): Month {
+    override fun generatePreviousMonth(firstWorkDate: LocalDate): Month {
         date = date.minusMonths(ONE_VALUE)
-        val dayList = workDaysGenerator.generateDays(date)
+        val dayList = workDaysGenerator.generateDays(date, firstWorkDate)
         val formattedDate = formatter.formatDate(date)
         return WorkMonth(formattedDate, dayList)
     }
 
-    override fun generateNextMonth(): Month {
+    override fun generateNextMonth(firstWorkDate: LocalDate): Month {
         date = date.plusMonths(ONE_VALUE)
-        val dayList = workDaysGenerator.generateDays(date)
+        val dayList = workDaysGenerator.generateDays(date, firstWorkDate)
         val formattedDate = formatter.formatDate(date)
         return WorkMonth(formattedDate, dayList)
     }

@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import com.github.googelfist.workshedule.component
 import com.github.googelfist.workshedule.databinding.ScheduleFragmentBinding
 import com.github.googelfist.workshedule.presentation.recycler.DayListAdapter
+import java.time.LocalDate
 import javax.inject.Inject
 
 class ScheduleFragment : Fragment() {
@@ -17,6 +18,8 @@ class ScheduleFragment : Fragment() {
     private var _binding: ScheduleFragmentBinding? = null
     private val binding: ScheduleFragmentBinding
         get() = _binding!!
+
+    private val firstWorkDate = LocalDate.of(2022, 4, 16)
 
     @Inject
     lateinit var scheduleViewModelFactory: ScheduleViewModelFactory
@@ -49,17 +52,19 @@ class ScheduleFragment : Fragment() {
         setupRecyclerView()
 
         setupButtons()
+
+        twoInTwoViewModel.onGenerateCurrentMonth(firstWorkDate)
     }
 
     private fun setupButtons() {
         binding.twoInTwoPreviousButton.setOnClickListener {
-            twoInTwoViewModel.onGeneratePreviousMonth()
+            twoInTwoViewModel.onGeneratePreviousMonth(firstWorkDate)
         }
         binding.twoInTwoCurrentButton.setOnClickListener {
-            twoInTwoViewModel.onGenerateCurrentMonth()
+            twoInTwoViewModel.onGenerateCurrentMonth(firstWorkDate)
         }
         binding.twoInTwoNextButton.setOnClickListener {
-            twoInTwoViewModel.onGenerateNextMonth()
+            twoInTwoViewModel.onGenerateNextMonth(firstWorkDate)
         }
     }
 
