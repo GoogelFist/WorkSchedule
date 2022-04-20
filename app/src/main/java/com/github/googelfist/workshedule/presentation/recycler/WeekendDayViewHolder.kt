@@ -1,4 +1,4 @@
-package com.github.googelfist.workshedule.presentation.schedule.recycler.holder
+package com.github.googelfist.workshedule.presentation.recycler
 
 import android.view.View
 import android.widget.TextView
@@ -8,7 +8,7 @@ import com.github.googelfist.workshedule.R
 import com.github.googelfist.workshedule.domain.models.day.Day
 import com.github.googelfist.workshedule.domain.models.day.WeekendDay
 
-class WeekendViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+class WeekendDayViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
     private val weekendDayTextView: TextView by lazy(LazyThreadSafetyMode.NONE) {
         view.findViewById(R.id.text_view_weekend_day_item)

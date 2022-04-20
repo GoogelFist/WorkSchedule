@@ -1,4 +1,4 @@
-package com.github.googelfist.workshedule.presentation
+package com.github.googelfist.workshedule.presentation.recycler
 
 import androidx.recyclerview.widget.DiffUtil
 import com.github.googelfist.workshedule.domain.models.day.Day

@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.github.googelfist.workshedule.component
 import com.github.googelfist.workshedule.databinding.DefaultScheduleFragmentBinding
-import com.github.googelfist.workshedule.presentation.def.recycler.DefaultDayListAdapter
+import com.github.googelfist.workshedule.presentation.recycler.DayListAdapter
 import javax.inject.Inject
 
 class DefaultScheduleFragment : Fragment() {
@@ -25,7 +25,7 @@ class DefaultScheduleFragment : Fragment() {
         defaultViewModelFactory
     }
 
-    private lateinit var dayListAdapter: DefaultDayListAdapter
+    private lateinit var dayListAdapter: DayListAdapter
 
     override fun onAttach(context: Context) {
         context.component.inject(this)
@@ -72,7 +72,7 @@ class DefaultScheduleFragment : Fragment() {
     private fun setupRecyclerView() {
         val recyclerView = binding.defaultDayRecyclerView
 
-        dayListAdapter = DefaultDayListAdapter()
+        dayListAdapter = DayListAdapter()
         recyclerView.adapter = dayListAdapter
     }
 

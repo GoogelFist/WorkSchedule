@@ -1,4 +1,4 @@
-package com.github.googelfist.workshedule.presentation.def.recycler.holder
+package com.github.googelfist.workshedule.presentation.recycler
 
 import android.view.View
 import android.widget.TextView

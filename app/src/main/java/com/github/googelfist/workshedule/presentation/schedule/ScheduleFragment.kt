@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.github.googelfist.workshedule.component
 import com.github.googelfist.workshedule.databinding.ScheduleFragmentBinding
-import com.github.googelfist.workshedule.presentation.schedule.recycler.ScheduleDayListAdapter
+import com.github.googelfist.workshedule.presentation.recycler.DayListAdapter
 import javax.inject.Inject
 
 class ScheduleFragment : Fragment() {
@@ -25,7 +25,7 @@ class ScheduleFragment : Fragment() {
         scheduleViewModelFactory
     }
 
-    lateinit var scheduleDayListAdapter: ScheduleDayListAdapter
+    lateinit var dayListAdapter: DayListAdapter
 
     override fun onAttach(context: Context) {
         context.component.inject(this)
@@ -65,7 +65,7 @@ class ScheduleFragment : Fragment() {
 
     private fun observeViewModel() {
         twoInTwoViewModel.month.observe(viewLifecycleOwner) {
-            scheduleDayListAdapter.submitList(it.getDaysList())
+            dayListAdapter.submitList(it.getDaysList())
             binding.twoInTwoDateTextView.text = it.getFormattedDate()
         }
     }
@@ -73,8 +73,8 @@ class ScheduleFragment : Fragment() {
     private fun setupRecyclerView() {
         val recyclerView = binding.twoInTwoDayRecyclerView
 
-        scheduleDayListAdapter = ScheduleDayListAdapter()
-        recyclerView.adapter = scheduleDayListAdapter
+        dayListAdapter = DayListAdapter()
+        recyclerView.adapter = dayListAdapter
     }
 
     override fun onDestroy() {
