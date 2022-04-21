@@ -1,5 +1,9 @@
 package com.github.googelfist.workshedule.di
 
+import com.github.googelfist.workshedule.data.RepositoryImp
+import com.github.googelfist.workshedule.data.datasource.LocalDataSource
+import com.github.googelfist.workshedule.data.datasource.local.RoomDataSourceImpl
+import com.github.googelfist.workshedule.domain.Repository
 import com.github.googelfist.workshedule.domain.monthgenerator.twointwo.WorkTwoInTwoMonthGenerator
 import com.github.googelfist.workshedule.domain.monthgenerator.twointwo.WorkTwoInTwoMonthGeneratorImpl
 import com.github.googelfist.workshedule.domain.monthgenerator.twointwo.daygenerator.WorkTwoInTwoDaysGenerator
@@ -25,4 +29,11 @@ interface TwoInTwoModule {
     @Binds
     @Singleton
     fun bindMonthGenerator(impl: WorkTwoInTwoMonthGeneratorImpl): WorkTwoInTwoMonthGenerator
+
+    @Binds
+    @Singleton
+    fun bindRepository(impl: RepositoryImp): Repository
+
+    @Binds
+    fun bindDataSource(impl: RoomDataSourceImpl): LocalDataSource
 }
