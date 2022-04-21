@@ -1,10 +1,10 @@
-package com.github.googelfist.workshedule.domain.usecases.twointwo
+package com.github.googelfist.workshedule.domain.usecases
 
 import com.github.googelfist.workshedule.domain.Repository
 import javax.inject.Inject
 
 class SaveFirstWorkDateUseCase @Inject constructor(private val repository: Repository) {
-    operator fun invoke(firstWorkDate: String) {
+    suspend operator fun invoke(firstWorkDate: String) {
         repository.saveFirstWorkDate(firstWorkDate)
     }
 }

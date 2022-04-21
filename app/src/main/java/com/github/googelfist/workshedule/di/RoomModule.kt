@@ -15,7 +15,6 @@ class RoomModule {
     fun provideDataRoomDatabase(application: Application): ParametersDataBase {
         return Room.databaseBuilder(application, ParametersDataBase::class.java, DB_NAME)
             .fallbackToDestructiveMigration()
-            .allowMainThreadQueries() // TODO: add coroutines
             .build()
     }
 

@@ -2,32 +2,26 @@ package com.github.googelfist.workshedule.presentation.schedule
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.github.googelfist.workshedule.domain.usecases.twointwo.GenerateCurrentMonthTwoInTwoUseCase
-import com.github.googelfist.workshedule.domain.usecases.twointwo.GenerateNextMonthTwoInTwoUseCase
-import com.github.googelfist.workshedule.domain.usecases.twointwo.GeneratePreviousMonthTwoInTwoUseCase
-import com.github.googelfist.workshedule.domain.usecases.twointwo.LoadFirstWorkDateUseCase
-import com.github.googelfist.workshedule.domain.usecases.twointwo.LoadScheduleTypeUseCase
-import com.github.googelfist.workshedule.domain.usecases.twointwo.SaveFirstWorkDateUseCase
-import com.github.googelfist.workshedule.domain.usecases.twointwo.SaveScheduleTypeUseCase
+import com.github.googelfist.workshedule.domain.usecases.GenerateCurrentMonthUseCase
+import com.github.googelfist.workshedule.domain.usecases.GenerateNextMonthUseCase
+import com.github.googelfist.workshedule.domain.usecases.GeneratePreviousMonthUseCase
+import com.github.googelfist.workshedule.domain.usecases.SaveFirstWorkDateUseCase
+import com.github.googelfist.workshedule.domain.usecases.SaveScheduleTypeUseCase
 import javax.inject.Inject
 
 class ScheduleViewModelFactory @Inject constructor(
-    private val generatePreviousMonthTwoInTwoUseCase: GeneratePreviousMonthTwoInTwoUseCase,
-    private val generateCurrentMonthTwoInTwoUseCase: GenerateCurrentMonthTwoInTwoUseCase,
-    private val generateNextMonthTwoInTwoUseCase: GenerateNextMonthTwoInTwoUseCase,
-    private val loadFirstWorkDateUseCase: LoadFirstWorkDateUseCase,
+    private val generatePreviousMonthUseCase: GeneratePreviousMonthUseCase,
+    private val generateCurrentMonthUseCase: GenerateCurrentMonthUseCase,
+    private val generateNextMonthUseCase: GenerateNextMonthUseCase,
     private val saveFirstWorkDateUseCase: SaveFirstWorkDateUseCase,
-    private val loadScheduleTypeUseCase: LoadScheduleTypeUseCase,
     private val saveScheduleTypeUseCase: SaveScheduleTypeUseCase,
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return ScheduleViewModel(
-            generatePreviousMonthTwoInTwoUseCase = generatePreviousMonthTwoInTwoUseCase,
-            generateCurrentMonthTwoInTwoUseCase = generateCurrentMonthTwoInTwoUseCase,
-            generateNextMonthTwoInTwoUseCase = generateNextMonthTwoInTwoUseCase,
-            loadFirstWorkDateUseCase = loadFirstWorkDateUseCase,
+            generatePreviousMonthUseCase = generatePreviousMonthUseCase,
+            generateCurrentMonthUseCase = generateCurrentMonthUseCase,
+            generateNextMonthUseCase = generateNextMonthUseCase,
             saveFirstWorkDateUseCase = saveFirstWorkDateUseCase,
-            loadScheduleTypeUseCase = loadScheduleTypeUseCase,
             saveScheduleTypeUseCase = saveScheduleTypeUseCase,
         ) as T
     }

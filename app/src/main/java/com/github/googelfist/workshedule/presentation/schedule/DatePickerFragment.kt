@@ -22,19 +22,13 @@ class DatePickerFragment(private val viewModel: ViewModel) :
 
     // TODO: not sure about this
     override fun onDateSet(view: DatePicker, year: Int, month: Int, day: Int) {
-        when (viewModel) {
-            is ScheduleViewModel -> {
-
-//                DateTimeFormatter.ofPattern("yyyy-MM-dd").parse("2022-4-22")
-//                LocalDate.from(DateTimeFormatter.ofPattern("yyyy-M-dd").parse("2022-4-22"))
-                viewModel.onSaveFirstWorkDate("$year-${month + ONE_VALUE}-$day")
-            }
-            else -> throw RuntimeException("View model is unknown")
-        }
+        if (viewModel is ScheduleViewModel) {
+            viewModel.onSaveFirstWorkDate("$year-${month + ONE_VALUE}-$day")
+            viewModel.onGenerateCurrentMonth()
+        } else throw RuntimeException("View model is unknown")
     }
 
     companion object {
-
         private const val ONE_VALUE = 1
     }
 }

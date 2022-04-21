@@ -1,15 +1,18 @@
-package com.github.googelfist.workshedule.domain.monthgenerator.def.fabric
+package com.github.googelfist.workshedule.domain.monthgenerator.fabric
 
 import com.github.googelfist.workshedule.domain.models.day.Day
 import com.github.googelfist.workshedule.domain.models.day.DefaultDay
 import com.github.googelfist.workshedule.domain.models.day.WeekendDay
 import com.github.googelfist.workshedule.domain.models.day.WorkDay
 import com.github.googelfist.workshedule.domain.monthgenerator.DateNowContainer
+import com.github.googelfist.workshedule.domain.monthgenerator.ScheduleCreator
 import java.time.LocalDate
 import javax.inject.Inject
 
-class DefaultDaysFabricImpl @Inject constructor(private val dateNowContainer: DateNowContainer) :
-    DefaultDaysFabric {
+class DaysFabricImpl @Inject constructor(
+    private val dateNowContainer: DateNowContainer,
+    private val scheduleCreator: ScheduleCreator
+) : DaysFabric {
 
     override fun getDefaultDay(dateOfMonth: LocalDate, activeDate: LocalDate): Day {
 
@@ -40,11 +43,10 @@ class DefaultDaysFabricImpl @Inject constructor(private val dateNowContainer: Da
         }
     }
 
-    override fun getTwoInTwoWorkDay(
-        dateOfMonth: LocalDate,
-        activeDate: LocalDate,
-        workSchedule: Set<LocalDate>
-    ): Day {
+    override suspend fun getWorkDay(dateOfMonth: LocalDate, activeDate: LocalDate): Day {
+
+        val workSchedule = scheduleCreator.createTwoInTwoSchedule(dateOfMonth)
+
         return when {
             isWorkShiftDay(workSchedule, dateOfMonth) && !isCurrentMonthDay(
                 dateOfMonth,

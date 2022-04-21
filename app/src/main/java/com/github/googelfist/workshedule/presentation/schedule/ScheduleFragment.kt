@@ -2,7 +2,6 @@ package com.github.googelfist.workshedule.presentation.schedule
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,6 @@ import androidx.fragment.app.activityViewModels
 import com.github.googelfist.workshedule.component
 import com.github.googelfist.workshedule.databinding.ScheduleFragmentBinding
 import com.github.googelfist.workshedule.presentation.recycler.DayListAdapter
-import java.time.LocalDate
 import javax.inject.Inject
 
 class ScheduleFragment : Fragment() {
@@ -20,14 +18,10 @@ class ScheduleFragment : Fragment() {
     private val binding: ScheduleFragmentBinding
         get() = _binding!!
 
-    //    private val firstWorkDate = LocalDate.of(2022, 4, 16)
-//    private var firstWorkDate = LocalDate.of(2022, 4, 17)
-    lateinit var firstWorkDate: LocalDate
-
     @Inject
     lateinit var scheduleViewModelFactory: ScheduleViewModelFactory
 
-    private val twoInTwoViewModel by activityViewModels<ScheduleViewModel> {
+    private val scheduleViewModel by activityViewModels<ScheduleViewModel> {
         scheduleViewModelFactory
     }
 
@@ -50,15 +44,15 @@ class ScheduleFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        twoInTwoViewModel.onSaveFirstWorkDate("2022-4-17")
-
         observeViewModel()
 
         setupRecyclerView()
 
         setupButtons()
 
-        twoInTwoViewModel.onGenerateCurrentMonth(firstWorkDate)
+        // TODO: create ui for this
+        scheduleViewModel.onSaveScheduleType(TWO_IN_TWO_SCHEDULE_TYPE)
+//        scheduleViewModel.onSaveScheduleType(DEFAULT_SCHEDULE_TYPE)
     }
 
     override fun onDestroy() {
@@ -67,15 +61,9 @@ class ScheduleFragment : Fragment() {
     }
 
     private fun observeViewModel() {
-        twoInTwoViewModel.month.observe(viewLifecycleOwner) {
+        scheduleViewModel.month.observe(viewLifecycleOwner) {
             dayListAdapter.submitList(it.getDaysList())
             binding.twoInTwoDateTextView.text = it.getFormattedDate()
-        }
-
-        twoInTwoViewModel.firstWorkDate.observe(viewLifecycleOwner) {
-            firstWorkDate = it
-            Log.e("PARSE", "$firstWorkDate")
-            twoInTwoViewModel.onGenerateCurrentMonth(firstWorkDate)
         }
     }
 
@@ -88,24 +76,25 @@ class ScheduleFragment : Fragment() {
 
     private fun setupButtons() {
         binding.twoInTwoPreviousButton.setOnClickListener {
-            twoInTwoViewModel.onGeneratePreviousMonth(firstWorkDate)
+            scheduleViewModel.onGeneratePreviousMonth()
         }
         binding.twoInTwoCurrentButton.setOnClickListener {
-            twoInTwoViewModel.onGenerateCurrentMonth(firstWorkDate)
+            scheduleViewModel.onGenerateCurrentMonth()
         }
         binding.twoInTwoNextButton.setOnClickListener {
-            twoInTwoViewModel.onGenerateNextMonth(firstWorkDate)
+            scheduleViewModel.onGenerateNextMonth()
         }
         binding.datePickerDialog.setOnClickListener {
-            val datePickerFragment = DatePickerFragment(twoInTwoViewModel)
+            val datePickerFragment = DatePickerFragment(scheduleViewModel)
             datePickerFragment.show(requireActivity().supportFragmentManager, DATE_PICKER_TAG)
         }
     }
 
-
     companion object {
-
         private const val DATE_PICKER_TAG = "datePicker"
+
+        private const val TWO_IN_TWO_SCHEDULE_TYPE = "2/2"
+        private const val DEFAULT_SCHEDULE_TYPE = "Default"
 
         fun getNewInstance(): ScheduleFragment {
             return ScheduleFragment()

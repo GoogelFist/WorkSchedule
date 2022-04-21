@@ -1,7 +1,5 @@
 package com.github.googelfist.workshedule.data.datasource.local
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations
 import com.github.googelfist.workshedule.data.datasource.LocalDataSource
 import com.github.googelfist.workshedule.data.datasource.local.model.FirstWorkDateDao
 import com.github.googelfist.workshedule.data.datasource.local.model.ScheduleTypeDao
@@ -11,22 +9,22 @@ import javax.inject.Inject
 
 class RoomDataSourceImpl @Inject constructor(private val parametersDao: ParametersDao) :
     LocalDataSource {
-    override fun loadFirstWorkDate(): LiveData<LocalDate> {
-        val loadFirstWorkDate = parametersDao.loadFirstWorkDate(FIRST_WORK_DATE_ID)
-        return Transformations.map(loadFirstWorkDate) {
-            LocalDate.from(DateTimeFormatter.ofPattern("yyyy-M-dd").parse(it))
-        }
+    override suspend fun loadFirstWorkDate(): LocalDate {
+        val firstWorkDate = parametersDao.loadFirstWorkDate(FIRST_WORK_DATE_ID)
+        // TODO: rewrite with mapper
+        return LocalDate.from(DateTimeFormatter.ofPattern("yyyy-M-dd").parse(firstWorkDate))
     }
 
-    override fun saveFirstWorkDate(firstWorkDate: String) {
+    override suspend fun saveFirstWorkDate(firstWorkDate: String) {
         parametersDao.saveFirstWorkDate(FirstWorkDateDao(FIRST_WORK_DATE_ID, firstWorkDate))
     }
 
-    override fun loadScheduleType(): LiveData<String> {
+    override suspend fun loadScheduleType(): String {
+        // TODO: rewrite with sealed class
         return parametersDao.loadScheduleType(SCHEDULE_TYPE_ID)
     }
 
-    override fun saveScheduleType(scheduleType: String) {
+    override suspend fun saveScheduleType(scheduleType: String) {
         parametersDao.saveScheduleType(ScheduleTypeDao(SCHEDULE_TYPE_ID, scheduleType))
     }
 
