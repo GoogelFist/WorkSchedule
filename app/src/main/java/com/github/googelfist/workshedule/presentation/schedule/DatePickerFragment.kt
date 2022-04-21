@@ -22,9 +22,9 @@ class DatePickerFragment(private val viewModel: ViewModel) :
 
     // TODO: not sure about this
     override fun onDateSet(view: DatePicker, year: Int, month: Int, day: Int) {
+        val date = "$year-${month + ONE_VALUE}-$day"
         if (viewModel is ScheduleViewModel) {
-            viewModel.onSaveFirstWorkDate("$year-${month + ONE_VALUE}-$day")
-            viewModel.onGenerateCurrentMonth()
+            viewModel.onRefreshFirstWorkDate(date)
         } else throw RuntimeException("View model is unknown")
     }
 

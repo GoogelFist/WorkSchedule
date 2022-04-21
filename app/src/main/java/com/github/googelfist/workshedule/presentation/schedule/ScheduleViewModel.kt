@@ -49,15 +49,19 @@ class ScheduleViewModel(
         }
     }
 
-    fun onSaveFirstWorkDate(firstWorkDate: String) {
+    fun onRefreshScheduleType(scheduleType: String) {
         viewModelScope.launch {
-            saveFirstWorkDateUseCase(firstWorkDate)
+            saveScheduleTypeUseCase(scheduleType)
+            val month = generateCurrentMonthUseCase()
+            _month.value = month
         }
     }
 
-    fun onSaveScheduleType(scheduleType: String) {
+    fun onRefreshFirstWorkDate(firstWorkDate: String) {
         viewModelScope.launch {
-            saveScheduleTypeUseCase(scheduleType)
+            saveFirstWorkDateUseCase(firstWorkDate)
+            val month = generateCurrentMonthUseCase()
+            _month.value = month
         }
     }
 }

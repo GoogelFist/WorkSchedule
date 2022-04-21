@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">Work Shedule</string>
+    <string name="app_name">Work Schedule</string>
+    <string name="schedule_type_default">Default</string>
+    <string name="schedule_type_two_in_two">2/2</string>
 </resources>
