@@ -1,7 +1,7 @@
 package com.github.googelfist.workshedule.domain.monthgenerator.def
 
 import com.github.googelfist.workshedule.domain.formatter.DateFormatter
-import com.github.googelfist.workshedule.domain.models.day.DefaultMonth
+import com.github.googelfist.workshedule.domain.models.month.DefaultMonth
 import com.github.googelfist.workshedule.domain.models.month.Month
 import com.github.googelfist.workshedule.domain.monthgenerator.DateNowContainer
 import com.github.googelfist.workshedule.domain.monthgenerator.def.daysgenerator.DefaultDaysGenerator

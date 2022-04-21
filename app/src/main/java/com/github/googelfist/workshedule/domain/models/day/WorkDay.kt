@@ -1,7 +1,5 @@
 package com.github.googelfist.workshedule.domain.models.day
 
-import com.github.googelfist.workshedule.domain.models.month.CurrentMonth
-
 data class WorkDay(
     val day: Int,
     val month: Int,
