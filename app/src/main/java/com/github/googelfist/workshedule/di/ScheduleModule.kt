@@ -8,12 +8,12 @@ import com.github.googelfist.workshedule.domain.formatter.DateFormatter
 import com.github.googelfist.workshedule.domain.formatter.DateFormatterImpl
 import com.github.googelfist.workshedule.domain.monthgenerator.MonthGenerator
 import com.github.googelfist.workshedule.domain.monthgenerator.MonthGeneratorImpl
-import com.github.googelfist.workshedule.domain.monthgenerator.ScheduleCreator
-import com.github.googelfist.workshedule.domain.monthgenerator.ScheduleCreatorImpl
 import com.github.googelfist.workshedule.domain.monthgenerator.daygenerator.DaysGenerator
 import com.github.googelfist.workshedule.domain.monthgenerator.daygenerator.DaysGeneratorImpl
 import com.github.googelfist.workshedule.domain.monthgenerator.fabric.DaysFabric
 import com.github.googelfist.workshedule.domain.monthgenerator.fabric.DaysFabricImpl
+import com.github.googelfist.workshedule.domain.monthgenerator.schedulecreator.ScheduleCreator
+import com.github.googelfist.workshedule.domain.monthgenerator.schedulecreator.ScheduleCreatorImpl
 import dagger.Binds
 import dagger.Module
 import javax.inject.Singleton

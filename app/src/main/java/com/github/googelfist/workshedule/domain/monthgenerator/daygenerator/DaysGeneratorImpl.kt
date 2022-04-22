@@ -1,6 +1,7 @@
 package com.github.googelfist.workshedule.domain.monthgenerator.daygenerator
 
 import com.github.googelfist.workshedule.domain.Repository
+import com.github.googelfist.workshedule.domain.ScheduleType
 import com.github.googelfist.workshedule.domain.models.day.Day
 import com.github.googelfist.workshedule.domain.monthgenerator.fabric.DaysFabric
 import java.time.LocalDate
@@ -12,14 +13,11 @@ class DaysGeneratorImpl @Inject constructor(
 ) : DaysGenerator {
 
     override suspend fun getDays(date: LocalDate): List<Day> {
-
         val scheduleType = repository.loadScheduleType()
 
         return when (scheduleType) {
-            TWO_IN_TWO_SCHEDULE_TYPE -> generateWorkDays(date)
-            else -> {
-                generateDefaultDays(date)
-            }
+            is ScheduleType.TwoInTwo -> generateWorkDays(date)
+            is ScheduleType.Default -> generateDefaultDays(date)
         }
     }
 
@@ -57,8 +55,5 @@ class DaysGeneratorImpl @Inject constructor(
     companion object {
         private const val ONE_VALUE = 1L
         private const val MAX_DAY_COUNT = 42
-
-        private const val TWO_IN_TWO_SCHEDULE_TYPE = "2/2"
-        private const val DEFAULT_SCHEDULE_TYPE = "Default"
     }
 }

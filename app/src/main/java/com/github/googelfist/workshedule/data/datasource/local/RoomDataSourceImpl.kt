@@ -1,23 +1,23 @@
 package com.github.googelfist.workshedule.data.datasource.local
 
+import com.github.googelfist.workshedule.data.Mapper
 import com.github.googelfist.workshedule.data.datasource.LocalDataSource
 import com.github.googelfist.workshedule.data.datasource.local.model.FirstWorkDateDao
 import com.github.googelfist.workshedule.data.datasource.local.model.ScheduleTypeDao
 import com.github.googelfist.workshedule.domain.monthgenerator.DateNowContainer
 import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 class RoomDataSourceImpl @Inject constructor(
     private val parametersDao: ParametersDao,
-    private val dateNowContainer: DateNowContainer
+    private val dateNowContainer: DateNowContainer,
+    private val mapper: Mapper
 ) :
     LocalDataSource {
     override suspend fun loadFirstWorkDate(): LocalDate {
         val firstWorkDate = parametersDao.loadFirstWorkDate(FIRST_WORK_DATE_ID)
         firstWorkDate?.let {
-            // TODO: rewrite with mapper
-            return LocalDate.from(DateTimeFormatter.ofPattern("yyyy-M-dd").parse(firstWorkDate))
+            return mapper.mapDateStringToLocalDate(it)
         }
         return dateNowContainer.getDate()
     }
@@ -27,10 +27,9 @@ class RoomDataSourceImpl @Inject constructor(
     }
 
     override suspend fun loadScheduleType(): String {
-        // TODO: rewrite with sealed class
         val scheduleType = parametersDao.loadScheduleType(SCHEDULE_TYPE_ID)
         scheduleType?.let {
-            return scheduleType
+            return it
         }
         return DEFAULT_SCHEDULE_TYPE
     }
