@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.github.googelfist.workshedule.domain.usecases.GenerateCurrentMonthUseCase
 import com.github.googelfist.workshedule.domain.usecases.GenerateNextMonthUseCase
 import com.github.googelfist.workshedule.domain.usecases.GeneratePreviousMonthUseCase
+import com.github.googelfist.workshedule.domain.usecases.LoadScheduleTypeUseCase
 import com.github.googelfist.workshedule.domain.usecases.SaveFirstWorkDateUseCase
 import com.github.googelfist.workshedule.domain.usecases.SaveScheduleTypeUseCase
 import javax.inject.Inject
@@ -15,6 +16,7 @@ class ScheduleViewModelFactory @Inject constructor(
     private val generateNextMonthUseCase: GenerateNextMonthUseCase,
     private val saveFirstWorkDateUseCase: SaveFirstWorkDateUseCase,
     private val saveScheduleTypeUseCase: SaveScheduleTypeUseCase,
+    private val loadScheduleTypeUseCase: LoadScheduleTypeUseCase
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return ScheduleViewModel(
@@ -23,6 +25,7 @@ class ScheduleViewModelFactory @Inject constructor(
             generateNextMonthUseCase = generateNextMonthUseCase,
             saveFirstWorkDateUseCase = saveFirstWorkDateUseCase,
             saveScheduleTypeUseCase = saveScheduleTypeUseCase,
+            loadScheduleTypeUseCase = loadScheduleTypeUseCase
         ) as T
     }
 }

@@ -4,10 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.github.googelfist.workshedule.domain.ScheduleType
 import com.github.googelfist.workshedule.domain.models.month.Month
 import com.github.googelfist.workshedule.domain.usecases.GenerateCurrentMonthUseCase
 import com.github.googelfist.workshedule.domain.usecases.GenerateNextMonthUseCase
 import com.github.googelfist.workshedule.domain.usecases.GeneratePreviousMonthUseCase
+import com.github.googelfist.workshedule.domain.usecases.LoadScheduleTypeUseCase
 import com.github.googelfist.workshedule.domain.usecases.SaveFirstWorkDateUseCase
 import com.github.googelfist.workshedule.domain.usecases.SaveScheduleTypeUseCase
 import kotlinx.coroutines.launch
@@ -18,13 +20,19 @@ class ScheduleViewModel(
     private val generateNextMonthUseCase: GenerateNextMonthUseCase,
     private val saveFirstWorkDateUseCase: SaveFirstWorkDateUseCase,
     private val saveScheduleTypeUseCase: SaveScheduleTypeUseCase,
+    private val loadScheduleTypeUseCase: LoadScheduleTypeUseCase
 ) : ViewModel() {
 
     private var _month = MutableLiveData<Month>()
     val month: LiveData<Month>
         get() = _month
 
+    private var _scheduleType = MutableLiveData<ScheduleType>()
+    val scheduleType: LiveData<ScheduleType>
+        get() = _scheduleType
+
     init {
+        onLoadScheduleType()
         onGenerateCurrentMonth()
     }
 
@@ -54,14 +62,28 @@ class ScheduleViewModel(
             saveScheduleTypeUseCase(scheduleType)
             val month = generateCurrentMonthUseCase()
             _month.value = month
+
+            val type = loadScheduleTypeUseCase()
+            _scheduleType.value = type
         }
     }
 
+    // TODO: naming (single response)
     fun onRefreshFirstWorkDate(firstWorkDate: String) {
         viewModelScope.launch {
             saveFirstWorkDateUseCase(firstWorkDate)
             val month = generateCurrentMonthUseCase()
             _month.value = month
+
+            val type = loadScheduleTypeUseCase()
+            _scheduleType.value = type
+        }
+    }
+
+    private fun onLoadScheduleType() {
+        viewModelScope.launch {
+            val scheduleType = loadScheduleTypeUseCase()
+            _scheduleType.value = scheduleType
         }
     }
 }

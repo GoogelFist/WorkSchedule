@@ -12,6 +12,7 @@ import androidx.fragment.app.activityViewModels
 import com.github.googelfist.workshedule.R
 import com.github.googelfist.workshedule.component
 import com.github.googelfist.workshedule.databinding.ScheduleFragmentBinding
+import com.github.googelfist.workshedule.domain.ScheduleType
 import com.github.googelfist.workshedule.presentation.recycler.DayListAdapter
 import javax.inject.Inject
 
@@ -63,6 +64,23 @@ class ScheduleFragment : Fragment() {
         scheduleViewModel.month.observe(viewLifecycleOwner) {
             dayListAdapter.submitList(it.getDaysList())
             binding.twoInTwoDateTextView.text = it.getFormattedDate()
+        }
+
+        // TODO: string resources
+        scheduleViewModel.scheduleType.observe(viewLifecycleOwner) { scheduleType ->
+            when (scheduleType) {
+                is ScheduleType.TwoInTwo -> {
+                    binding.datePickerDialog.visibility = View.VISIBLE
+                    binding.dateTextView.visibility = View.VISIBLE
+                    binding.dateTextView.text = scheduleType.firstWorkDate.toString()
+                    binding.scheduleTypeTextView.text = "2 / 2"
+                }
+                is ScheduleType.Default -> {
+                    binding.datePickerDialog.visibility = View.GONE
+                    binding.dateTextView.visibility = View.GONE
+                    binding.scheduleTypeTextView.text = "Default"
+                }
+            }
         }
     }
 
