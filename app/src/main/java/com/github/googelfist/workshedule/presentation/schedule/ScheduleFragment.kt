@@ -102,8 +102,11 @@ class ScheduleFragment : Fragment() {
             scheduleViewModel.onGenerateNextMonth()
         }
         binding.datePickerDialog.setOnClickListener {
-            val datePickerFragment = DatePickerFragment(scheduleViewModel)
+            val datePickerFragment = DatePickerFragment()
             datePickerFragment.show(requireActivity().supportFragmentManager, DATE_PICKER_TAG)
+            datePickerFragment.dateSetListener = { date ->
+                scheduleViewModel.onRefreshFirstWorkDate(date)
+            }
         }
         binding.scheduleTypes.setOnClickListener { v: View ->
             showMenu(v, R.menu.schedule_types_menu)

@@ -5,11 +5,12 @@ import android.app.Dialog
 import android.os.Bundle
 import android.widget.DatePicker
 import androidx.fragment.app.DialogFragment
-import androidx.lifecycle.ViewModel
 import java.util.Calendar
 
-class DatePickerFragment(private val viewModel: ViewModel) :
+class DatePickerFragment() :
     DialogFragment(), DatePickerDialog.OnDateSetListener {
+
+    lateinit var dateSetListener: (String) -> Unit
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val calendar = Calendar.getInstance()
@@ -20,12 +21,9 @@ class DatePickerFragment(private val viewModel: ViewModel) :
         return DatePickerDialog(requireActivity(), this, year, month, day)
     }
 
-    // TODO: not sure about this
     override fun onDateSet(view: DatePicker, year: Int, month: Int, day: Int) {
         val date = "$year-${month + ONE_VALUE}-$day"
-        if (viewModel is ScheduleViewModel) {
-            viewModel.onRefreshFirstWorkDate(date)
-        } else throw RuntimeException("View model is unknown")
+        dateSetListener.invoke(date)
     }
 
     companion object {
