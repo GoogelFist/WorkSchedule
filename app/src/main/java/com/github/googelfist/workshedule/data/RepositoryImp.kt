@@ -18,7 +18,7 @@ class RepositoryImp @Inject constructor(private val localDataSource: LocalDataSo
                 val firstWorkDate = localDataSource.loadFirstWorkDate()
                 ScheduleType.TwoInTwo(firstWorkDate = firstWorkDate, TWO_IN_TWO_CYCLE_DAY_STEP)
             }
-            DEFAULT_SCHEDULE_TYPE -> ScheduleType.Default
+            DEFAULT_SCHEDULE_TYPE -> ScheduleType.Default()
             else -> {
                 throw RuntimeException("Unknown schedule type")
             }

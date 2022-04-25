@@ -10,7 +10,7 @@ import java.util.Calendar
 class DatePickerFragment() :
     DialogFragment(), DatePickerDialog.OnDateSetListener {
 
-    lateinit var dateSetListener: (String) -> Unit
+    lateinit var onDateSetListener: (String) -> Unit
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val calendar = Calendar.getInstance()
@@ -23,10 +23,16 @@ class DatePickerFragment() :
 
     override fun onDateSet(view: DatePicker, year: Int, month: Int, day: Int) {
         val date = "$year-${month + ONE_VALUE}-$day"
-        dateSetListener.invoke(date)
+        onDateSetListener.invoke(date)
     }
 
     companion object {
         private const val ONE_VALUE = 1
+
+        const val TAG = "date picker tag"
+
+        fun newInstance(): DatePickerFragment {
+            return DatePickerFragment()
+        }
     }
 }

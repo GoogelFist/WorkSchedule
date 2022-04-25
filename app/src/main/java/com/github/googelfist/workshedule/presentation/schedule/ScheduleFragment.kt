@@ -12,7 +12,6 @@ import androidx.fragment.app.activityViewModels
 import com.github.googelfist.workshedule.R
 import com.github.googelfist.workshedule.component
 import com.github.googelfist.workshedule.databinding.ScheduleFragmentBinding
-import com.github.googelfist.workshedule.domain.ScheduleType
 import com.github.googelfist.workshedule.presentation.recycler.DayListAdapter
 import javax.inject.Inject
 
@@ -30,6 +29,8 @@ class ScheduleFragment : Fragment() {
     }
 
     lateinit var dayListAdapter: DayListAdapter
+
+    private val bottomSheetFragment by lazy(LazyThreadSafetyMode.NONE) { BottomSheetFragment.getNewInstance() }
 
     override fun onAttach(context: Context) {
         context.component.inject(this)
@@ -52,7 +53,13 @@ class ScheduleFragment : Fragment() {
 
         setupRecyclerView()
 
+        setupAppBar()
+
         setupButtons()
+
+        binding.buttonShowBottomSheet.setOnClickListener {
+            bottomSheetFragment.show(childFragmentManager, BottomSheetFragment.TAG)
+        }
     }
 
     override fun onDestroy() {
@@ -63,53 +70,50 @@ class ScheduleFragment : Fragment() {
     private fun observeViewModel() {
         scheduleViewModel.month.observe(viewLifecycleOwner) {
             dayListAdapter.submitList(it.getDaysList())
-            binding.twoInTwoDateTextView.text = it.getFormattedDate()
-        }
-
-        // TODO: string resources
-        scheduleViewModel.scheduleType.observe(viewLifecycleOwner) { scheduleType ->
-            when (scheduleType) {
-                is ScheduleType.TwoInTwo -> {
-                    binding.datePickerDialog.visibility = View.VISIBLE
-                    binding.dateTextView.visibility = View.VISIBLE
-                    binding.dateTextView.text = scheduleType.firstWorkDate.toString()
-                    binding.scheduleTypeTextView.text = "2 / 2"
-                }
-                is ScheduleType.Default -> {
-                    binding.datePickerDialog.visibility = View.GONE
-                    binding.dateTextView.visibility = View.GONE
-                    binding.scheduleTypeTextView.text = "Default"
-                }
-            }
+            binding.dateTextView.text = it.getFormattedDate()
         }
     }
 
     private fun setupRecyclerView() {
-        val recyclerView = binding.twoInTwoDayRecyclerView
+        val recyclerView = binding.recyclerView
 
         dayListAdapter = DayListAdapter()
         recyclerView.adapter = dayListAdapter
     }
 
-    private fun setupButtons() {
-        binding.twoInTwoPreviousButton.setOnClickListener {
-            scheduleViewModel.onGeneratePreviousMonth()
-        }
-        binding.twoInTwoCurrentButton.setOnClickListener {
-            scheduleViewModel.onGenerateCurrentMonth()
-        }
-        binding.twoInTwoNextButton.setOnClickListener {
-            scheduleViewModel.onGenerateNextMonth()
-        }
-        binding.datePickerDialog.setOnClickListener {
-            val datePickerFragment = DatePickerFragment()
-            datePickerFragment.show(requireActivity().supportFragmentManager, DATE_PICKER_TAG)
-            datePickerFragment.dateSetListener = { date ->
-                scheduleViewModel.onRefreshFirstWorkDate(date)
+    private fun setupAppBar() {
+        binding.topAppBar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.first_work_date_menu_item -> {
+                    val datePickerFragment = DatePickerFragment.newInstance()
+                    datePickerFragment.show(childFragmentManager, DatePickerFragment.TAG)
+                    datePickerFragment.onDateSetListener = { date ->
+                        scheduleViewModel.onRefreshFirstWorkDate(date)
+                    }
+                    true
+                }
+                R.id.schedule_type_menu_item -> {
+                    val schedulePickerDialog = ScheduleTypePickerDialog.newInstance()
+                    schedulePickerDialog.show(childFragmentManager, ScheduleTypePickerDialog.TAG)
+                    schedulePickerDialog.onScheduleTypeSetListener = { scheduleType ->
+                        scheduleViewModel.onRefreshScheduleType(scheduleType)
+                    }
+                    true
+                }
+                else -> false
             }
         }
-        binding.scheduleTypes.setOnClickListener { v: View ->
-            showMenu(v, R.menu.schedule_types_menu)
+    }
+
+    private fun setupButtons() {
+        binding.previousButton.setOnClickListener {
+            scheduleViewModel.onGeneratePreviousMonth()
+        }
+        binding.currentButton.setOnClickListener {
+            scheduleViewModel.onGenerateCurrentMonth()
+        }
+        binding.nextButton.setOnClickListener {
+            scheduleViewModel.onGenerateNextMonth()
         }
     }
 
@@ -126,9 +130,8 @@ class ScheduleFragment : Fragment() {
     }
 
     companion object {
-        private const val DATE_PICKER_TAG = "datePicker"
 
-        fun getNewInstance(): ScheduleFragment {
+        fun newInstance(): ScheduleFragment {
             return ScheduleFragment()
         }
     }

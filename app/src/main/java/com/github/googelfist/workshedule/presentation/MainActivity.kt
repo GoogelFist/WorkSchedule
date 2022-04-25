@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
                 .beginTransaction()
                 .replace(
                     R.id.fragment_recycler_view_container,
-                    ScheduleFragment.getNewInstance()
+                    ScheduleFragment.newInstance()
                 )
                 .setReorderingAllowed(true)
                 .commit()

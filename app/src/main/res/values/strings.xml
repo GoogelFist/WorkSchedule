@@ -2,4 +2,15 @@
     <string name="app_name">Work Schedule</string>
     <string name="schedule_type_default">Default</string>
     <string name="schedule_type_two_in_two">2/2</string>
+
+
+    <string name="schedule_type_picker_dialog_title">Choose schedule type:</string>
+    <string name="schedule_type_picker_dialog_positive_button">OK</string>
+    <string name="schedule_type_picker_dialog_negative_button">Cancel</string>
+    <string name="schedule_type_menu_item_title">Schedule type</string>
+    <string name="first_work_date_menu_item_title">First work date</string>
+    <string name="first_work_date_menu_item_content_description">Choose first work date</string>
+    <string name="schedule_type_menu_item_content_description">Choose schedule type</string>
+
+
 </resources>
