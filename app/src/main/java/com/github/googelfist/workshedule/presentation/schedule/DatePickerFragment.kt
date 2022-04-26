@@ -21,7 +21,7 @@ class DatePickerFragment() :
 
         return DatePickerDialog(
             requireActivity(),
-            R.style.Theme_ScheduleDatePickerDialog,
+            R.style.Theme_WorkSchedule_ScheduleDatePickerDialog,
             this,
             year,
             month,
