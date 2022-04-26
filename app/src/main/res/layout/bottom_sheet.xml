@@ -4,51 +4,66 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:behavior_hideable="true"
-    app:behavior_peekHeight="150dp"
+    android:paddingBottom="16dp"
+    android:theme="@style/Theme.WorkSchedule"
     app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
 
-    <TextView
-        android:id="@+id/first_work_date_title_text_view"
+    <Button
+        android:id="@+id/schedule_type_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="First work date:"
+        android:text="Schedule type"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="First work date:" />
-
-    <TextView
-        android:id="@+id/date_text_view_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toBottomOf="@id/first_work_date_title_text_view"
-        app:layout_constraintStart_toEndOf="@+id/first_work_date_title_text_view"
-        app:layout_constraintTop_toTopOf="@id/first_work_date_title_text_view"
-        tools:layout_editor_absoluteX="102dp"
-        tools:layout_editor_absoluteY="164dp"
-        tools:text="2022-2-21" />
-
-    <TextView
-        android:id="@+id/schedule_type_title_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Schedule type:"
-        app:layout_constraintStart_toStartOf="@+id/first_work_date_title_text_view"
-        app:layout_constraintTop_toBottomOf="@+id/first_work_date_title_text_view"
-        tools:text="Schedule type:" />
+        app:layout_goneMarginTop="8dp"
+        tools:text="Schedule type" />
 
     <TextView
         android:id="@+id/schedule_type_text_view_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/schedule_type_title_text_view"
-        app:layout_constraintStart_toEndOf="@+id/schedule_type_title_text_view"
-        app:layout_constraintTop_toTopOf="@+id/schedule_type_title_text_view"
+        android:textSize="18dp"
+        app:layout_constraintBottom_toBottomOf="@+id/schedule_type_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/schedule_type_button"
+        app:layout_constraintTop_toTopOf="@+id/schedule_type_button"
         tools:text="Default" />
+
+    <View
+        android:id="@+id/divider_line"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/schedule_type_button"
+        app:layout_constraintTop_toBottomOf="@+id/schedule_type_button" />
+
+    <Button
+        android:id="@+id/first_work_date_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="First work date"
+        app:layout_constraintStart_toStartOf="@+id/schedule_type_button"
+        app:layout_constraintTop_toBottomOf="@+id/divider_line"
+        tools:text="First work date" />
+
+    <TextView
+        android:id="@+id/date_text_view_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textSize="18dp"
+        app:layout_constraintBottom_toBottomOf="@id/first_work_date_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/first_work_date_button"
+        app:layout_constraintTop_toTopOf="@id/first_work_date_button"
+        tools:text="2022-2-21" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.WorkSchedule.ScheduleDatePickerDialog" parent="Theme.MaterialComponents.DayNight.Dialog">
+        <item name="colorAccent">@color/purple_700</item>
+        <item name="android:windowBackground">@android:color/background_light</item>
+        <item name="android:colorControlActivated">@color/purple_700</item>
+        <item name="android:textColorPrimary">@color/black</item>
+        <item name="android:textColorSecondary">@android:color/darker_gray</item>
+        <item name="android:buttonBarPositiveButtonStyle">
+            @style/Theme.WorkSchedule.DatePickerDialog.Alert.Button.Positive
+        </item>
+        <item name="android:buttonBarNegativeButtonStyle">
+            @style/Theme.WorkSchedule.DatePickerDialog.Alert.Button.Negative
+        </item>
+        <item name="android:buttonBarNeutralButtonStyle">
+            @style/Theme.WorkSchedule.DatePickerDialog.Alert.Button.Neutral
+        </item>
+
+    </style>
+
+    <style name="Theme.WorkSchedule.DatePickerDialog.Alert.Button.Positive" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/purple_700</item>
+    </style>
+
+    <style name="Theme.WorkSchedule.DatePickerDialog.Alert.Button.Negative" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/purple_700</item>
+    </style>
+
+    <style name="Theme.WorkSchedule.DatePickerDialog.Alert.Button.Neutral" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/purple_700</item>
+    </style>
+</resources>

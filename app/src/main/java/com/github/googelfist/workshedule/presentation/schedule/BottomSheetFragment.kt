@@ -42,16 +42,43 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        observeViewModel()
+
+        setupButtons()
+    }
+
+    private fun setupButtons() {
+        binding.firstWorkDateButton.setOnClickListener {
+            val datePickerFragment = DatePickerFragment.newInstance()
+            datePickerFragment.show(childFragmentManager, DatePickerFragment.TAG)
+            datePickerFragment.onDateSetListener = { date ->
+                scheduleViewModel.onRefreshFirstWorkDate(date)
+            }
+        }
+        binding.scheduleTypeButton.setOnClickListener {
+            val schedulePickerDialog = ScheduleTypePickerDialog.newInstance()
+            schedulePickerDialog.show(childFragmentManager, ScheduleTypePickerDialog.TAG)
+            schedulePickerDialog.onScheduleTypeSetListener = { scheduleType ->
+                scheduleViewModel.onRefreshScheduleType(scheduleType)
+            }
+        }
+    }
+
+    // TODO:
+    private fun observeViewModel() {
         scheduleViewModel.scheduleType.observe(viewLifecycleOwner) { scheduleType ->
             when (scheduleType) {
                 is ScheduleType.TwoInTwo -> {
-                    binding.firstWorkDateTitleTextView.visibility = View.VISIBLE
+                    binding.dividerLine.visibility = View.VISIBLE
+                    binding.firstWorkDateButton.visibility = View.VISIBLE
+                    binding.dateTextViewValue.visibility = View.VISIBLE
                     binding.dateTextViewValue.text = scheduleType.firstWorkDate.toString()
                     binding.scheduleTypeTextViewValue.text = scheduleType.type
 
                 }
                 is ScheduleType.Default -> {
-                    binding.firstWorkDateTitleTextView.visibility = View.GONE
+                    binding.dividerLine.visibility = View.GONE
+                    binding.firstWorkDateButton.visibility = View.GONE
                     binding.dateTextViewValue.visibility = View.GONE
                     binding.scheduleTypeTextViewValue.text = scheduleType.type
                 }

@@ -5,8 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.PopupMenu
-import androidx.annotation.MenuRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.github.googelfist.workshedule.R
@@ -57,6 +55,7 @@ class ScheduleFragment : Fragment() {
 
         setupButtons()
 
+        // TODO:  
         binding.buttonShowBottomSheet.setOnClickListener {
             bottomSheetFragment.show(childFragmentManager, BottomSheetFragment.TAG)
         }
@@ -79,6 +78,7 @@ class ScheduleFragment : Fragment() {
 
         dayListAdapter = DayListAdapter()
         recyclerView.adapter = dayListAdapter
+        recyclerView.itemAnimator = null
     }
 
     private fun setupAppBar() {
@@ -115,18 +115,6 @@ class ScheduleFragment : Fragment() {
         binding.nextButton.setOnClickListener {
             scheduleViewModel.onGenerateNextMonth()
         }
-    }
-
-    private fun showMenu(v: View, @MenuRes menuRes: Int) {
-        val popup = PopupMenu(context, v)
-        popup.menuInflater.inflate(menuRes, popup.menu)
-
-        popup.setOnMenuItemClickListener {
-            scheduleViewModel.onRefreshScheduleType(it.toString())
-            true
-        }
-
-        popup.show()
     }
 
     companion object {
