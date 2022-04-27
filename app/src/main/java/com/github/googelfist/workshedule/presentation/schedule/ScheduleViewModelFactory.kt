@@ -18,14 +18,19 @@ class ScheduleViewModelFactory @Inject constructor(
     private val saveScheduleTypeUseCase: SaveScheduleTypeUseCase,
     private val loadScheduleTypeUseCase: LoadScheduleTypeUseCase
 ) : ViewModelProvider.Factory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return ScheduleViewModel(
-            generatePreviousMonthUseCase = generatePreviousMonthUseCase,
-            generateCurrentMonthUseCase = generateCurrentMonthUseCase,
-            generateNextMonthUseCase = generateNextMonthUseCase,
-            saveFirstWorkDateUseCase = saveFirstWorkDateUseCase,
-            saveScheduleTypeUseCase = saveScheduleTypeUseCase,
-            loadScheduleTypeUseCase = loadScheduleTypeUseCase
-        ) as T
+
+    @Suppress("UNCHECKED_CAST")
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(ScheduleViewModel::class.java)) {
+            return ScheduleViewModel(
+                generatePreviousMonthUseCase = generatePreviousMonthUseCase,
+                generateCurrentMonthUseCase = generateCurrentMonthUseCase,
+                generateNextMonthUseCase = generateNextMonthUseCase,
+                saveFirstWorkDateUseCase = saveFirstWorkDateUseCase,
+                saveScheduleTypeUseCase = saveScheduleTypeUseCase,
+                loadScheduleTypeUseCase = loadScheduleTypeUseCase
+            ) as T
+        }
+        throw RuntimeException("Unknown class name")
     }
 }

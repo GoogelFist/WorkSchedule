@@ -28,13 +28,13 @@ class ScheduleTypePickerDialog : DialogFragment() {
             val builder = AlertDialog.Builder(it)
             builder
                 .setTitle(title)
-                .setSingleChoiceItems(scheduleTypeItems, DEFAULT_POSITION) { dialog, item ->
+                .setSingleChoiceItems(scheduleTypeItems, DEFAULT_POSITION) { _, item ->
                     positionClicked = item
                 }
-                .setPositiveButton(positiveButtonTitle) { dialog, id ->
+                .setPositiveButton(positiveButtonTitle) { _, _ ->
                     onScheduleTypeSetListener(scheduleTypeItems[positionClicked])
                 }
-                .setNegativeButton(negativeButtonTitle) { dialog, id -> }
+                .setNegativeButton(negativeButtonTitle) { _, _ -> }
                 .create()
         } ?: throw IllegalStateException("Activity cannot be null")
     }

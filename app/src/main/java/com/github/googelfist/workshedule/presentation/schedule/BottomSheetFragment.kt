@@ -67,20 +67,24 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
     // TODO:
     private fun observeViewModel() {
         scheduleViewModel.scheduleType.observe(viewLifecycleOwner) { scheduleType ->
-            when (scheduleType) {
-                is ScheduleType.TwoInTwo -> {
-                    binding.dividerLine.visibility = View.VISIBLE
-                    binding.firstWorkDateButton.visibility = View.VISIBLE
-                    binding.dateTextViewValue.visibility = View.VISIBLE
-                    binding.dateTextViewValue.text = scheduleType.firstWorkDate.toString()
-                    binding.scheduleTypeTextViewValue.text = scheduleType.type
+            with(binding) {
+                when (scheduleType) {
+                    is ScheduleType.TwoInTwo -> {
+                        dividerLine.visibility = View.VISIBLE
+                        firstWorkDateButton.visibility = View.VISIBLE
+                        dateTextViewValue.visibility = View.VISIBLE
 
-                }
-                is ScheduleType.Default -> {
-                    binding.dividerLine.visibility = View.GONE
-                    binding.firstWorkDateButton.visibility = View.GONE
-                    binding.dateTextViewValue.visibility = View.GONE
-                    binding.scheduleTypeTextViewValue.text = scheduleType.type
+                        dateTextViewValue.text = scheduleType.firstWorkDate.toString()
+                        scheduleTypeTextViewValue.text = scheduleType.type
+
+                    }
+                    is ScheduleType.Default -> {
+                        dividerLine.visibility = View.GONE
+                        firstWorkDateButton.visibility = View.GONE
+                        dateTextViewValue.visibility = View.GONE
+
+                        scheduleTypeTextViewValue.text = scheduleType.type
+                    }
                 }
             }
         }

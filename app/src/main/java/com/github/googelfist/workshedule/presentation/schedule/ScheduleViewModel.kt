@@ -68,7 +68,6 @@ class ScheduleViewModel(
         }
     }
 
-    // TODO: naming (single response)
     fun onRefreshFirstWorkDate(firstWorkDate: String) {
         viewModelScope.launch {
             saveFirstWorkDateUseCase(firstWorkDate)

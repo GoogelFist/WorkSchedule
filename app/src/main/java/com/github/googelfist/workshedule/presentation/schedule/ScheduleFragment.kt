@@ -27,7 +27,9 @@ class ScheduleFragment : Fragment() {
 
     lateinit var dayListAdapter: DayListAdapter
 
-    private val bottomSheetFragment by lazy(LazyThreadSafetyMode.NONE) { BottomSheetFragment.getNewInstance() }
+    private val bottomSheetFragment by lazy(LazyThreadSafetyMode.NONE) {
+        BottomSheetFragment.getNewInstance()
+    }
 
     override fun onAttach(context: Context) {
         context.component.inject(this)
