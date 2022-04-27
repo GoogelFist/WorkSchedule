@@ -12,5 +12,21 @@
     <string name="first_work_date_menu_item_content_description">Choose first work date</string>
     <string name="schedule_type_menu_item_content_description">Choose schedule type</string>
 
+    <string name="su_week_day">Su</string>
+    <string name="sa_week_day">Sa</string>
+    <string name="fr_week_day">Fr</string>
+    <string name="th_week_day">Th</string>
+    <string name="we_week_day">We</string>
+    <string name="tu_week_day">Tu</string>
+    <string name="mo_week_day">Mo</string>
+
+    <string name="previous_title_button">previous</string>
+    <string name="current_title_button">current</string>
+    <string name="next_title_button">next</string>
+    <string name="show_control_panel_title_button">Show control panel</string>
+
+    <string name="control_panel_title">Control panel</string>
+    <string name="schedule_type_title_button">Schedule type</string>
+    <string name="first_work_date_title_button">First work date</string>
 
 </resources>

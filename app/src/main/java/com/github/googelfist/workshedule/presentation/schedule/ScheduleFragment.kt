@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.github.googelfist.workshedule.R
 import com.github.googelfist.workshedule.component
 import com.github.googelfist.workshedule.databinding.ScheduleFragmentBinding
 import com.github.googelfist.workshedule.presentation.recycler.DayListAdapter
@@ -51,14 +50,7 @@ class ScheduleFragment : Fragment() {
 
         setupRecyclerView()
 
-        setupAppBar()
-
         setupButtons()
-
-        // TODO:  
-        binding.buttonShowBottomSheet.setOnClickListener {
-            bottomSheetFragment.show(childFragmentManager, BottomSheetFragment.TAG)
-        }
     }
 
     override fun onDestroy() {
@@ -81,30 +73,6 @@ class ScheduleFragment : Fragment() {
         recyclerView.itemAnimator = null
     }
 
-    private fun setupAppBar() {
-        binding.topAppBar.setOnMenuItemClickListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.first_work_date_menu_item -> {
-                    val datePickerFragment = DatePickerFragment.newInstance()
-                    datePickerFragment.show(childFragmentManager, DatePickerFragment.TAG)
-                    datePickerFragment.onDateSetListener = { date ->
-                        scheduleViewModel.onRefreshFirstWorkDate(date)
-                    }
-                    true
-                }
-                R.id.schedule_type_menu_item -> {
-                    val schedulePickerDialog = ScheduleTypePickerDialog.newInstance()
-                    schedulePickerDialog.show(childFragmentManager, ScheduleTypePickerDialog.TAG)
-                    schedulePickerDialog.onScheduleTypeSetListener = { scheduleType ->
-                        scheduleViewModel.onRefreshScheduleType(scheduleType)
-                    }
-                    true
-                }
-                else -> false
-            }
-        }
-    }
-
     private fun setupButtons() {
         binding.previousButton.setOnClickListener {
             scheduleViewModel.onGeneratePreviousMonth()
@@ -114,6 +82,9 @@ class ScheduleFragment : Fragment() {
         }
         binding.nextButton.setOnClickListener {
             scheduleViewModel.onGenerateNextMonth()
+        }
+        binding.buttonShowBottomSheet.setOnClickListener {
+            bottomSheetFragment.show(parentFragmentManager, BottomSheetFragment.TAG)
         }
     }
 
