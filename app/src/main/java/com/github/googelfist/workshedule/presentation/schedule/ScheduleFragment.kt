@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import com.github.googelfist.workshedule.component
 import com.github.googelfist.workshedule.databinding.ScheduleFragmentBinding
 import com.github.googelfist.workshedule.presentation.recycler.DayListAdapter
+import com.github.googelfist.workshedule.presentation.schedule.models.ScheduleEvent
 import javax.inject.Inject
 
 class ScheduleFragment : Fragment() {
@@ -61,9 +62,9 @@ class ScheduleFragment : Fragment() {
     }
 
     private fun observeViewModel() {
-        scheduleViewModel.month.observe(viewLifecycleOwner) {
-            dayListAdapter.submitList(it.getDaysList())
-            binding.dateTextView.text = it.getFormattedDate()
+        scheduleViewModel.scheduleState.observe(viewLifecycleOwner) {
+            dayListAdapter.submitList(it.dayList)
+            binding.dateTextView.text = it.formattedDate
         }
     }
 
@@ -77,13 +78,13 @@ class ScheduleFragment : Fragment() {
 
     private fun setupButtons() {
         binding.previousButton.setOnClickListener {
-            scheduleViewModel.onGeneratePreviousMonth()
+            scheduleViewModel.obtainEvent(ScheduleEvent.GeneratedPreviousMonth)
         }
         binding.currentButton.setOnClickListener {
-            scheduleViewModel.onGenerateCurrentMonth()
+            scheduleViewModel.obtainEvent(ScheduleEvent.GeneratedCurrentMonth)
         }
         binding.nextButton.setOnClickListener {
-            scheduleViewModel.onGenerateNextMonth()
+            scheduleViewModel.obtainEvent(ScheduleEvent.GeneratedNextMonth)
         }
         binding.buttonShowBottomSheet.setOnClickListener {
             bottomSheetFragment.show(parentFragmentManager, BottomSheetFragment.TAG)

@@ -1,11 +1,11 @@
 package com.github.googelfist.workshedule.domain.usecases
 
-import com.github.googelfist.workshedule.domain.models.month.Month
-import com.github.googelfist.workshedule.domain.monthgenerator.MonthGenerator
+import com.github.googelfist.workshedule.domain.models.ScheduleState
+import com.github.googelfist.workshedule.domain.monthgenerator.ScheduleGenerator
 import javax.inject.Inject
 
-class GenerateCurrentMonthUseCase @Inject constructor(private val workDaysGenerator: MonthGenerator) {
-    suspend operator fun invoke(): Month {
+class GenerateCurrentMonthUseCase @Inject constructor(private val workDaysGenerator: ScheduleGenerator) {
+    suspend operator fun invoke(): ScheduleState {
         return workDaysGenerator.generateCurrentMonth()
     }
 }

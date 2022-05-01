@@ -8,7 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.github.googelfist.workshedule.component
 import com.github.googelfist.workshedule.databinding.BottomSheetBinding
-import com.github.googelfist.workshedule.domain.ScheduleType
+import com.github.googelfist.workshedule.domain.models.ScheduleTypeState
+import com.github.googelfist.workshedule.presentation.schedule.models.ScheduleEvent
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import javax.inject.Inject
 
@@ -50,40 +51,38 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
     private fun setupButtons() {
         binding.firstWorkDateButton.setOnClickListener {
             val datePickerFragment = DatePickerFragment.newInstance()
-            datePickerFragment.show(childFragmentManager, DatePickerFragment.TAG)
+            datePickerFragment.show(parentFragmentManager, DatePickerFragment.TAG)
             datePickerFragment.onDateSetListener = { date ->
-                scheduleViewModel.onRefreshFirstWorkDate(date)
+                scheduleViewModel.obtainEvent(ScheduleEvent.RefreshFirstWorkDate(date))
             }
         }
         binding.scheduleTypeButton.setOnClickListener {
             val schedulePickerDialog = ScheduleTypePickerDialog.newInstance()
-            schedulePickerDialog.show(childFragmentManager, ScheduleTypePickerDialog.TAG)
+            schedulePickerDialog.show(parentFragmentManager, ScheduleTypePickerDialog.TAG)
             schedulePickerDialog.onScheduleTypeSetListener = { scheduleType ->
-                scheduleViewModel.onRefreshScheduleType(scheduleType)
+                scheduleViewModel.obtainEvent(ScheduleEvent.RefreshScheduleType(scheduleType))
             }
         }
     }
 
-    // TODO:
     private fun observeViewModel() {
-        scheduleViewModel.scheduleType.observe(viewLifecycleOwner) { scheduleType ->
+        scheduleViewModel.scheduleTypeState.observe(viewLifecycleOwner) { scheduleTypeState ->
             with(binding) {
-                when (scheduleType) {
-                    is ScheduleType.TwoInTwo -> {
+                when (scheduleTypeState) {
+                    is ScheduleTypeState.TwoInTwo -> {
                         dividerLine.visibility = View.VISIBLE
                         firstWorkDateButton.visibility = View.VISIBLE
                         dateTextViewValue.visibility = View.VISIBLE
 
-                        dateTextViewValue.text = scheduleType.firstWorkDate.toString()
-                        scheduleTypeTextViewValue.text = scheduleType.type
-
+                        dateTextViewValue.text = scheduleTypeState.firstWorkDate.toString()
+                        scheduleTypeTextViewValue.text = scheduleTypeState.type
                     }
-                    is ScheduleType.Default -> {
+                    is ScheduleTypeState.Default -> {
                         dividerLine.visibility = View.GONE
                         firstWorkDateButton.visibility = View.GONE
                         dateTextViewValue.visibility = View.GONE
 
-                        scheduleTypeTextViewValue.text = scheduleType.type
+                        scheduleTypeTextViewValue.text = scheduleTypeState.type
                     }
                 }
             }

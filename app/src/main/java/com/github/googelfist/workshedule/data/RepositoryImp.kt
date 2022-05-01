@@ -2,7 +2,7 @@ package com.github.googelfist.workshedule.data
 
 import com.github.googelfist.workshedule.data.datasource.LocalDataSource
 import com.github.googelfist.workshedule.domain.Repository
-import com.github.googelfist.workshedule.domain.ScheduleType
+import com.github.googelfist.workshedule.domain.models.ScheduleTypeState
 import javax.inject.Inject
 
 class RepositoryImp @Inject constructor(private val localDataSource: LocalDataSource) : Repository {
@@ -11,17 +11,17 @@ class RepositoryImp @Inject constructor(private val localDataSource: LocalDataSo
         localDataSource.saveFirstWorkDate(firstWorkDate)
     }
 
-    override suspend fun loadScheduleType(): ScheduleType {
+    override suspend fun loadScheduleType(): ScheduleTypeState {
         val scheduleType = localDataSource.loadScheduleType()
         return when (scheduleType) {
             TWO_IN_TWO_SCHEDULE_TYPE -> {
                 val firstWorkDate = localDataSource.loadFirstWorkDate()
-                ScheduleType.TwoInTwo(
+                ScheduleTypeState.TwoInTwo(
                     firstWorkDate = firstWorkDate,
                     dayCycleStep = TWO_IN_TWO_CYCLE_DAY_STEP
                 )
             }
-            DEFAULT_SCHEDULE_TYPE -> ScheduleType.Default()
+            DEFAULT_SCHEDULE_TYPE -> ScheduleTypeState.Default()
             else -> {
                 throw RuntimeException("Unknown schedule type")
             }

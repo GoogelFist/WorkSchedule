@@ -1,7 +1,7 @@
 package com.github.googelfist.workshedule.domain.monthgenerator.schedulecreator
 
 import com.github.googelfist.workshedule.domain.Repository
-import com.github.googelfist.workshedule.domain.ScheduleType
+import com.github.googelfist.workshedule.domain.models.ScheduleTypeState
 import java.time.LocalDate
 import javax.inject.Inject
 
@@ -11,7 +11,7 @@ class ScheduleCreatorImpl @Inject constructor(private val repository: Repository
     override suspend fun createWorkSchedule(date: LocalDate): Set<LocalDate> {
         val scheduleType = repository.loadScheduleType()
         return when (scheduleType) {
-            is ScheduleType.TwoInTwo -> {
+            is ScheduleTypeState.TwoInTwo -> {
                 val firstWorkDate = scheduleType.firstWorkDate
                 val step = scheduleType.dayCycleStep
                 val actualFirstWorkDate = getActualFirstWorkDay(date, firstWorkDate, step)
