@@ -34,8 +34,9 @@ class ScheduleViewModel(
         get() = _scheduleTypeState
 
     init {
-        onLoadScheduleType()
+        loadScheduleType()
         generatedCurrentMonth()
+        initMonth()
     }
 
     override fun obtainEvent(event: ScheduleEvent) {
@@ -72,6 +73,7 @@ class ScheduleViewModel(
     private fun refreshedScheduleType(scheduleType: String) {
         viewModelScope.launch {
             saveScheduleTypeUseCase(scheduleType)
+
             val scheduleState = generateCurrentMonthUseCase()
             _scheduleState.value = scheduleState
 
@@ -83,6 +85,7 @@ class ScheduleViewModel(
     private fun refreshedFirstWorkDate(firstWorkDate: String) {
         viewModelScope.launch {
             saveFirstWorkDateUseCase(firstWorkDate)
+
             val scheduleState = generateCurrentMonthUseCase()
             _scheduleState.value = scheduleState
 
@@ -91,7 +94,15 @@ class ScheduleViewModel(
         }
     }
 
-    private fun onLoadScheduleType() {
+    private fun initMonth() {
+        viewModelScope.launch {
+            _scheduleState.value = ScheduleState.LaunchingState
+            val scheduleState = generateCurrentMonthUseCase()
+            _scheduleState.value = scheduleState
+        }
+    }
+
+    private fun loadScheduleType() {
         viewModelScope.launch {
             val scheduleTypeState = loadScheduleTypeUseCase()
             _scheduleTypeState.value = scheduleTypeState

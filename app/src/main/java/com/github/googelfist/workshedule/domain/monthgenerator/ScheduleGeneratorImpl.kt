@@ -17,21 +17,21 @@ class ScheduleGeneratorImpl @Inject constructor(
         date = dateNowContainer.getDate()
         val dayList = daysGenerator.getDays(date)
         val formattedDate = formatter.formatDate(date)
-        return ScheduleState(formattedDate, dayList)
+        return ScheduleState.GeneratedState(formattedDate, dayList)
     }
 
     override suspend fun generatePreviousMonth(): ScheduleState {
         date = date.minusMonths(ONE_VALUE)
         val dayList = daysGenerator.getDays(date)
         val formattedDate = formatter.formatDate(date)
-        return ScheduleState(formattedDate, dayList)
+        return ScheduleState.GeneratedState(formattedDate, dayList)
     }
 
     override suspend fun generateNextMonth(): ScheduleState {
         date = date.plusMonths(ONE_VALUE)
         val dayList = daysGenerator.getDays(date)
         val formattedDate = formatter.formatDate(date)
-        return ScheduleState(formattedDate, dayList)
+        return ScheduleState.GeneratedState(formattedDate, dayList)
     }
 
     companion object {

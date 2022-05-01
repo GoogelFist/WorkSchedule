@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.github.googelfist.workshedule.component
 import com.github.googelfist.workshedule.databinding.ScheduleFragmentBinding
+import com.github.googelfist.workshedule.domain.models.ScheduleState
 import com.github.googelfist.workshedule.presentation.recycler.DayListAdapter
 import com.github.googelfist.workshedule.presentation.schedule.models.ScheduleEvent
 import javax.inject.Inject
@@ -61,10 +62,29 @@ class ScheduleFragment : Fragment() {
         _binding = null
     }
 
+    // TODO:  splash screen
     private fun observeViewModel() {
-        scheduleViewModel.scheduleState.observe(viewLifecycleOwner) {
-            dayListAdapter.submitList(it.dayList)
-            binding.dateTextView.text = it.formattedDate
+        scheduleViewModel.scheduleState.observe(viewLifecycleOwner) { scheduleState ->
+            when (scheduleState) {
+                ScheduleState.LaunchingState -> {
+                    with(binding) {
+                        progressBar.visibility = View.VISIBLE
+                        weekDaysLayout.visibility = View.GONE
+                        navigationButtons.visibility = View.GONE
+                        buttonShowBottomSheet.visibility = View.GONE
+                    }
+                }
+                is ScheduleState.GeneratedState -> {
+                    with(binding) {
+                        progressBar.visibility = View.GONE
+                        weekDaysLayout.visibility = View.VISIBLE
+                        navigationButtons.visibility = View.VISIBLE
+                        buttonShowBottomSheet.visibility = View.VISIBLE
+                    }
+                    dayListAdapter.submitList(scheduleState.dayList)
+                    binding.dateTextView.text = scheduleState.formattedDate
+                }
+            }
         }
     }
 
