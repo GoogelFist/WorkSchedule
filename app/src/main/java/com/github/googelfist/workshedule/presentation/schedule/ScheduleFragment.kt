@@ -92,22 +92,41 @@ class ScheduleFragment : Fragment() {
         val recyclerView = binding.recyclerView
 
         dayListAdapter = DayListAdapter()
-        recyclerView.adapter = dayListAdapter
-        recyclerView.itemAnimator = null
+
+        with(recyclerView) {
+            adapter = dayListAdapter
+
+            recycledViewPool.setMaxRecycledViews(
+                DayListAdapter.DEFAULT_DAY_TYPE,
+                DayListAdapter.DEFAULT_DAY_TYPE_POOL_SIZE
+            )
+            recycledViewPool.setMaxRecycledViews(
+                DayListAdapter.WORK_DAY_TYPE,
+                DayListAdapter.WORK_DAY_TYPE_POOL_SIZE
+            )
+            recycledViewPool.setMaxRecycledViews(
+                DayListAdapter.WEEKEND_DAY_TYPE,
+                DayListAdapter.WEEKEND_DAY_TYPE_POOL_SIZE
+            )
+
+            itemAnimator = null
+        }
     }
 
     private fun setupButtons() {
-        binding.previousButton.setOnClickListener {
-            scheduleViewModel.obtainEvent(ScheduleEvent.GeneratedPreviousMonth)
-        }
-        binding.currentButton.setOnClickListener {
-            scheduleViewModel.obtainEvent(ScheduleEvent.GeneratedCurrentMonth)
-        }
-        binding.nextButton.setOnClickListener {
-            scheduleViewModel.obtainEvent(ScheduleEvent.GeneratedNextMonth)
-        }
-        binding.buttonShowBottomSheet.setOnClickListener {
-            bottomSheetFragment.show(parentFragmentManager, BottomSheetFragment.TAG)
+        with(binding) {
+            previousButton.setOnClickListener {
+                scheduleViewModel.obtainEvent(ScheduleEvent.GeneratedPreviousMonth)
+            }
+            currentButton.setOnClickListener {
+                scheduleViewModel.obtainEvent(ScheduleEvent.GeneratedCurrentMonth)
+            }
+            nextButton.setOnClickListener {
+                scheduleViewModel.obtainEvent(ScheduleEvent.GeneratedNextMonth)
+            }
+            buttonShowBottomSheet.setOnClickListener {
+                bottomSheetFragment.show(parentFragmentManager, BottomSheetFragment.TAG)
+            }
         }
     }
 

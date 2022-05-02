@@ -55,8 +55,12 @@ class DayListAdapter : ListAdapter<Day, RecyclerView.ViewHolder>(DayDiffCallback
     }
 
     companion object {
-        private const val DEFAULT_DAY_TYPE = 201
-        private const val WORK_DAY_TYPE = 300
-        private const val WEEKEND_DAY_TYPE = 400
+        const val DEFAULT_DAY_TYPE = 201
+        const val WORK_DAY_TYPE = 300
+        const val WEEKEND_DAY_TYPE = 400
+
+        const val DEFAULT_DAY_TYPE_POOL_SIZE = 62
+        const val WORK_DAY_TYPE_POOL_SIZE = 32
+        const val WEEKEND_DAY_TYPE_POOL_SIZE = 32
     }
 }
