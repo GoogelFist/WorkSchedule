@@ -4,12 +4,15 @@ import com.github.googelfist.workshedule.domain.Repository
 import com.github.googelfist.workshedule.domain.models.ScheduleTypeState
 import com.github.googelfist.workshedule.domain.models.day.Day
 import com.github.googelfist.workshedule.domain.monthgenerator.fabric.DaysFabric
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import javax.inject.Inject
 
 class DaysGeneratorImpl @Inject constructor(
     private val daysFabric: DaysFabric,
-    private val repository: Repository
+    private val repository: Repository,
+    private val dispatcher: CoroutineDispatcher
 ) : DaysGenerator {
 
     override suspend fun getDays(date: LocalDate): List<Day> {
@@ -21,35 +24,41 @@ class DaysGeneratorImpl @Inject constructor(
         }
     }
 
-    private fun generateDefaultDays(date: LocalDate): List<Day> {
-        var firstMondayInMonth = getDateOfFirstMonday(date)
+    private suspend fun generateDefaultDays(date: LocalDate): List<Day> {
+        return withContext(dispatcher) {
+            var firstMondayInMonth = getDateOfFirstMonday(date)
 
-        val dayList = mutableListOf<Day>()
-        repeat(MAX_DAY_COUNT) {
-            dayList.add(daysFabric.getDefaultDay(firstMondayInMonth, date))
+            val dayList = mutableListOf<Day>()
+            repeat(MAX_DAY_COUNT) {
+                dayList.add(daysFabric.getDefaultDay(firstMondayInMonth, date))
 
-            firstMondayInMonth = firstMondayInMonth.plusDays(ONE_VALUE)
+                firstMondayInMonth = firstMondayInMonth.plusDays(ONE_VALUE)
+            }
+            dayList
         }
-        return dayList
     }
 
     private suspend fun generateWorkDays(date: LocalDate): List<Day> {
-        var firstMondayInMonth = getDateOfFirstMonday(date)
+        return withContext(dispatcher) {
+            var firstMondayInMonth = getDateOfFirstMonday(date)
 
-        val dayList = mutableListOf<Day>()
-        repeat(MAX_DAY_COUNT) {
-            dayList.add(daysFabric.getWorkDay(firstMondayInMonth, date))
+            val dayList = mutableListOf<Day>()
+            repeat(MAX_DAY_COUNT) {
+                dayList.add(daysFabric.getWorkDay(firstMondayInMonth, date))
 
-            firstMondayInMonth = firstMondayInMonth.plusDays(ONE_VALUE)
+                firstMondayInMonth = firstMondayInMonth.plusDays(ONE_VALUE)
+            }
+            dayList
         }
-        return dayList
     }
 
-    private fun getDateOfFirstMonday(date: LocalDate): LocalDate {
-        val firstDayOfMonth = LocalDate.of(date.year, date.month, ONE_VALUE.toInt())
-        val dayOfWeek = firstDayOfMonth.dayOfWeek.value - ONE_VALUE
+    private suspend fun getDateOfFirstMonday(date: LocalDate): LocalDate {
+        return withContext(dispatcher) {
+            val firstDayOfMonth = LocalDate.of(date.year, date.month, ONE_VALUE.toInt())
+            val dayOfWeek = firstDayOfMonth.dayOfWeek.value - ONE_VALUE
 
-        return firstDayOfMonth.minusDays(dayOfWeek)
+            firstDayOfMonth.minusDays(dayOfWeek)
+        }
     }
 
     companion object {
