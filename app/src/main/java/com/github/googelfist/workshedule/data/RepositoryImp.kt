@@ -3,12 +3,16 @@ package com.github.googelfist.workshedule.data
 import com.github.googelfist.workshedule.data.datasource.LocalDataSource
 import com.github.googelfist.workshedule.domain.Repository
 import com.github.googelfist.workshedule.domain.models.ScheduleTypeState
+import com.github.googelfist.workshedule.domain.models.day.Day
 import javax.inject.Inject
 
 class RepositoryImp @Inject constructor(private val localDataSource: LocalDataSource) : Repository {
 
+    private val cache = mutableMapOf<String, List<Day>>()
+
     override suspend fun saveFirstWorkDate(firstWorkDate: String) {
         localDataSource.saveFirstWorkDate(firstWorkDate)
+        clearCache()
     }
 
     override suspend fun loadScheduleType(): ScheduleTypeState {
@@ -30,6 +34,19 @@ class RepositoryImp @Inject constructor(private val localDataSource: LocalDataSo
 
     override suspend fun saveScheduleType(scheduleType: String) {
         localDataSource.saveScheduleType(scheduleType)
+        clearCache()
+    }
+
+    override fun putToCache(formattedDate: String, dayList: List<Day>) {
+        cache[formattedDate] = dayList
+    }
+
+    override fun getFromCache(formattedDate: String): List<Day>? {
+        return cache[formattedDate]
+    }
+
+    private fun clearCache() {
+        cache.clear()
     }
 
     companion object {

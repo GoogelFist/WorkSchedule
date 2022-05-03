@@ -5,13 +5,11 @@ import com.github.googelfist.workshedule.domain.models.day.DefaultDay
 import com.github.googelfist.workshedule.domain.models.day.WeekendDay
 import com.github.googelfist.workshedule.domain.models.day.WorkDay
 import com.github.googelfist.workshedule.domain.monthgenerator.DateNowContainer
-import com.github.googelfist.workshedule.domain.monthgenerator.schedulecreator.ScheduleCreator
 import java.time.LocalDate
 import javax.inject.Inject
 
 class DaysFabricImpl @Inject constructor(
-    private val dateNowContainer: DateNowContainer,
-    private val scheduleCreator: ScheduleCreator
+    private val dateNowContainer: DateNowContainer
 ) : DaysFabric {
 
     override fun getDefaultDay(dateOfMonth: LocalDate, activeDate: LocalDate): Day {
@@ -43,9 +41,11 @@ class DaysFabricImpl @Inject constructor(
         }
     }
 
-    override suspend fun getWorkDay(dateOfMonth: LocalDate, activeDate: LocalDate): Day {
-
-        val workSchedule = scheduleCreator.createWorkSchedule(dateOfMonth)
+    override suspend fun getWorkDay(
+        dateOfMonth: LocalDate,
+        activeDate: LocalDate,
+        workSchedule: Set<LocalDate>
+    ): Day {
 
         return when {
             isWorkShiftDay(workSchedule, dateOfMonth) && !isCurrentMonthDay(
