@@ -9,7 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.github.googelfist.workshedule.component
 import com.github.googelfist.workshedule.databinding.ScheduleFragmentBinding
+import com.github.googelfist.workshedule.domain.models.ScheduleState
 import com.github.googelfist.workshedule.presentation.recycler.DayListAdapter
+import com.github.googelfist.workshedule.presentation.schedule.models.ScheduleEvent
 import javax.inject.Inject
 
 class ScheduleFragment : Fragment() {
@@ -60,10 +62,29 @@ class ScheduleFragment : Fragment() {
         _binding = null
     }
 
+    // TODO:  splash screen
     private fun observeViewModel() {
-        scheduleViewModel.month.observe(viewLifecycleOwner) {
-            dayListAdapter.submitList(it.getDaysList())
-            binding.dateTextView.text = it.getFormattedDate()
+        scheduleViewModel.scheduleState.observe(viewLifecycleOwner) { scheduleState ->
+            when (scheduleState) {
+                ScheduleState.LaunchingState -> {
+                    with(binding) {
+                        progressBar.visibility = View.VISIBLE
+                        weekDaysLayout.visibility = View.GONE
+                        navigationButtons.visibility = View.GONE
+                        buttonShowBottomSheet.visibility = View.GONE
+                    }
+                }
+                is ScheduleState.GeneratedState -> {
+                    with(binding) {
+                        progressBar.visibility = View.GONE
+                        weekDaysLayout.visibility = View.VISIBLE
+                        navigationButtons.visibility = View.VISIBLE
+                        buttonShowBottomSheet.visibility = View.VISIBLE
+                    }
+                    dayListAdapter.submitList(scheduleState.dayList)
+                    binding.dateTextView.text = scheduleState.formattedDate
+                }
+            }
         }
     }
 
@@ -71,22 +92,41 @@ class ScheduleFragment : Fragment() {
         val recyclerView = binding.recyclerView
 
         dayListAdapter = DayListAdapter()
-        recyclerView.adapter = dayListAdapter
-        recyclerView.itemAnimator = null
+
+        with(recyclerView) {
+            adapter = dayListAdapter
+
+            recycledViewPool.setMaxRecycledViews(
+                DayListAdapter.DEFAULT_DAY_TYPE,
+                DayListAdapter.DEFAULT_DAY_TYPE_POOL_SIZE
+            )
+            recycledViewPool.setMaxRecycledViews(
+                DayListAdapter.WORK_DAY_TYPE,
+                DayListAdapter.WORK_DAY_TYPE_POOL_SIZE
+            )
+            recycledViewPool.setMaxRecycledViews(
+                DayListAdapter.WEEKEND_DAY_TYPE,
+                DayListAdapter.WEEKEND_DAY_TYPE_POOL_SIZE
+            )
+
+            itemAnimator = null
+        }
     }
 
     private fun setupButtons() {
-        binding.previousButton.setOnClickListener {
-            scheduleViewModel.onGeneratePreviousMonth()
-        }
-        binding.currentButton.setOnClickListener {
-            scheduleViewModel.onGenerateCurrentMonth()
-        }
-        binding.nextButton.setOnClickListener {
-            scheduleViewModel.onGenerateNextMonth()
-        }
-        binding.buttonShowBottomSheet.setOnClickListener {
-            bottomSheetFragment.show(parentFragmentManager, BottomSheetFragment.TAG)
+        with(binding) {
+            previousButton.setOnClickListener {
+                scheduleViewModel.obtainEvent(ScheduleEvent.GeneratedPreviousMonth)
+            }
+            currentButton.setOnClickListener {
+                scheduleViewModel.obtainEvent(ScheduleEvent.GeneratedCurrentMonth)
+            }
+            nextButton.setOnClickListener {
+                scheduleViewModel.obtainEvent(ScheduleEvent.GeneratedNextMonth)
+            }
+            buttonShowBottomSheet.setOnClickListener {
+                bottomSheetFragment.show(parentFragmentManager, BottomSheetFragment.TAG)
+            }
         }
     }
 

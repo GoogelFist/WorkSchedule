@@ -24,6 +24,7 @@ class DefaultDayViewHolder(private val view: View) : RecyclerView.ViewHolder(vie
     }
 
     private fun setNotCurrentMonthView(day: Day) {
+        defaultTextView.background = null
         defaultTextView.setTextColor(
             ContextCompat.getColor(view.context, R.color.not_current_month_text_color)
         )
@@ -39,6 +40,7 @@ class DefaultDayViewHolder(private val view: View) : RecyclerView.ViewHolder(vie
     }
 
     private fun setCurrentMonthView(day: Day) {
+        defaultTextView.background = null
         defaultTextView.setTextColor(ContextCompat.getColor(view.context, R.color.black))
         defaultTextView.text = day.getDayValue().toString()
     }

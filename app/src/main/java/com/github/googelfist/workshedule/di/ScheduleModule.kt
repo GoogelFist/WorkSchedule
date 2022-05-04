@@ -6,8 +6,8 @@ import com.github.googelfist.workshedule.data.datasource.local.RoomDataSourceImp
 import com.github.googelfist.workshedule.domain.Repository
 import com.github.googelfist.workshedule.domain.formatter.DateFormatter
 import com.github.googelfist.workshedule.domain.formatter.DateFormatterImpl
-import com.github.googelfist.workshedule.domain.monthgenerator.MonthGenerator
-import com.github.googelfist.workshedule.domain.monthgenerator.MonthGeneratorImpl
+import com.github.googelfist.workshedule.domain.monthgenerator.ScheduleGenerator
+import com.github.googelfist.workshedule.domain.monthgenerator.ScheduleGeneratorImpl
 import com.github.googelfist.workshedule.domain.monthgenerator.daygenerator.DaysGenerator
 import com.github.googelfist.workshedule.domain.monthgenerator.daygenerator.DaysGeneratorImpl
 import com.github.googelfist.workshedule.domain.monthgenerator.fabric.DaysFabric
@@ -32,7 +32,7 @@ interface ScheduleModule {
 
     @Binds
     @Singleton
-    fun bindMonthGenerator(impl: MonthGeneratorImpl): MonthGenerator
+    fun bindMonthGenerator(impl: ScheduleGeneratorImpl): ScheduleGenerator
 
     @Binds
     @Singleton

@@ -8,7 +8,7 @@ import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
 
-@Component(modules = [ScheduleModule::class, RoomModule::class])
+@Component(modules = [ScheduleModule::class, RoomModule::class, CoroutineDispatcherModule::class])
 @Singleton
 interface ApplicationComponent {
     fun inject(fragment: ScheduleFragment)
