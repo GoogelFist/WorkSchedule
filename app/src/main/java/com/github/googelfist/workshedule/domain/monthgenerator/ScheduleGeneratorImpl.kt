@@ -16,31 +16,31 @@ class ScheduleGeneratorImpl @Inject constructor(
 
     private var date = dateNowContainer.getDate()
 
-    override suspend fun generateCurrentMonth(): ScheduleState {
+    override suspend fun getCurrentMonthState(): ScheduleState {
         date = dateNowContainer.getDate()
 
-        return generateScheduleState(date)
+        return getScheduleState(date)
     }
 
-    override suspend fun generatePreviousMonth(): ScheduleState {
+    override suspend fun getPreviousMonthState(): ScheduleState {
         date = date.minusMonths(ONE_VALUE)
 
-        return generateScheduleState(date)
+        return getScheduleState(date)
     }
 
-    override suspend fun generateNextMonth(): ScheduleState {
+    override suspend fun getNextMonthState(): ScheduleState {
         date = date.plusMonths(ONE_VALUE)
 
-        return generateScheduleState(date)
+        return getScheduleState(date)
     }
 
-    private suspend fun generateScheduleState(date: LocalDate): ScheduleState {
+    private suspend fun getScheduleState(date: LocalDate): ScheduleState {
         val formattedDate = formatter.formatDate(date)
         repository.getFromCache(formattedDate)?.let {
             return ScheduleState.GeneratedState(formattedDate, it)
         }
 
-        preLoadMonth(date)
+        preloadMonthStates(date)
 
         val dayList = repository.getFromCache(formattedDate)
             ?: throw RuntimeException("Cache is not contains list")
@@ -48,7 +48,7 @@ class ScheduleGeneratorImpl @Inject constructor(
         return ScheduleState.GeneratedState(formattedDate, dayList)
     }
 
-    private suspend fun preLoadMonth(currentDate: LocalDate) {
+    private suspend fun preloadMonthStates(currentDate: LocalDate) {
         var startDate = currentDate.minusMonths(MONTH_RANGE_FROM_MIDDLE)
 
         repeat(REPEAT_MONTH_RANGE) {
@@ -65,6 +65,5 @@ class ScheduleGeneratorImpl @Inject constructor(
         private const val REPEAT_MONTH_RANGE = 6
 
         private const val MONTH_RANGE_FROM_MIDDLE = 3L
-
     }
 }

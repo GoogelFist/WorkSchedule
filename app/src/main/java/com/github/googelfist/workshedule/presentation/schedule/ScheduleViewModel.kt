@@ -6,9 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.googelfist.workshedule.domain.models.ScheduleState
 import com.github.googelfist.workshedule.domain.models.ScheduleTypeState
-import com.github.googelfist.workshedule.domain.usecases.GenerateCurrentMonthUseCase
-import com.github.googelfist.workshedule.domain.usecases.GenerateNextMonthUseCase
-import com.github.googelfist.workshedule.domain.usecases.GeneratePreviousMonthUseCase
+import com.github.googelfist.workshedule.domain.usecases.GetCurrentMonthStateUseCase
+import com.github.googelfist.workshedule.domain.usecases.GetNextMonthStateUseCase
+import com.github.googelfist.workshedule.domain.usecases.GetPreviousMonthStateUseCase
 import com.github.googelfist.workshedule.domain.usecases.LoadScheduleTypeUseCase
 import com.github.googelfist.workshedule.domain.usecases.SaveFirstWorkDateUseCase
 import com.github.googelfist.workshedule.domain.usecases.SaveScheduleTypeUseCase
@@ -17,9 +17,9 @@ import com.github.googelfist.workshedule.presentation.schedule.models.ScheduleEv
 import kotlinx.coroutines.launch
 
 class ScheduleViewModel(
-    private val generatePreviousMonthUseCase: GeneratePreviousMonthUseCase,
-    private val generateCurrentMonthUseCase: GenerateCurrentMonthUseCase,
-    private val generateNextMonthUseCase: GenerateNextMonthUseCase,
+    private val getPreviousMonthStateUseCase: GetPreviousMonthStateUseCase,
+    private val getCurrentMonthStateUseCase: GetCurrentMonthStateUseCase,
+    private val getNextMonthStateUseCase: GetNextMonthStateUseCase,
     private val saveFirstWorkDateUseCase: SaveFirstWorkDateUseCase,
     private val saveScheduleTypeUseCase: SaveScheduleTypeUseCase,
     private val loadScheduleTypeUseCase: LoadScheduleTypeUseCase
@@ -51,21 +51,21 @@ class ScheduleViewModel(
 
     private fun generatedCurrentMonth() {
         viewModelScope.launch {
-            val scheduleState = generateCurrentMonthUseCase()
+            val scheduleState = getCurrentMonthStateUseCase()
             _scheduleState.value = scheduleState
         }
     }
 
     private fun generatedPreviousMonth() {
         viewModelScope.launch {
-            val scheduleState = generatePreviousMonthUseCase()
+            val scheduleState = getPreviousMonthStateUseCase()
             _scheduleState.value = scheduleState
         }
     }
 
     private fun generatedNextMonth() {
         viewModelScope.launch {
-            val scheduleState = generateNextMonthUseCase()
+            val scheduleState = getNextMonthStateUseCase()
             _scheduleState.value = scheduleState
         }
     }
@@ -74,7 +74,7 @@ class ScheduleViewModel(
         viewModelScope.launch {
             saveScheduleTypeUseCase(scheduleType)
 
-            val scheduleState = generateCurrentMonthUseCase()
+            val scheduleState = getCurrentMonthStateUseCase()
             _scheduleState.value = scheduleState
 
             val scheduleTypeState = loadScheduleTypeUseCase()
@@ -86,7 +86,7 @@ class ScheduleViewModel(
         viewModelScope.launch {
             saveFirstWorkDateUseCase(firstWorkDate)
 
-            val scheduleState = generateCurrentMonthUseCase()
+            val scheduleState = getCurrentMonthStateUseCase()
             _scheduleState.value = scheduleState
 
             val scheduleTypeState = loadScheduleTypeUseCase()
@@ -97,7 +97,7 @@ class ScheduleViewModel(
     private fun initMonth() {
         viewModelScope.launch {
             _scheduleState.value = ScheduleState.LaunchingState
-            val scheduleState = generateCurrentMonthUseCase()
+            val scheduleState = getCurrentMonthStateUseCase()
             _scheduleState.value = scheduleState
         }
     }
