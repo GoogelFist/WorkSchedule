@@ -9,7 +9,7 @@
     app:cardUseCompatPadding="true">
 
     <TextView
-        android:id="@+id/text_view_default_day_item"
+        android:id="@+id/text_view_sleep_off_weekend_day_item"
         android:layout_width="35dp"
         android:layout_height="50dp"
         android:gravity="center"
@@ -18,7 +18,7 @@
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="1"
-        tools:background="@drawable/today_default_background" />
+        tools:background="@drawable/today_sleep_off_weekend_background"
+        tools:text="1" />
 
 </androidx.cardview.widget.CardView>

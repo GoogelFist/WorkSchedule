@@ -105,8 +105,16 @@ class ScheduleFragment : Fragment() {
                 DayListAdapter.WORK_DAY_TYPE_POOL_SIZE
             )
             recycledViewPool.setMaxRecycledViews(
+                DayListAdapter.NIGHT_WORK_DAY_TYPE,
+                DayListAdapter.NIGHT_WORK_TYPE_POOL_SIZE
+            )
+            recycledViewPool.setMaxRecycledViews(
                 DayListAdapter.WEEKEND_DAY_TYPE,
                 DayListAdapter.WEEKEND_DAY_TYPE_POOL_SIZE
+            )
+            recycledViewPool.setMaxRecycledViews(
+                DayListAdapter.SLEEP_OFF_WEEKEND_DAY_TYPE,
+                DayListAdapter.SLEEP_OFF_WEEKEND_TYPE_POOL_SIZE
             )
 
             itemAnimator = null

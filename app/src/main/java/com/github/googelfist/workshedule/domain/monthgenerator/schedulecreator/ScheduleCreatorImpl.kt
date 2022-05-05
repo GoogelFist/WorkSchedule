@@ -10,7 +10,7 @@ class ScheduleCreatorImpl @Inject constructor() :
     override suspend fun createWorkSchedule(
         scheduleType: ScheduleTypeState,
         date: LocalDate
-    ): Set<LocalDate> {
+    ): Map<LocalDate, Int> {
         return when (scheduleType) {
             is ScheduleTypeState.TwoInTwo -> {
                 val firstWorkDate = scheduleType.firstWorkDate
@@ -18,7 +18,7 @@ class ScheduleCreatorImpl @Inject constructor() :
                 val actualFirstWorkDate = getActualFirstWorkDay(date, firstWorkDate, step)
                 getWorkSchedule(actualFirstWorkDate, step)
             }
-            else -> emptySet()
+            else -> emptyMap()
         }
     }
 
@@ -40,8 +40,8 @@ class ScheduleCreatorImpl @Inject constructor() :
         return curDate
     }
 
-    private fun getWorkSchedule(date: LocalDate, step: Long): Set<LocalDate> {
-        val dateSet = mutableSetOf<LocalDate>()
+    private fun getWorkSchedule(date: LocalDate, step: Long): Map<LocalDate, Int> {
+        val map = mutableMapOf<LocalDate, Int>()
 
         val startDate = date.minusDays(MONTH_RANGE_FROM_MIDDLE)
         val endDate = date.plusDays(MONTH_RANGE_FROM_MIDDLE)
@@ -51,20 +51,40 @@ class ScheduleCreatorImpl @Inject constructor() :
             lowDate = lowDate.minusDays(step)
         }
 
-        while (lowDate < endDate) {
-            var workDate = lowDate
-            repeat(step.toInt() / TWO_VALUE) {
-                dateSet.add(workDate)
-                workDate = workDate.plusDays(ONE_VALUE)
+        if (step == TWO_IN_TWO_STEP) {
+            while (lowDate < endDate) {
+                repeat(step.toInt() / TWO_VALUE) {
+                    map[lowDate] = WORK_DAY
+                    lowDate = lowDate.plusDays(ONE_VALUE)
+
+                    map[lowDate] = NIGHT_WORK_DAY
+                    lowDate = lowDate.plusDays(ONE_VALUE)
+
+                    map[lowDate] = SLEEP_OFF_WEEKEND_DAY
+                    lowDate = lowDate.plusDays(ONE_VALUE)
+
+                    map[lowDate] = WEEKEND_DAY
+                    lowDate = lowDate.plusDays(ONE_VALUE)
+                }
             }
-            lowDate = lowDate.plusDays(step)
+        } else {
+            throw RuntimeException("Incorrect step")
         }
-        return dateSet
+
+        return map
     }
 
     companion object {
         private const val ONE_VALUE = 1L
         private const val TWO_VALUE = 2
+
+        // TODO: object constant helper
+        private const val WORK_DAY = 1
+        private const val NIGHT_WORK_DAY = 2
+        private const val SLEEP_OFF_WEEKEND_DAY = 3
+        private const val WEEKEND_DAY = 4
+
+        private const val TWO_IN_TWO_STEP = 4L
 
         private const val MONTH_RANGE_FROM_MIDDLE = 45L
     }

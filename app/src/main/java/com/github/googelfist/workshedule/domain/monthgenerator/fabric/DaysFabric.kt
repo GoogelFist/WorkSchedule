@@ -9,6 +9,6 @@ interface DaysFabric {
     suspend fun getWorkDay(
         dateOfMonth: LocalDate,
         activeDate: LocalDate,
-        workSchedule: Set<LocalDate>
+        workSchedule: Map<LocalDate, Int>
     ): Day
 }

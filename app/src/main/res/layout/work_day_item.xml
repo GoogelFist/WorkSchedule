@@ -10,8 +10,8 @@
 
     <TextView
         android:id="@+id/text_view_work_day_item"
-        android:layout_width="30dp"
-        android:layout_height="wrap_content"
+        android:layout_width="35dp"
+        android:layout_height="50dp"
         android:gravity="center"
         android:textColor="@color/black"
         android:textSize="22sp"

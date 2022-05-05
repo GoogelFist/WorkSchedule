@@ -4,5 +4,8 @@ import com.github.googelfist.workshedule.domain.models.ScheduleTypeState
 import java.time.LocalDate
 
 interface ScheduleCreator {
-    suspend fun createWorkSchedule(scheduleType: ScheduleTypeState, date: LocalDate): Set<LocalDate>
+    suspend fun createWorkSchedule(
+        scheduleType: ScheduleTypeState,
+        date: LocalDate
+    ): Map<LocalDate, Int>
 }
