@@ -6,7 +6,7 @@ import java.time.LocalDate
 interface DaysFabric {
     fun getDefaultDay(dateOfMonth: LocalDate, activeDate: LocalDate): Day
 
-    suspend fun getWorkDay(
+    fun getWorkDay(
         dateOfMonth: LocalDate,
         activeDate: LocalDate,
         workSchedule: Map<LocalDate, Int>
