@@ -25,23 +25,26 @@ class DefaultDayViewHolder(private val view: View) : RecyclerView.ViewHolder(vie
 
     private fun setNotCurrentMonthView(day: Day) {
         defaultTextView.background = null
-        defaultTextView.setTextColor(
-            ContextCompat.getColor(view.context, R.color.not_current_month_text_color)
-        )
+        defaultTextView.alpha = NOT_CURRENT_MONTH_ALPHA_VALUE
         defaultTextView.text = day.getDayValue().toString()
     }
 
     private fun setTodayView(day: Day) {
         defaultTextView.background =
             ContextCompat.getDrawable(view.context, R.drawable.today_default_background)
-
-        defaultTextView.setTextColor(ContextCompat.getColor(view.context, R.color.black))
+        defaultTextView.alpha = FULL_ALPHA_VALUE
         defaultTextView.text = day.getDayValue().toString()
     }
 
     private fun setCurrentMonthView(day: Day) {
         defaultTextView.background = null
-        defaultTextView.setTextColor(ContextCompat.getColor(view.context, R.color.black))
+        defaultTextView.alpha = FULL_ALPHA_VALUE
         defaultTextView.text = day.getDayValue().toString()
+    }
+
+    // TODO: constant object helper
+    companion object {
+        private const val FULL_ALPHA_VALUE = 1f
+        private const val NOT_CURRENT_MONTH_ALPHA_VALUE = 0.3f
     }
 }

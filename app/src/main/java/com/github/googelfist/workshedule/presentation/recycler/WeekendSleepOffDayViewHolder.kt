@@ -7,33 +7,33 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.github.googelfist.workshedule.R
 import com.github.googelfist.workshedule.domain.models.day.Day
-import com.github.googelfist.workshedule.domain.models.day.WeekendDay
+import com.github.googelfist.workshedule.domain.models.day.WeekendDaySleepOff
 
-class WeekendDayViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+class WeekendSleepOffDayViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
-    private val weekendDayConstraintLayout: ConstraintLayout by lazy(LazyThreadSafetyMode.NONE) {
-        view.findViewById(R.id.weekend_day_cl)
-    }
     private val weekendDayTextView: TextView by lazy(LazyThreadSafetyMode.NONE) {
-        view.findViewById(R.id.text_view_weekend_day_item)
+        view.findViewById(R.id.text_view_weekend_sleep_off_day_item)
+    }
+    private val weekendSleepOffDayConstraintLayout: ConstraintLayout by lazy(LazyThreadSafetyMode.NONE) {
+        view.findViewById(R.id.weekend_sleep_off_cl)
     }
 
     fun bind(day: Day) {
 
         when {
-            day is WeekendDay && !day.currentMonth -> setNotCurrentMonthView(day)
-            day is WeekendDay && day.today -> setTodayView(day)
-            day is WeekendDay && day.currentMonth -> setCurrentMonthView(day)
+            day is WeekendDaySleepOff && !day.currentMonth -> setNotCurrentMonthView(day)
+            day is WeekendDaySleepOff && day.today -> setTodayView(day)
+            day is WeekendDaySleepOff && day.currentMonth -> setCurrentMonthView(day)
             else -> throw NoSuchElementException("Unknown day type")
         }
     }
 
     private fun setNotCurrentMonthView(day: Day) {
-        weekendDayConstraintLayout.alpha = NOT_CURRENT_MONTH_ALPHA_VALUE
-        weekendDayConstraintLayout.setBackgroundColor(
+        weekendSleepOffDayConstraintLayout.alpha = NOT_CURRENT_MONTH_ALPHA_VALUE
+        weekendSleepOffDayConstraintLayout.setBackgroundColor(
             ContextCompat.getColor(
                 view.context,
-                R.color.weekend_day
+                R.color.weekend_sleep_off_day
             )
         )
 
@@ -42,25 +42,25 @@ class WeekendDayViewHolder(private val view: View) : RecyclerView.ViewHolder(vie
     }
 
     private fun setTodayView(day: Day) {
-        weekendDayConstraintLayout.alpha = FULL_ALPHA_VALUE
-        weekendDayConstraintLayout.setBackgroundColor(
+        weekendSleepOffDayConstraintLayout.alpha = FULL_ALPHA_VALUE
+        weekendSleepOffDayConstraintLayout.setBackgroundColor(
             ContextCompat.getColor(
                 view.context,
-                R.color.weekend_day
+                R.color.weekend_sleep_off_day
             )
         )
 
         weekendDayTextView.background =
-            ContextCompat.getDrawable(view.context, R.drawable.today_weekend_background)
+            ContextCompat.getDrawable(view.context, R.drawable.today_weekend_sleep_off_background)
         weekendDayTextView.text = day.getDayValue().toString()
     }
 
     private fun setCurrentMonthView(day: Day) {
-        weekendDayConstraintLayout.alpha = FULL_ALPHA_VALUE
-        weekendDayConstraintLayout.setBackgroundColor(
+        weekendSleepOffDayConstraintLayout.alpha = FULL_ALPHA_VALUE
+        weekendSleepOffDayConstraintLayout.setBackgroundColor(
             ContextCompat.getColor(
                 view.context,
-                R.color.weekend_day
+                R.color.weekend_sleep_off_day
             )
         )
 

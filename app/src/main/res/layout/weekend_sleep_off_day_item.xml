@@ -8,14 +8,14 @@
     app:cardUseCompatPadding="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/weekend_day_cl"
+        android:id="@+id/weekend_sleep_off_cl"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/weekend_day_icon"
+            android:id="@+id/weekend_sleep_off_icon"
             style="@style/DaysItemIcon"
-            android:src="@drawable/ic_smiley"
+            android:src="@drawable/ic_sleep"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -23,7 +23,7 @@
             app:layout_constraintVertical_bias="0" />
 
         <TextView
-            android:id="@+id/text_view_weekend_day_item"
+            android:id="@+id/text_view_weekend_sleep_off_day_item"
             style="@style/DaysItemTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

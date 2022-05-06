@@ -8,12 +8,12 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="weekend_not_current_month">#4099CC00</color>
-    <color name="weekend_current_month">#BF99CC00</color>
-    <color name="work_not_current_month">#40FF4444</color>
-    <color name="work_current_month">#BFFF4444</color>
+    <!-- Weekend colors -->
+    <color name="weekend_day">#BFFFF300</color>
+    <color name="weekend_sleep_off_day">#BFFFF300</color>
 
-    <color name="not_current_month_text_color">@android:color/darker_gray</color>
-
+    <!-- Work colors -->
+    <color name="work_day">#BFF14949</color>
+    <color name="work_night">#BFF14949</color>
 
 </resources>

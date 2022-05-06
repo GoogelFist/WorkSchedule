@@ -1,6 +1,6 @@
 package com.github.googelfist.workshedule.domain.models.day
 
-data class SleepOffWeekendDay(
+data class WorkNight(
     val day: Int,
     val month: Int,
     val year: Int,

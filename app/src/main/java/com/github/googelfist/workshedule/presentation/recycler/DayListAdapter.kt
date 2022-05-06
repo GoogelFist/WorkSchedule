@@ -7,10 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.github.googelfist.workshedule.R
 import com.github.googelfist.workshedule.domain.models.day.Day
 import com.github.googelfist.workshedule.domain.models.day.DefaultDay
-import com.github.googelfist.workshedule.domain.models.day.NightWorkDay
-import com.github.googelfist.workshedule.domain.models.day.SleepOffWeekendDay
 import com.github.googelfist.workshedule.domain.models.day.WeekendDay
+import com.github.googelfist.workshedule.domain.models.day.WeekendDaySleepOff
 import com.github.googelfist.workshedule.domain.models.day.WorkDay
+import com.github.googelfist.workshedule.domain.models.day.WorkNight
 
 class DayListAdapter : ListAdapter<Day, RecyclerView.ViewHolder>(DayDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -28,8 +28,8 @@ class DayListAdapter : ListAdapter<Day, RecyclerView.ViewHolder>(DayDiffCallback
             }
             SLEEP_OFF_WEEKEND_DAY_TYPE -> {
                 val layout = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.sleep_off_weekend_day_item, parent, false)
-                SleepOffWeekendDayViewHolder(layout)
+                    .inflate(R.layout.weekend_sleep_off_day_item, parent, false)
+                WeekendSleepOffDayViewHolder(layout)
             }
             WORK_DAY_TYPE -> {
                 val layout = LayoutInflater.from(parent.context)
@@ -38,8 +38,8 @@ class DayListAdapter : ListAdapter<Day, RecyclerView.ViewHolder>(DayDiffCallback
             }
             NIGHT_WORK_DAY_TYPE -> {
                 val layout = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.night_work_day_item, parent, false)
-                NightWorkDayViewHolder(layout)
+                    .inflate(R.layout.work_night_item, parent, false)
+                WorkNightViewHolder(layout)
             }
             else -> throw IllegalArgumentException("Unknown view type: $viewType")
         }
@@ -50,9 +50,9 @@ class DayListAdapter : ListAdapter<Day, RecyclerView.ViewHolder>(DayDiffCallback
         when (holder) {
             is DefaultDayViewHolder -> holder.bind(day)
             is WorkDayViewHolder -> holder.bind(day)
-            is NightWorkDayViewHolder -> holder.bind(day)
+            is WorkNightViewHolder -> holder.bind(day)
             is WeekendDayViewHolder -> holder.bind(day)
-            is SleepOffWeekendDayViewHolder -> holder.bind(day)
+            is WeekendSleepOffDayViewHolder -> holder.bind(day)
             else -> throw NoSuchElementException("Unknown view holder type")
         }
     }
@@ -63,9 +63,9 @@ class DayListAdapter : ListAdapter<Day, RecyclerView.ViewHolder>(DayDiffCallback
         return when (day) {
             is DefaultDay -> DEFAULT_DAY_TYPE
             is WorkDay -> WORK_DAY_TYPE
-            is NightWorkDay -> NIGHT_WORK_DAY_TYPE
+            is WorkNight -> NIGHT_WORK_DAY_TYPE
             is WeekendDay -> WEEKEND_DAY_TYPE
-            is SleepOffWeekendDay -> SLEEP_OFF_WEEKEND_DAY_TYPE
+            is WeekendDaySleepOff -> SLEEP_OFF_WEEKEND_DAY_TYPE
             else -> throw NoSuchElementException("Unknown view type")
         }
     }
