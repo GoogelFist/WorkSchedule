@@ -24,12 +24,15 @@
         android:gravity="center"
         android:textColor="@color/black"
         android:textSize="28sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="April 2022" />
 
+    <!-- move it to separate layout -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/week_days_layout"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="@id/date_text_view"
         app:layout_constraintStart_toStartOf="@id/date_text_view"
@@ -37,80 +40,91 @@
 
         <TextView
             android:id="@+id/mo_day_textview"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:gravity="center"
             android:text="@string/mo_week_day"
             android:textSize="20sp"
             app:layout_constraintEnd_toStartOf="@+id/tu_day_textview"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tu_day_textview"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:text="@string/tu_week_day"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@+id/mo_day_textview"
             app:layout_constraintEnd_toStartOf="@+id/we_day_textview"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/mo_day_textview"
             app:layout_constraintTop_toTopOf="@+id/mo_day_textview" />
 
         <TextView
             android:id="@+id/we_day_textview"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:text="@string/we_week_day"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@+id/mo_day_textview"
             app:layout_constraintEnd_toStartOf="@+id/th_day_textview"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/tu_day_textview"
             app:layout_constraintTop_toTopOf="@+id/mo_day_textview" />
 
         <TextView
             android:id="@+id/th_day_textview"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:text="@string/th_week_day"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@+id/mo_day_textview"
             app:layout_constraintEnd_toStartOf="@+id/fr_day_textview"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/we_day_textview"
             app:layout_constraintTop_toTopOf="@+id/mo_day_textview" />
 
         <TextView
             android:id="@+id/fr_day_textview"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:text="@string/fr_week_day"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@+id/mo_day_textview"
             app:layout_constraintEnd_toStartOf="@+id/sa_day_textview"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/th_day_textview"
             app:layout_constraintTop_toTopOf="@+id/mo_day_textview" />
 
         <TextView
             android:id="@+id/sa_day_textview"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:text="@string/sa_week_day"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@+id/mo_day_textview"
             app:layout_constraintEnd_toStartOf="@+id/su_day_textview"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/fr_day_textview"
             app:layout_constraintTop_toTopOf="@+id/mo_day_textview" />
 
         <TextView
             android:id="@+id/su_day_textview"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="26dp"
+            android:gravity="center"
             android:text="@string/su_week_day"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@+id/mo_day_textview"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/sa_day_textview"
             app:layout_constraintTop_toTopOf="@+id/mo_day_textview" />
 
@@ -118,11 +132,9 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintEnd_toEndOf="@+id/date_text_view"
         app:layout_constraintStart_toStartOf="@+id/date_text_view"
@@ -131,17 +143,18 @@
         tools:itemCount="42"
         tools:listitem="@layout/weekend_day_item" />
 
+    <!-- move it to separate layout -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/navigation_buttons"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@id/date_text_view"
         app:layout_constraintStart_toStartOf="@+id/date_text_view"
         app:layout_constraintTop_toBottomOf="@+id/recycler_view">
 
         <Button
             android:id="@+id/previous_button"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/previous_title_button"
             app:layout_constraintEnd_toStartOf="@+id/current_button"
@@ -152,20 +165,23 @@
 
         <Button
             android:id="@+id/current_button"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/current_title_button"
+            android:layout_marginStart="4dp"
             app:layout_constraintBottom_toBottomOf="@+id/previous_button"
             app:layout_constraintEnd_toStartOf="@+id/next_button"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/previous_button"
-            app:layout_constraintTop_toTopOf="@+id/previous_button" />
+            app:layout_constraintTop_toTopOf="@+id/previous_button"
+            app:layout_constraintVertical_bias="0.0" />
 
         <Button
             android:id="@+id/next_button"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/next_title_button"
+            android:layout_marginStart="4dp"
             app:layout_constraintBottom_toBottomOf="@+id/previous_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -182,6 +198,7 @@
         android:text="@string/show_control_panel_title_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/navigation_buttons" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
