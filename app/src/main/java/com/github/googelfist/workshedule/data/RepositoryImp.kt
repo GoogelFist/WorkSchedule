@@ -4,6 +4,7 @@ import com.github.googelfist.workshedule.data.datasource.LocalDataSource
 import com.github.googelfist.workshedule.domain.Repository
 import com.github.googelfist.workshedule.domain.models.ScheduleTypeState
 import com.github.googelfist.workshedule.domain.models.day.Day
+import com.github.googelfist.workshedule.domain.monthgenerator.DayType
 import javax.inject.Inject
 
 class RepositoryImp @Inject constructor(private val localDataSource: LocalDataSource) : Repository {
@@ -43,6 +44,29 @@ class RepositoryImp @Inject constructor(private val localDataSource: LocalDataSo
 
     override fun getFromCache(formattedDate: String): List<Day>? {
         return cache[formattedDate]
+    }
+
+    // TODO: temp
+    override fun getSchedulePattern(): List<DayType> {
+//        val pattern = listOf(
+//            DayType.WorkDay,
+//            DayType.DefaultDay
+//        )
+
+        val pattern = listOf(
+            DayType.WorkDay,
+            DayType.WorkNight,
+            DayType.WeekendDaySleepOff,
+            DayType.WeekendDay
+        )
+
+//        val pattern = listOf(
+//            DayType.WorkDay,
+//            DayType.WorkDay,
+//            DayType.WeekendDay,
+//            DayType.WeekendDay
+//        )
+        return pattern
     }
 
     private fun clearCache() {

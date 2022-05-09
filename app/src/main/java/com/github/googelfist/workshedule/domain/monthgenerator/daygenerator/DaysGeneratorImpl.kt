@@ -1,62 +1,70 @@
 package com.github.googelfist.workshedule.domain.monthgenerator.daygenerator
 
 import com.github.googelfist.workshedule.domain.Repository
-import com.github.googelfist.workshedule.domain.models.ScheduleTypeState
 import com.github.googelfist.workshedule.domain.models.day.Day
+import com.github.googelfist.workshedule.domain.monthgenerator.DayType
 import com.github.googelfist.workshedule.domain.monthgenerator.fabric.DaysFabric
-import com.github.googelfist.workshedule.domain.monthgenerator.schedulecreator.ScheduleCreator
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import java.time.LocalDate
+import java.time.temporal.ChronoUnit
 import javax.inject.Inject
+import kotlin.math.abs
 
 class DaysGeneratorImpl @Inject constructor(
     private val daysFabric: DaysFabric,
     private val repository: Repository,
-    private val dispatcher: CoroutineDispatcher,
-    private val scheduleCreator: ScheduleCreator
+    private val dispatcher: CoroutineDispatcher
 ) : DaysGenerator {
 
     override suspend fun getDays(date: LocalDate): List<Day> {
-        val scheduleTypeState = repository.loadScheduleType()
+        val schedulePattern = repository.getSchedulePattern()
 
-        return when (scheduleTypeState) {
-            is ScheduleTypeState.TwoInTwo -> generateWorkDays(date, scheduleTypeState)
-            is ScheduleTypeState.Default -> generateDefaultDays(date)
-        }
-    }
+        // TODO: temp
+        val firstDate = LocalDate.of(2022, 5, 2)
 
-    private suspend fun generateDefaultDays(date: LocalDate): List<Day> {
-        return withContext(dispatcher) {
-            var firstMondayInMonth = getDateOfFirstMonday(date)
-
-            val dayList = ArrayList<Day>(MAX_DAY_COUNT)
-            repeat(MAX_DAY_COUNT) {
-                dayList.add(daysFabric.getDefaultDay(firstMondayInMonth, date))
-
-                firstMondayInMonth = firstMondayInMonth.plusDays(ONE_VALUE)
-            }
-            dayList
-        }
+        return generateWorkDays(firstDate, schedulePattern, date)
     }
 
     private suspend fun generateWorkDays(
-        date: LocalDate,
-        scheduleTypeState: ScheduleTypeState
+        firstScheduleDate: LocalDate,
+        schedulePattern: List<DayType>,
+        date: LocalDate
     ): List<Day> {
         return withContext(dispatcher) {
-            var firstMondayInMonth = getDateOfFirstMonday(date)
-
-            val workSchedule = scheduleCreator.createWorkSchedule(scheduleTypeState, date)
-
             val dayList = ArrayList<Day>(MAX_DAY_COUNT)
-            repeat(MAX_DAY_COUNT) {
-                dayList.add(daysFabric.getWorkDay(firstMondayInMonth, date, workSchedule))
 
-                firstMondayInMonth = firstMondayInMonth.plusDays(ONE_VALUE)
+            var firstMondayDate = getDateOfFirstMonday(date)
+
+            val patternSize = schedulePattern.size
+
+            var typePointer =
+                getTypePointerOfFirstMonday(firstScheduleDate, firstMondayDate, patternSize)
+
+            repeat(MAX_DAY_COUNT) {
+
+                if (typePointer >= patternSize) {
+                    typePointer = 0
+                }
+                val dayType = schedulePattern[typePointer]
+
+                dayList.add(daysFabric.getDay(dayType, firstMondayDate, date))
+
+                typePointer++
+
+                firstMondayDate = firstMondayDate.plusDays(ONE_VALUE)
             }
             dayList
         }
+    }
+
+    private fun getTypePointerOfFirstMonday(
+        firstScheduleDate: LocalDate,
+        firstMondayDate: LocalDate,
+        schedulePatternSize: Int
+    ): Int {
+        val diff = ChronoUnit.DAYS.between(firstScheduleDate, firstMondayDate).toInt()
+        return schedulePatternSize - (abs(diff) % schedulePatternSize)
     }
 
     private suspend fun getDateOfFirstMonday(date: LocalDate): LocalDate {

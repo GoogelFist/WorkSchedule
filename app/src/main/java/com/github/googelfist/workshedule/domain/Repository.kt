@@ -2,6 +2,7 @@ package com.github.googelfist.workshedule.domain
 
 import com.github.googelfist.workshedule.domain.models.ScheduleTypeState
 import com.github.googelfist.workshedule.domain.models.day.Day
+import com.github.googelfist.workshedule.domain.monthgenerator.DayType
 
 interface Repository {
     suspend fun saveFirstWorkDate(firstWorkDate: String)
@@ -11,4 +12,7 @@ interface Repository {
 
     fun putToCache(formattedDate: String, dayList: List<Day>)
     fun getFromCache(formattedDate: String): List<Day>?
+
+    // TODO: temp
+    fun getSchedulePattern(): List<DayType>
 }
