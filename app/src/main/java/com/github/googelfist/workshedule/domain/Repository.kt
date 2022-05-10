@@ -1,7 +1,7 @@
 package com.github.googelfist.workshedule.domain
 
+import com.github.googelfist.workshedule.domain.models.Day
 import com.github.googelfist.workshedule.domain.models.ScheduleTypeState
-import com.github.googelfist.workshedule.domain.models.day.Day
 import com.github.googelfist.workshedule.domain.monthgenerator.DayType
 
 interface Repository {

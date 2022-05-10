@@ -2,8 +2,8 @@ package com.github.googelfist.workshedule.data
 
 import com.github.googelfist.workshedule.data.datasource.LocalDataSource
 import com.github.googelfist.workshedule.domain.Repository
+import com.github.googelfist.workshedule.domain.models.Day
 import com.github.googelfist.workshedule.domain.models.ScheduleTypeState
-import com.github.googelfist.workshedule.domain.models.day.Day
 import com.github.googelfist.workshedule.domain.monthgenerator.DayType
 import javax.inject.Inject
 
@@ -16,6 +16,7 @@ class RepositoryImp @Inject constructor(private val localDataSource: LocalDataSo
         clearCache()
     }
 
+    // TODO: edit this logic
     override suspend fun loadScheduleType(): ScheduleTypeState {
         val scheduleType = localDataSource.loadScheduleType()
         return when (scheduleType) {
@@ -49,23 +50,17 @@ class RepositoryImp @Inject constructor(private val localDataSource: LocalDataSo
     // TODO: temp
     override fun getSchedulePattern(): List<DayType> {
 //        val pattern = listOf(
-//            DayType.WorkDay,
-//            DayType.DefaultDay
+//            DayType.WorkDay("#BF6F0101"),
+//            DayType.DefaultDay("#FFFFFFFF")
 //        )
 
         val pattern = listOf(
-            DayType.WorkDay,
-            DayType.WorkNight,
-            DayType.WeekendDaySleepOff,
-            DayType.WeekendDay
+            DayType.WorkDay("#BF6F0101", "Day"),
+            DayType.WorkNight("#FF018786", "Night"),
+            DayType.WeekendDaySleepOff("#BF706B09", "SleepOff"),
+            DayType.WeekendDay("#BFFFF300", "Weekend")
         )
 
-//        val pattern = listOf(
-//            DayType.WorkDay,
-//            DayType.WorkDay,
-//            DayType.WeekendDay,
-//            DayType.WeekendDay
-//        )
         return pattern
     }
 

@@ -1,7 +1,7 @@
 package com.github.googelfist.workshedule.domain.monthgenerator.daygenerator
 
 import com.github.googelfist.workshedule.domain.Repository
-import com.github.googelfist.workshedule.domain.models.day.Day
+import com.github.googelfist.workshedule.domain.models.Day
 import com.github.googelfist.workshedule.domain.monthgenerator.DayType
 import com.github.googelfist.workshedule.domain.monthgenerator.fabric.DaysFabric
 import kotlinx.coroutines.CoroutineDispatcher

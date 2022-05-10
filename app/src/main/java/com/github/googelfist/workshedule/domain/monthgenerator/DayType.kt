@@ -1,9 +1,9 @@
 package com.github.googelfist.workshedule.domain.monthgenerator
 
 sealed class DayType {
-    object DefaultDay : DayType()
-    object WorkDay : DayType()
-    object WorkNight : DayType()
-    object WeekendDaySleepOff : DayType()
-    object WeekendDay : DayType()
+    data class DefaultDay(val backgroundColor: String, val title: String) : DayType()
+    data class WorkDay(val backgroundColor: String, val title: String) : DayType()
+    data class WorkNight(val backgroundColor: String, val title: String) : DayType()
+    data class WeekendDaySleepOff(val backgroundColor: String, val title: String) : DayType()
+    data class WeekendDay(val backgroundColor: String, val title: String) : DayType()
 }

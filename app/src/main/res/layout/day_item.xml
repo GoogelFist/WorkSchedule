@@ -8,22 +8,24 @@
     app:cardUseCompatPadding="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/weekend_day_cl"
+        android:id="@+id/day_item_cl"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/weekend_day_icon"
-            style="@style/DaysItemIcon"
-            android:src="@drawable/ic_smiley"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <TextView
+            android:id="@+id/tv_day_item_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="11sp"
+            android:gravity="center"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0" />
+            tools:text="W" />
 
         <TextView
-            android:id="@+id/text_view_weekend_day_item"
+            android:id="@+id/tv_day_item_value"
             style="@style/DaysItemTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -31,7 +33,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_day_item_title"
             app:layout_constraintVertical_bias="1"
             tools:text="1" />
 
