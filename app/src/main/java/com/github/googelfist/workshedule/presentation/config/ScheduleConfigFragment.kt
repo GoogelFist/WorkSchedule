@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.github.googelfist.workshedule.R
 import com.github.googelfist.workshedule.component
 import com.github.googelfist.workshedule.databinding.ScheduleConfigFragmentBinding
 import com.github.googelfist.workshedule.presentation.config.recycler.DayTypeListAdapter
@@ -14,6 +15,8 @@ import com.github.googelfist.workshedule.presentation.schedule.DatePickerFragmen
 import com.github.googelfist.workshedule.presentation.schedule.ScheduleViewModel
 import com.github.googelfist.workshedule.presentation.schedule.ScheduleViewModelFactory
 import com.github.googelfist.workshedule.presentation.schedule.models.ScheduleEvent
+import com.skydoves.colorpickerview.ColorPickerDialog
+import com.skydoves.colorpickerview.listeners.ColorEnvelopeListener
 import javax.inject.Inject
 
 class ScheduleConfigFragment : Fragment() {
@@ -30,7 +33,6 @@ class ScheduleConfigFragment : Fragment() {
     }
 
     lateinit var dayTypeListAdapter: DayTypeListAdapter
-
 
     override fun onAttach(context: Context) {
         context.component.inject(this)
@@ -50,11 +52,8 @@ class ScheduleConfigFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupRecyclerView()
-
         observeViewModel()
-
         setOnEditColorButtonClickListener()
-
         setupButtons()
     }
 
@@ -72,29 +71,45 @@ class ScheduleConfigFragment : Fragment() {
         }
     }
 
-    // TODO: create color picker dialog
     private fun setOnEditColorButtonClickListener() {
         dayTypeListAdapter.onEditColorButtonClickListener = { button, position ->
             button.setOnClickListener {
                 val dayType = dayTypeListAdapter.currentList[position]
-                val resultDayType = dayType.copy(backgroundColor = "#FF3700B3")
 
-                scheduleViewModel.obtainEvent(ScheduleEvent.EditDayType(position, resultDayType))
-                dayTypeListAdapter.notifyItemChanged(position)
-                scheduleViewModel.obtainEvent(ScheduleEvent.RefreshSchedulePattern)
+                onPickedColor(requireActivity()) { color ->
+                    val newDayType = dayType.copy(backgroundColor = color)
+                    scheduleViewModel.obtainEvent(ScheduleEvent.EditDayType(position, newDayType))
+                    dayTypeListAdapter.notifyItemChanged(position)
+                    scheduleViewModel.obtainEvent(ScheduleEvent.RefreshSchedulePattern)
+                }
             }
         }
     }
 
+    private fun onPickedColor(context: Context, color: (String) -> Unit) {
+        ColorPickerDialog.Builder(context)
+            .setTitle(getString(R.string.color_picker_title))
+            .setPreferenceName(getString(R.string.color_picker_preference_name))
+            .setPositiveButton(
+                getString(android.R.string.ok),
+                ColorEnvelopeListener { envelope, _ ->
+                    val hexColor = "#${envelope.hexCode}"
+                    color(hexColor)
+                })
+            .setNegativeButton(getString(android.R.string.cancel)) { dialogInterface, _ ->
+                dialogInterface.dismiss()
+            }
+            .attachAlphaSlideBar(true)
+            .attachBrightnessSlideBar(true)
+            .setBottomSpace(COLOR_PICKER_BOTTOM_SPACE)
+            .show()
+    }
 
     private fun setupRecyclerView() {
         val recyclerView = binding.recyclerViewEditDayTypes
 
         dayTypeListAdapter = DayTypeListAdapter()
-
-        with(recyclerView) {
-            adapter = dayTypeListAdapter
-        }
+        recyclerView.adapter = dayTypeListAdapter
     }
 
     private fun setupButtons() {
@@ -108,6 +123,7 @@ class ScheduleConfigFragment : Fragment() {
     }
 
     companion object {
+        private const val COLOR_PICKER_BOTTOM_SPACE = 12
 
         fun newInstance(): ScheduleConfigFragment {
             return ScheduleConfigFragment()
