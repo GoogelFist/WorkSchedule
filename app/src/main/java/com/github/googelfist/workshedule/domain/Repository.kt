@@ -1,18 +1,18 @@
 package com.github.googelfist.workshedule.domain
 
 import com.github.googelfist.workshedule.domain.models.Day
-import com.github.googelfist.workshedule.domain.models.ScheduleTypeState
-import com.github.googelfist.workshedule.domain.monthgenerator.DayType
+import com.github.googelfist.workshedule.domain.models.DayType
+import java.time.LocalDate
 
 interface Repository {
     suspend fun saveFirstWorkDate(firstWorkDate: String)
-
-    suspend fun loadScheduleType(): ScheduleTypeState
-    suspend fun saveScheduleType(scheduleType: String)
+    suspend fun loadFirstWorkDate(): LocalDate
 
     fun putToCache(formattedDate: String, dayList: List<Day>)
     fun getFromCache(formattedDate: String): List<Day>?
 
     // TODO: temp
-    fun getSchedulePattern(): List<DayType>
+    fun loadSchedulePattern(): List<DayType>
+    fun saveSchedulePattern(pattern: List<DayType>)
+    fun editDayType(position: Int, dayType: DayType)
 }

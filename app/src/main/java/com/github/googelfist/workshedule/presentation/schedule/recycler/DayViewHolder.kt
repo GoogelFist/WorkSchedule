@@ -1,4 +1,4 @@
-package com.github.googelfist.workshedule.presentation.recycler
+package com.github.googelfist.workshedule.presentation.schedule.recycler
 
 import android.graphics.Color
 import android.view.View

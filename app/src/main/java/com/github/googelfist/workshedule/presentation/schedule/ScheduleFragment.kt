@@ -7,11 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.github.googelfist.workshedule.R
 import com.github.googelfist.workshedule.component
 import com.github.googelfist.workshedule.databinding.ScheduleFragmentBinding
 import com.github.googelfist.workshedule.domain.models.ScheduleState
-import com.github.googelfist.workshedule.presentation.recycler.DayListAdapter
+import com.github.googelfist.workshedule.presentation.config.ScheduleConfigFragment
 import com.github.googelfist.workshedule.presentation.schedule.models.ScheduleEvent
+import com.github.googelfist.workshedule.presentation.schedule.recycler.DayListAdapter
 import javax.inject.Inject
 
 class ScheduleFragment : Fragment() {
@@ -28,10 +30,6 @@ class ScheduleFragment : Fragment() {
     }
 
     lateinit var dayListAdapter: DayListAdapter
-
-    private val bottomSheetFragment by lazy(LazyThreadSafetyMode.NONE) {
-        BottomSheetFragment.getNewInstance()
-    }
 
     override fun onAttach(context: Context) {
         context.component.inject(this)
@@ -50,9 +48,9 @@ class ScheduleFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        observeViewModel()
-
         setupRecyclerView()
+
+        observeViewModel()
 
         setupButtons()
     }
@@ -96,11 +94,6 @@ class ScheduleFragment : Fragment() {
         with(recyclerView) {
             adapter = dayListAdapter
 
-            recycledViewPool.setMaxRecycledViews(
-                DayListAdapter.DAY_TYPE,
-                DayListAdapter.DAY_TYPE_POOL_SIZE
-            )
-
             itemAnimator = null
         }
     }
@@ -117,7 +110,15 @@ class ScheduleFragment : Fragment() {
                 scheduleViewModel.obtainEvent(ScheduleEvent.GeneratedNextMonth)
             }
             buttonShowBottomSheet.setOnClickListener {
-                bottomSheetFragment.show(parentFragmentManager, BottomSheetFragment.TAG)
+                requireActivity().supportFragmentManager
+                    .beginTransaction()
+                    .replace(
+                        R.id.fragment_recycler_view_container,
+                        ScheduleConfigFragment.newInstance()
+                    )
+                    .addToBackStack(null)
+                    .setReorderingAllowed(true)
+                    .commit()
             }
         }
     }

@@ -1,8 +1,8 @@
 package com.github.googelfist.workshedule.domain.monthgenerator.fabric
 
 import com.github.googelfist.workshedule.domain.models.Day
+import com.github.googelfist.workshedule.domain.models.DayType
 import com.github.googelfist.workshedule.domain.monthgenerator.DateNowContainer
-import com.github.googelfist.workshedule.domain.monthgenerator.DayType
 import java.time.LocalDate
 import javax.inject.Inject
 
@@ -19,28 +19,8 @@ class DaysFabricImpl @Inject constructor(
         activeDate: LocalDate
     ): Day {
 
-        when (dayType) {
-            is DayType.DefaultDay -> {
-                backgroundColor = dayType.backgroundColor
-                title = dayType.title
-            }
-            is DayType.WorkDay -> {
-                backgroundColor = dayType.backgroundColor
-                title = dayType.title
-            }
-            is DayType.WorkNight -> {
-                backgroundColor = dayType.backgroundColor
-                title = dayType.title
-            }
-            is DayType.WeekendDaySleepOff -> {
-                backgroundColor = dayType.backgroundColor
-                title = dayType.title
-            }
-            is DayType.WeekendDay -> {
-                backgroundColor = dayType.backgroundColor
-                title = dayType.title
-            }
-        }
+        val backgroundColor = dayType.backgroundColor
+        val title = dayType.title
 
         return when {
             !isCurrentMonthDay(dateOfMonth, activeDate) ->

@@ -20,6 +20,7 @@ import javax.inject.Singleton
 interface ScheduleModule {
 
     @Binds
+    @Singleton
     fun bindDaysFabric(impl: DaysFabricImpl): DaysFabric
 
     @Binds

@@ -48,6 +48,7 @@ class ScheduleGeneratorImpl @Inject constructor(
         return ScheduleState.GeneratedState(formattedDate, dayList)
     }
 
+    // TODO: make it without unused work, split to next and previous preload
     private suspend fun preloadMonthStates(currentDate: LocalDate) {
         var startDate = currentDate.minusMonths(MONTH_RANGE_FROM_MIDDLE)
 
