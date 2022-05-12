@@ -65,6 +65,6 @@ class DayViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
     // TODO: constant object helper
     companion object {
         private const val FULL_ALPHA_VALUE = 1f
-        private const val NOT_CURRENT_MONTH_ALPHA_VALUE = 0.3f
+        private const val NOT_CURRENT_MONTH_ALPHA_VALUE = 0.4f
     }
 }

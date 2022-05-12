@@ -28,6 +28,15 @@
         app:layout_constraintTop_toTopOf="@id/first_work_date_button"
         tools:text="2022-2-21" />
 
+    <Button
+        android:id="@+id/button_create_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Create type"
+        app:layout_constraintStart_toStartOf="@id/first_work_date_button"
+        app:layout_constraintTop_toBottomOf="@id/first_work_date_button" />
+
     <View
         android:id="@+id/divider_line"
         android:layout_width="0dp"
@@ -37,7 +46,7 @@
         android:background="@android:color/darker_gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/first_work_date_button"
-        app:layout_constraintTop_toBottomOf="@+id/first_work_date_button" />
+        app:layout_constraintTop_toBottomOf="@+id/button_create_type" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_edit_day_types"
@@ -50,7 +59,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/divider_line"
+        app:layout_constraintTop_toBottomOf="@id/divider_line"
         tools:itemCount="3"
         tools:listitem="@layout/day_type_edit_item" />
 

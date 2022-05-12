@@ -16,4 +16,6 @@
     <color name="work_day">#BFF14949</color>
     <color name="work_night">#BFF14949</color>
 
+    <color name="weekend_sleep_day">#E57373</color>
+
 </resources>

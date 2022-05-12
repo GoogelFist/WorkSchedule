@@ -2,6 +2,8 @@ package com.github.googelfist.workshedule.presentation.schedule
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.github.googelfist.workshedule.domain.usecases.CreateDayTypeUseCase
+import com.github.googelfist.workshedule.domain.usecases.DeleteDayTypeUseCase
 import com.github.googelfist.workshedule.domain.usecases.EditDayTypeUseCase
 import com.github.googelfist.workshedule.domain.usecases.GetCurrentMonthStateUseCase
 import com.github.googelfist.workshedule.domain.usecases.GetNextMonthStateUseCase
@@ -20,7 +22,9 @@ class ScheduleViewModelFactory @Inject constructor(
     private val loadFirstWorkDateUseCase: LoadFirstWorkDateUseCase,
     private val saveSchedulePatternUseCase: SaveSchedulePatternUseCase,
     private val loadSchedulePatternUseCase: LoadSchedulePatternUseCase,
-    private val editDayTypeUseCase: EditDayTypeUseCase
+    private val createDayTypeUseCase: CreateDayTypeUseCase,
+    private val editDayTypeUseCase: EditDayTypeUseCase,
+    private val deleteDayTypeUseCase: DeleteDayTypeUseCase
 ) : ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")
@@ -34,7 +38,9 @@ class ScheduleViewModelFactory @Inject constructor(
                 loadFirstWorkDateUseCase = loadFirstWorkDateUseCase,
                 saveSchedulePatternUseCase = saveSchedulePatternUseCase,
                 loadSchedulePatternUseCase = loadSchedulePatternUseCase,
-                editDayTypeUseCase = editDayTypeUseCase
+                createDayTypeUseCase = createDayTypeUseCase,
+                editDayTypeUseCase = editDayTypeUseCase,
+                deleteDayTypeUseCase = deleteDayTypeUseCase
             ) as T
         }
         throw RuntimeException("Unknown class name")

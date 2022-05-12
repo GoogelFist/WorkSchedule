@@ -9,6 +9,9 @@ sealed class ScheduleEvent {
     data class UpdateSchedulePattern(val schedulePattern: List<DayType>) : ScheduleEvent()
     object RefreshSchedulePattern : ScheduleEvent()
     data class RefreshFirstWorkDate(val firstWorkDate: String) : ScheduleEvent()
+
+    object CreateDayType : ScheduleEvent()
     data class EditDayType(val position: Int, val dayType: DayType) : ScheduleEvent()
+    data class DeleteDayType(val position: Int) : ScheduleEvent()
 
 }

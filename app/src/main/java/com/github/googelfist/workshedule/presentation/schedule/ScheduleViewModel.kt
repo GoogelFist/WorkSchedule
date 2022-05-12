@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.googelfist.workshedule.domain.models.DayType
 import com.github.googelfist.workshedule.domain.models.ScheduleState
+import com.github.googelfist.workshedule.domain.usecases.CreateDayTypeUseCase
+import com.github.googelfist.workshedule.domain.usecases.DeleteDayTypeUseCase
 import com.github.googelfist.workshedule.domain.usecases.EditDayTypeUseCase
 import com.github.googelfist.workshedule.domain.usecases.GetCurrentMonthStateUseCase
 import com.github.googelfist.workshedule.domain.usecases.GetNextMonthStateUseCase
@@ -27,7 +29,9 @@ class ScheduleViewModel(
     private val loadFirstWorkDateUseCase: LoadFirstWorkDateUseCase,
     private val saveSchedulePatternUseCase: SaveSchedulePatternUseCase,
     private val loadSchedulePatternUseCase: LoadSchedulePatternUseCase,
-    private val editDayTypeUseCase: EditDayTypeUseCase
+    private val editDayTypeUseCase: EditDayTypeUseCase,
+    private val createDayTypeUseCase: CreateDayTypeUseCase,
+    private val deleteDayTypeUseCase: DeleteDayTypeUseCase
 ) : ViewModel(), EventHandler<ScheduleEvent> {
 
     private var _scheduleState = MutableLiveData<ScheduleState>()
@@ -47,6 +51,7 @@ class ScheduleViewModel(
 
     }
 
+    // TODO: create separate view model for config fragment
     override fun obtainEvent(event: ScheduleEvent) {
         when (event) {
             ScheduleEvent.GeneratedCurrentMonth -> generatedCurrentMonth()
@@ -55,24 +60,21 @@ class ScheduleViewModel(
             is ScheduleEvent.RefreshFirstWorkDate -> refreshedFirstWorkDate(event.firstWorkDate)
             is ScheduleEvent.UpdateSchedulePattern -> refreshedSchedulePattern(event.schedulePattern)
             ScheduleEvent.RefreshSchedulePattern -> updateSchedulePattern()
-            is ScheduleEvent.EditDayType -> editDayType(event.position, event.dayType)
+
+            ScheduleEvent.CreateDayType -> createDayType()
+            is ScheduleEvent.EditDayType -> updateDayType(event.position, event.dayType)
+            is ScheduleEvent.DeleteDayType -> deleteDayType(event.position)
         }
     }
 
-    private fun updateSchedulePattern() {
+    private fun initMonth() {
         viewModelScope.launch {
-
+            _scheduleState.value = ScheduleState.LaunchingState
             val scheduleState = getCurrentMonthStateUseCase()
             _scheduleState.value = scheduleState
 
-            val scheduleTypePattern = loadSchedulePatternUseCase()
-            _scheduleTypePattern.value = scheduleTypePattern
-        }
-    }
-
-    private fun editDayType(position: Int, dayType: DayType) {
-        viewModelScope.launch {
-            editDayTypeUseCase(position, dayType)
+            val firstDate = loadFirstWorkDateUseCase()
+            _firstWorkDate.value = firstDate
 
             val patternSchedule = loadSchedulePatternUseCase()
             _scheduleTypePattern.value = patternSchedule
@@ -86,6 +88,13 @@ class ScheduleViewModel(
         }
     }
 
+    private fun generatedNextMonth() {
+        viewModelScope.launch {
+            val scheduleState = getNextMonthStateUseCase()
+            _scheduleState.value = scheduleState
+        }
+    }
+
     private fun generatedPreviousMonth() {
         viewModelScope.launch {
             val scheduleState = getPreviousMonthStateUseCase()
@@ -93,10 +102,15 @@ class ScheduleViewModel(
         }
     }
 
-    private fun generatedNextMonth() {
+    private fun refreshedFirstWorkDate(firstWorkDate: String) {
         viewModelScope.launch {
-            val scheduleState = getNextMonthStateUseCase()
+            saveFirstWorkDateUseCase(firstWorkDate)
+
+            val scheduleState = getCurrentMonthStateUseCase()
             _scheduleState.value = scheduleState
+
+            val firstDate = loadFirstWorkDateUseCase()
+            _firstWorkDate.value = firstDate
         }
     }
 
@@ -113,26 +127,38 @@ class ScheduleViewModel(
         }
     }
 
-    private fun refreshedFirstWorkDate(firstWorkDate: String) {
+    private fun updateSchedulePattern() {
         viewModelScope.launch {
-            saveFirstWorkDateUseCase(firstWorkDate)
 
             val scheduleState = getCurrentMonthStateUseCase()
             _scheduleState.value = scheduleState
 
-            val firstDate = loadFirstWorkDateUseCase()
-            _firstWorkDate.value = firstDate
+            val scheduleTypePattern = loadSchedulePatternUseCase()
+            _scheduleTypePattern.value = scheduleTypePattern
         }
     }
 
-    private fun initMonth() {
+    private fun createDayType() {
         viewModelScope.launch {
-            _scheduleState.value = ScheduleState.LaunchingState
-            val scheduleState = getCurrentMonthStateUseCase()
-            _scheduleState.value = scheduleState
+            createDayTypeUseCase()
 
-            val firstDate = loadFirstWorkDateUseCase()
-            _firstWorkDate.value = firstDate
+            val patternSchedule = loadSchedulePatternUseCase()
+            _scheduleTypePattern.value = patternSchedule
+        }
+    }
+
+    private fun updateDayType(position: Int, dayType: DayType) {
+        viewModelScope.launch {
+            editDayTypeUseCase(position, dayType)
+
+            val patternSchedule = loadSchedulePatternUseCase()
+            _scheduleTypePattern.value = patternSchedule
+        }
+    }
+
+    private fun deleteDayType(position: Int) {
+        viewModelScope.launch {
+            deleteDayTypeUseCase(position)
 
             val patternSchedule = loadSchedulePatternUseCase()
             _scheduleTypePattern.value = patternSchedule

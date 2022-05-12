@@ -16,10 +16,10 @@ class RepositoryImp @Inject constructor(private val localDataSource: LocalDataSo
 
     // TODO: temp
     private val pattern = listOf<DayType>(
-        DayType("#BF6F0101", "Day"),
-        DayType("#FF018786", "Night"),
-        DayType("#BF706B09", "SleepOff"),
-        DayType("#BFFFF300", "Weekend")
+        DayType("#FFEF5350", "Day"),
+        DayType("#FFEC407A", "Night"),
+        DayType("#FFFFCA28", "Sleep${System.lineSeparator()}Off"),
+        DayType("#FFD4E157", "Day${System.lineSeparator()}Off")
     )
 
     override suspend fun saveFirstWorkDate(firstWorkDate: String) {
@@ -60,9 +60,25 @@ class RepositoryImp @Inject constructor(private val localDataSource: LocalDataSo
         clearCache()
     }
 
-    override fun editDayType(position: Int, dayType: DayType) {
+    // TODO: temp
+    override fun createDayType() {
+        val dayType = DayType("#FFFFFFFF", "Default${System.lineSeparator()}Day")
+        schedulePattern.add(dayType)
+
+        clearCache()
+    }
+
+    // TODO: temp
+    override fun updateDayType(position: Int, dayType: DayType) {
         schedulePattern.removeAt(position)
         schedulePattern.add(position, dayType)
+
+        clearCache()
+    }
+
+    // TODO: temp
+    override fun deleteDayType(position: Int) {
+        schedulePattern.removeAt(position)
 
         clearCache()
     }

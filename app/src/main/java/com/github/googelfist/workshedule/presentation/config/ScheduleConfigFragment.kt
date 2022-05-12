@@ -57,7 +57,8 @@ class ScheduleConfigFragment : Fragment() {
         setupRecyclerView()
         observeViewModel()
         setOnEditColorButtonClickListener()
-        setOnEditTitleButtonClickListener(view)
+        setOnEditTitleButtonClickListener()
+        setOnDeleteButtonClickListener()
         setupButtons()
     }
 
@@ -110,7 +111,7 @@ class ScheduleConfigFragment : Fragment() {
             .show()
     }
 
-    private fun setOnEditTitleButtonClickListener(view: View) {
+    private fun setOnEditTitleButtonClickListener() {
 
         dayTypeListAdapter.onEditTitleButtonClickListener = { button, position ->
             button.setOnClickListener {
@@ -153,6 +154,18 @@ class ScheduleConfigFragment : Fragment() {
         dialog.show()
     }
 
+
+    private fun setOnDeleteButtonClickListener() {
+        dayTypeListAdapter.onDeleteButtonClickListener = { button, position ->
+            button.setOnClickListener {
+                scheduleViewModel.obtainEvent(ScheduleEvent.DeleteDayType(position))
+
+                dayTypeListAdapter.notifyItemRemoved(position)
+                scheduleViewModel.obtainEvent(ScheduleEvent.RefreshSchedulePattern)
+            }
+        }
+    }
+
     private fun setupRecyclerView() {
         val recyclerView = binding.recyclerViewEditDayTypes
 
@@ -161,11 +174,21 @@ class ScheduleConfigFragment : Fragment() {
     }
 
     private fun setupButtons() {
-        binding.firstWorkDateButton.setOnClickListener {
-            val datePickerFragment = DatePickerFragment.newInstance()
-            datePickerFragment.show(parentFragmentManager, DatePickerFragment.TAG)
-            datePickerFragment.onDateSetListener = { date ->
-                scheduleViewModel.obtainEvent(ScheduleEvent.RefreshFirstWorkDate(date))
+        with(binding) {
+            firstWorkDateButton.setOnClickListener {
+                val datePickerFragment = DatePickerFragment.newInstance()
+                datePickerFragment.show(parentFragmentManager, DatePickerFragment.TAG)
+                datePickerFragment.onDateSetListener = { date ->
+                    scheduleViewModel.obtainEvent(ScheduleEvent.RefreshFirstWorkDate(date))
+                }
+            }
+            buttonCreateType.setOnClickListener {
+                scheduleViewModel.obtainEvent(ScheduleEvent.CreateDayType)
+
+                val lastPosition = dayTypeListAdapter.itemCount - ONE_VAlUE
+                dayTypeListAdapter.notifyItemInserted(lastPosition)
+
+                scheduleViewModel.obtainEvent(ScheduleEvent.RefreshSchedulePattern)
             }
         }
     }
@@ -176,6 +199,8 @@ class ScheduleConfigFragment : Fragment() {
         fun newInstance(): ScheduleConfigFragment {
             return ScheduleConfigFragment()
         }
+
+        private const val ONE_VAlUE = 1
 
         private const val DIALOG_LAYOUT_START_PADDING = 45
         private const val DIALOG_LAYOUT_TOP_PADDING = 10

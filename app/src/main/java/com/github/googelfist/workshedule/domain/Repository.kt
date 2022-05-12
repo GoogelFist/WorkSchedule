@@ -14,5 +14,8 @@ interface Repository {
     // TODO: temp
     fun loadSchedulePattern(): List<DayType>
     fun saveSchedulePattern(pattern: List<DayType>)
-    fun editDayType(position: Int, dayType: DayType)
+
+    fun createDayType()
+    fun updateDayType(position: Int, dayType: DayType)
+    fun deleteDayType(position: Int)
 }

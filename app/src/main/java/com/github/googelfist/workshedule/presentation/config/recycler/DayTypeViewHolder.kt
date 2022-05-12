@@ -17,6 +17,9 @@ class DayTypeViewHolder(private val view: View) : RecyclerView.ViewHolder(view) 
     val editTitleButton: ImageButton by lazy(LazyThreadSafetyMode.NONE) {
         view.findViewById(R.id.button_edit_title)
     }
+    val deleteButton: ImageButton by lazy(LazyThreadSafetyMode.NONE) {
+        view.findViewById(R.id.delete_button)
+    }
 
     private val constraintLayout: ConstraintLayout by lazy(LazyThreadSafetyMode.NONE) {
         view.findViewById(R.id.day_item_config_cl)
