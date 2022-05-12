@@ -15,7 +15,7 @@ class RepositoryImp @Inject constructor(private val localDataSource: LocalDataSo
     private var schedulePattern = mutableListOf<DayType>()
 
     // TODO: temp
-    private val pattern = listOf(
+    private val pattern = listOf<DayType>(
         DayType("#BF6F0101", "Day"),
         DayType("#FF018786", "Night"),
         DayType("#BF706B09", "SleepOff"),

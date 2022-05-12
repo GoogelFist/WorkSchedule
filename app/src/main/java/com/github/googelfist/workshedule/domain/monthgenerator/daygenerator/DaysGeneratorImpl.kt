@@ -1,6 +1,7 @@
 package com.github.googelfist.workshedule.domain.monthgenerator.daygenerator
 
 import com.github.googelfist.workshedule.domain.Repository
+import com.github.googelfist.workshedule.domain.models.Day
 import com.github.googelfist.workshedule.domain.models.DayType
 import com.github.googelfist.workshedule.domain.monthgenerator.fabric.DaysFabric
 import kotlinx.coroutines.CoroutineDispatcher
@@ -16,7 +17,7 @@ class DaysGeneratorImpl @Inject constructor(
     private val dispatcher: CoroutineDispatcher
 ) : DaysGenerator {
 
-    override suspend fun getDays(date: LocalDate): List<com.github.googelfist.workshedule.domain.models.Day> {
+    override suspend fun getDays(date: LocalDate): List<Day> {
         val schedulePattern = repository.loadSchedulePattern()
         val firstDate = repository.loadFirstWorkDate()
 
@@ -27,10 +28,10 @@ class DaysGeneratorImpl @Inject constructor(
         firstScheduleDate: LocalDate,
         schedulePattern: List<DayType>,
         date: LocalDate
-    ): List<com.github.googelfist.workshedule.domain.models.Day> {
+    ): List<Day> {
         return withContext(dispatcher) {
             val dayList =
-                ArrayList<com.github.googelfist.workshedule.domain.models.Day>(MAX_DAY_COUNT)
+                ArrayList<Day>(MAX_DAY_COUNT)
 
             var firstMondayDate = getDateOfFirstMonday(date)
 

@@ -9,6 +9,7 @@ import com.github.googelfist.workshedule.domain.models.DayType
 
 class DayTypeListAdapter : ListAdapter<DayType, DayTypeViewHolder>(DayTypeDiffCallback()) {
     lateinit var onEditColorButtonClickListener: (button: Button, position: Int) -> Unit
+    lateinit var onEditTitleButtonClickListener: (button: Button, position: Int) -> Unit
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DayTypeViewHolder {
 
@@ -23,6 +24,9 @@ class DayTypeListAdapter : ListAdapter<DayType, DayTypeViewHolder>(DayTypeDiffCa
 
         val editColorButton = holder.editColorButton
         onEditColorButtonClickListener(editColorButton, position)
+
+        val editTitleButton = holder.editTitleButton
+        onEditTitleButtonClickListener(editTitleButton, position)
 
         holder.bind(dayType)
     }

@@ -14,6 +14,9 @@ class DayTypeViewHolder(private val view: View) : RecyclerView.ViewHolder(view) 
     val editColorButton: Button by lazy(LazyThreadSafetyMode.NONE) {
         view.findViewById(R.id.button_edit_color)
     }
+    val editTitleButton: Button by lazy(LazyThreadSafetyMode.NONE) {
+        view.findViewById(R.id.button_edit_title)
+    }
 
     private val constraintLayout: ConstraintLayout by lazy(LazyThreadSafetyMode.NONE) {
         view.findViewById(R.id.day_item_config_cl)

@@ -5,6 +5,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.FrameLayout
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.github.googelfist.workshedule.R
@@ -54,6 +57,7 @@ class ScheduleConfigFragment : Fragment() {
         setupRecyclerView()
         observeViewModel()
         setOnEditColorButtonClickListener()
+        setOnEditTitleButtonClickListener(view)
         setupButtons()
     }
 
@@ -87,6 +91,7 @@ class ScheduleConfigFragment : Fragment() {
     }
 
     private fun onPickedColor(context: Context, color: (String) -> Unit) {
+
         ColorPickerDialog.Builder(context)
             .setTitle(getString(R.string.color_picker_title))
             .setPreferenceName(getString(R.string.color_picker_preference_name))
@@ -103,6 +108,49 @@ class ScheduleConfigFragment : Fragment() {
             .attachBrightnessSlideBar(true)
             .setBottomSpace(COLOR_PICKER_BOTTOM_SPACE)
             .show()
+    }
+
+    private fun setOnEditTitleButtonClickListener(view: View) {
+
+        dayTypeListAdapter.onEditTitleButtonClickListener = { button, position ->
+            button.setOnClickListener {
+                val dayType = dayTypeListAdapter.currentList[position]
+
+                onTitleChanged(dayType.title, requireActivity()) { title ->
+                    val newDayType = dayType.copy(title = title)
+                    scheduleViewModel.obtainEvent(ScheduleEvent.EditDayType(position, newDayType))
+                    dayTypeListAdapter.notifyItemChanged(position)
+                    scheduleViewModel.obtainEvent(ScheduleEvent.RefreshSchedulePattern)
+                }
+            }
+        }
+    }
+
+    private fun onTitleChanged(currentText: String, context: Context, title: (String) -> Unit) {
+        val inputEditTextField = EditText(context)
+        inputEditTextField.setText(currentText)
+
+        val layout = FrameLayout(context)
+        layout.setPaddingRelative(
+            DIALOG_LAYOUT_START_PADDING,
+            DIALOG_LAYOUT_TOP_PADDING,
+            DIALOG_LAYOUT_END_PADDING,
+            DIALOG_LAYOUT_BOTTOM_PADDING
+        )
+        layout.addView(inputEditTextField)
+
+        val dialog =
+            AlertDialog.Builder(context, R.style.ThemeOverlay_MaterialComponents_Dialog_Alert)
+                .setTitle(getString(R.string.edit_title_dialog_title))
+                .setMessage(getString(R.string.edit_title_dialog_massage))
+                .setView(layout)
+                .setPositiveButton(android.R.string.ok) { _, _ ->
+                    val editTextInput = inputEditTextField.text.toString()
+                    title(editTextInput)
+                }
+                .setNegativeButton(android.R.string.cancel, null)
+                .create()
+        dialog.show()
     }
 
     private fun setupRecyclerView() {
@@ -128,5 +176,10 @@ class ScheduleConfigFragment : Fragment() {
         fun newInstance(): ScheduleConfigFragment {
             return ScheduleConfigFragment()
         }
+
+        private const val DIALOG_LAYOUT_START_PADDING = 45
+        private const val DIALOG_LAYOUT_TOP_PADDING = 10
+        private const val DIALOG_LAYOUT_END_PADDING = 45
+        private const val DIALOG_LAYOUT_BOTTOM_PADDING = 45
     }
 }

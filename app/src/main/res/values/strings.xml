@@ -23,4 +23,8 @@
     <!--Color picker dialog -->
     <string name="color_picker_title">Edit color</string>
     <string name="color_picker_preference_name">MyColorPickerDialog</string>
+
+    <!--Edit title dialog -->
+    <string name="edit_title_dialog_title">Edit title</string>
+    <string name="edit_title_dialog_massage">Enter new title</string>
 </resources>
