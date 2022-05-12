@@ -24,19 +24,11 @@ class DayTypeViewHolder(private val view: View) : RecyclerView.ViewHolder(view) 
     private val dayTextViewTitle: TextView by lazy(LazyThreadSafetyMode.NONE) {
         view.findViewById(R.id.tv_day_item_config_title)
     }
-    private val colorExample: View by lazy(LazyThreadSafetyMode.NONE) {
-        view.findViewById(R.id.color_example)
-    }
-    private val titleExampleTextView: TextView by lazy(LazyThreadSafetyMode.NONE) {
-        view.findViewById(R.id.tv_title_example)
-    }
+
 
     fun bind(dayType: DayType) {
         constraintLayout.setBackgroundColor(Color.parseColor(dayType.backgroundColor))
 
         dayTextViewTitle.text = dayType.title
-
-        colorExample.setBackgroundColor(Color.parseColor(dayType.backgroundColor))
-        titleExampleTextView.text = dayType.title
     }
 }
