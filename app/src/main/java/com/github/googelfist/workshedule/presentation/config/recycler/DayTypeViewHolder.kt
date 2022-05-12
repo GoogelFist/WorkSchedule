@@ -2,7 +2,7 @@ package com.github.googelfist.workshedule.presentation.config.recycler
 
 import android.graphics.Color
 import android.view.View
-import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
@@ -11,10 +11,10 @@ import com.github.googelfist.workshedule.domain.models.DayType
 
 class DayTypeViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
-    val editColorButton: Button by lazy(LazyThreadSafetyMode.NONE) {
+    val editColorButton: ImageButton by lazy(LazyThreadSafetyMode.NONE) {
         view.findViewById(R.id.button_edit_color)
     }
-    val editTitleButton: Button by lazy(LazyThreadSafetyMode.NONE) {
+    val editTitleButton: ImageButton by lazy(LazyThreadSafetyMode.NONE) {
         view.findViewById(R.id.button_edit_title)
     }
 

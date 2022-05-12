@@ -19,6 +19,10 @@
 
     <!--Config screen -->
     <string name="first_work_date_title_button">First work date</string>
+    <string name="edit_title_tv">Edit title</string>
+    <string name="example_day_item_value">1</string>
+    <string name="delete_day_type_button_content_description">Delete type button</string>
+    <string name="edit_title_button_content_description">Edit title button</string>
 
     <!--Color picker dialog -->
     <string name="color_picker_title">Edit color</string>

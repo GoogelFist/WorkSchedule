@@ -2,14 +2,14 @@ package com.github.googelfist.workshedule.presentation.config.recycler
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Button
+import android.widget.ImageButton
 import androidx.recyclerview.widget.ListAdapter
 import com.github.googelfist.workshedule.R
 import com.github.googelfist.workshedule.domain.models.DayType
 
 class DayTypeListAdapter : ListAdapter<DayType, DayTypeViewHolder>(DayTypeDiffCallback()) {
-    lateinit var onEditColorButtonClickListener: (button: Button, position: Int) -> Unit
-    lateinit var onEditTitleButtonClickListener: (button: Button, position: Int) -> Unit
+    lateinit var onEditColorButtonClickListener: (button: ImageButton, position: Int) -> Unit
+    lateinit var onEditTitleButtonClickListener: (button: ImageButton, position: Int) -> Unit
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DayTypeViewHolder {
 
