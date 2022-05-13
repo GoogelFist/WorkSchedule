@@ -4,8 +4,8 @@ import com.github.googelfist.workshedule.domain.models.ScheduleState
 import com.github.googelfist.workshedule.domain.monthgenerator.ScheduleGenerator
 import javax.inject.Inject
 
-class GetCurrentMonthStateUseCase @Inject constructor(private val workDaysGenerator: ScheduleGenerator) {
+class GetCurrentMonthStateUseCase @Inject constructor(private val scheduleGenerator: ScheduleGenerator) {
     suspend operator fun invoke(): ScheduleState {
-        return workDaysGenerator.getCurrentMonthState()
+        return scheduleGenerator.getCurrentMonthState()
     }
 }
