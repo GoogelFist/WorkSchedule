@@ -1,11 +1,15 @@
 package com.github.googelfist.workshedule.domain.usecases
 
 import com.github.googelfist.workshedule.domain.Repository
-import java.time.LocalDate
+import com.github.googelfist.workshedule.domain.formatter.DateFormatter
 import javax.inject.Inject
 
-class LoadFirstWorkDateUseCase @Inject constructor(private val repository: Repository) {
-    suspend operator fun invoke(): LocalDate {
-        return repository.loadFirstWorkDate()
+class LoadFirstWorkDateUseCase @Inject constructor(
+    private val repository: Repository,
+    private val formatter: DateFormatter
+) {
+    suspend operator fun invoke(): String {
+        val date = repository.loadFirstWorkDate()
+        return formatter.formatDateToConfig(date)
     }
 }

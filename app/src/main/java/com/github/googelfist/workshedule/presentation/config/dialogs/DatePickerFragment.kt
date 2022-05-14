@@ -1,4 +1,4 @@
-package com.github.googelfist.workshedule.presentation.schedule
+package com.github.googelfist.workshedule.presentation.config.dialogs
 
 import android.app.DatePickerDialog
 import android.app.Dialog

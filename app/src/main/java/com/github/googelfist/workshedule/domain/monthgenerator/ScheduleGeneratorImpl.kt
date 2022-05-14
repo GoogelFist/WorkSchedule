@@ -35,7 +35,7 @@ class ScheduleGeneratorImpl @Inject constructor(
     }
 
     private suspend fun getCurrentScheduleState(date: LocalDate): ScheduleState {
-        val formattedDate = formatter.formatDate(date)
+        val formattedDate = formatter.formatDateToSchedule(date)
         repository.getFromCache(formattedDate)?.let {
             return ScheduleState.GeneratedState(formattedDate, it)
         }
@@ -52,7 +52,7 @@ class ScheduleGeneratorImpl @Inject constructor(
         var startDate = currentDate.minusMonths(REPEAT_PRELOAD_RANGE_DOWN_FROM_CURRENT)
 
         repeat(REPEAT_PRELOAD_TIMES_CURRENT) {
-            val formattedDate = formatter.formatDate(startDate)
+            val formattedDate = formatter.formatDateToSchedule(startDate)
             val dayList = daysGenerator.getDays(startDate)
             repository.putToCache(formattedDate, dayList)
             startDate = startDate.plusMonths(ONE_VALUE)
@@ -60,7 +60,7 @@ class ScheduleGeneratorImpl @Inject constructor(
     }
 
     private suspend fun getPreviousScheduleState(date: LocalDate): ScheduleState {
-        val formattedDate = formatter.formatDate(date)
+        val formattedDate = formatter.formatDateToSchedule(date)
         repository.getFromCache(formattedDate)?.let {
             return ScheduleState.GeneratedState(formattedDate, it)
         }
@@ -77,7 +77,7 @@ class ScheduleGeneratorImpl @Inject constructor(
         var startDate = date.minusMonths(REPEAT_PRELOAD_RANGE)
 
         repeat(REPEAT_PRELOAD_TIMES) {
-            val formattedDate = formatter.formatDate(startDate)
+            val formattedDate = formatter.formatDateToSchedule(startDate)
             val dayList = daysGenerator.getDays(startDate)
             repository.putToCache(formattedDate, dayList)
             startDate = startDate.plusMonths(ONE_VALUE)
@@ -85,7 +85,7 @@ class ScheduleGeneratorImpl @Inject constructor(
     }
 
     private suspend fun getNextScheduleState(date: LocalDate): ScheduleState {
-        val formattedDate = formatter.formatDate(date)
+        val formattedDate = formatter.formatDateToSchedule(date)
         repository.getFromCache(formattedDate)?.let {
             return ScheduleState.GeneratedState(formattedDate, it)
         }
@@ -102,7 +102,7 @@ class ScheduleGeneratorImpl @Inject constructor(
         var startDate = date
 
         repeat(REPEAT_PRELOAD_TIMES) {
-            val formattedDate = formatter.formatDate(startDate)
+            val formattedDate = formatter.formatDateToSchedule(startDate)
             val dayList = daysGenerator.getDays(startDate)
             repository.putToCache(formattedDate, dayList)
             startDate = startDate.plusMonths(ONE_VALUE)

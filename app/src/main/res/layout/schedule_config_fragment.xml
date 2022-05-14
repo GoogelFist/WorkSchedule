@@ -5,37 +5,44 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
+
+    <!--  create style for buttons  -->
+    <ImageButton
         android:id="@+id/first_work_date_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:text="@string/first_work_date_title_button"
+        android:background="@drawable/image_button_background"
+        android:contentDescription="@string/choose_first_work_date_button_content_description"
+        android:src="@drawable/ic_baseline_calendar_month_24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="First work date" />
 
     <TextView
+        android:id="@+id/tv_chose_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tv_chose_first_date_button"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/date_text_view_value"
+        app:layout_constraintEnd_toEndOf="@+id/date_text_view_value"
+        app:layout_constraintStart_toStartOf="@+id/date_text_view_value"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <TextView
         android:id="@+id/date_text_view_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@id/first_work_date_button"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="16dp"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/divider_line"
         app:layout_constraintStart_toEndOf="@+id/first_work_date_button"
-        app:layout_constraintTop_toTopOf="@id/first_work_date_button"
-        tools:text="2022-2-21" />
-
-    <Button
-        android:id="@+id/button_create_type"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Create type"
-        app:layout_constraintStart_toStartOf="@id/first_work_date_button"
-        app:layout_constraintTop_toBottomOf="@id/first_work_date_button" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_chose_date"
+        tools:text="21 may 2022" />
 
     <View
         android:id="@+id/divider_line"
@@ -45,8 +52,8 @@
         android:layout_marginEnd="8dp"
         android:background="@android:color/darker_gray"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/first_work_date_button"
-        app:layout_constraintTop_toBottomOf="@+id/button_create_type" />
+        app:layout_constraintStart_toStartOf="@id/first_work_date_button"
+        app:layout_constraintTop_toBottomOf="@+id/first_work_date_button" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_edit_day_types"
@@ -55,12 +62,22 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/divider_line"
         tools:itemCount="3"
         tools:listitem="@layout/day_type_edit_item" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/f_button_create_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:contentDescription="@string/create_new_type_button_content_description"
+        android:src="@drawable/ic_baseline_add_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

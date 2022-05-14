@@ -12,13 +12,12 @@ class RoomDataSourceImpl @Inject constructor(
     private val parametersDao: ParametersDao,
     private val dateNowContainer: DateNowContainer,
     private val mapper: Mapper
-) :
-    LocalDataSource {
+) : LocalDataSource {
     override suspend fun loadFirstWorkDate(): LocalDate {
         val firstWorkDate = parametersDao.loadFirstWorkDate(FIRST_WORK_DATE_ID)
-        firstWorkDate?.let {
-            return mapper.mapDateStringToLocalDate(it)
-        }
+
+        firstWorkDate?.let { return mapper.mapDateStringToLocalDate(it) }
+
         return dateNowContainer.getDate()
     }
 
@@ -26,6 +25,7 @@ class RoomDataSourceImpl @Inject constructor(
         parametersDao.saveFirstWorkDate(FirstWorkDateDao(FIRST_WORK_DATE_ID, firstWorkDate))
     }
 
+    // TODO:  change to schedule pattern methods
     override suspend fun loadScheduleType(): String {
         val scheduleType = parametersDao.loadScheduleType(SCHEDULE_TYPE_ID)
         scheduleType?.let {
@@ -34,6 +34,7 @@ class RoomDataSourceImpl @Inject constructor(
         return DEFAULT_SCHEDULE_TYPE
     }
 
+    // TODO:  change to schedule pattern methods
     override suspend fun saveScheduleType(scheduleType: String) {
         parametersDao.saveScheduleType(ScheduleTypeDao(SCHEDULE_TYPE_ID, scheduleType))
     }

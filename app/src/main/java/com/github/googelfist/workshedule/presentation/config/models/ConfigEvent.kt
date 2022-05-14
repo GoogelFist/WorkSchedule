@@ -3,8 +3,7 @@ package com.github.googelfist.workshedule.presentation.config.models
 import com.github.googelfist.workshedule.domain.models.DayType
 
 sealed class ConfigEvent {
-    data class UpdateSchedulePattern(val schedulePattern: List<DayType>) : ConfigEvent()
-    object RefreshSchedulePattern : ConfigEvent()
+    object UpdateSchedulePattern : ConfigEvent()
     data class RefreshFirstWorkDate(val firstWorkDate: String) : ConfigEvent()
 
     object CreateDayType : ConfigEvent()

@@ -49,9 +49,7 @@ class ScheduleFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupRecyclerView()
-
         observeViewModel()
-
         setupButtons()
     }
 

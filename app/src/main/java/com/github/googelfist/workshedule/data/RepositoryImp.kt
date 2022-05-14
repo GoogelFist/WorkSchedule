@@ -9,8 +9,7 @@ import javax.inject.Inject
 
 class RepositoryImp @Inject constructor(private val localDataSource: LocalDataSource) : Repository {
 
-    private val cache =
-        mutableMapOf<String, List<Day>>()
+    private val cache = mutableMapOf<String, List<Day>>()
 
     private var schedulePattern = mutableListOf<DayType>()
 
@@ -23,18 +22,15 @@ class RepositoryImp @Inject constructor(private val localDataSource: LocalDataSo
     )
 
     override suspend fun saveFirstWorkDate(firstWorkDate: String) {
-        localDataSource.saveFirstWorkDate(firstWorkDate)
         clearCache()
+        localDataSource.saveFirstWorkDate(firstWorkDate)
     }
 
     override suspend fun loadFirstWorkDate(): LocalDate {
         return localDataSource.loadFirstWorkDate()
     }
 
-    override fun putToCache(
-        formattedDate: String,
-        dayList: List<Day>
-    ) {
+    override fun putToCache(formattedDate: String, dayList: List<Day>) {
         cache[formattedDate] = dayList
     }
 
@@ -54,10 +50,11 @@ class RepositoryImp @Inject constructor(private val localDataSource: LocalDataSo
 
     // TODO: temp
     override fun saveSchedulePattern(pattern: List<DayType>) {
-        schedulePattern.clear()
-        schedulePattern.addAll(pattern)
+//        schedulePattern.clear()
+//        schedulePattern.addAll(pattern)
+//        schedulePattern = pattern as MutableList<DayType>
 
-        clearCache()
+//        clearCache()
     }
 
     // TODO: temp
@@ -79,7 +76,6 @@ class RepositoryImp @Inject constructor(private val localDataSource: LocalDataSo
     // TODO: temp
     override fun deleteDayType(position: Int) {
         schedulePattern.removeAt(position)
-
         clearCache()
     }
 
