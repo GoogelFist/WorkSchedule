@@ -1,6 +1,5 @@
 package com.github.googelfist.workshedule.presentation.config.recycler
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
@@ -47,7 +46,6 @@ class DayTypeListAdapter : ListAdapter<DayType, DayTypeViewHolder>(DayTypeDiffCa
     }
 
     override fun onBindViewHolder(holder: DayTypeViewHolder, position: Int) {
-        Log.d("TAG", "onBind $position")
         val dayType = getItem(position)
 
         holder.bind(dayType)

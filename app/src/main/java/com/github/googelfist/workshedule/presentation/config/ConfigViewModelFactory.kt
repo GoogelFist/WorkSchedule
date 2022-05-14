@@ -5,17 +5,15 @@ import androidx.lifecycle.ViewModelProvider
 import com.github.googelfist.workshedule.domain.usecases.CreateDayTypeUseCase
 import com.github.googelfist.workshedule.domain.usecases.DeleteDayTypeUseCase
 import com.github.googelfist.workshedule.domain.usecases.EditDayTypeUseCase
-import com.github.googelfist.workshedule.domain.usecases.LoadFirstWorkDateUseCase
-import com.github.googelfist.workshedule.domain.usecases.LoadSchedulePatternUseCase
+import com.github.googelfist.workshedule.domain.usecases.LoadScheduleConfigUseCase
 import com.github.googelfist.workshedule.domain.usecases.SaveFirstWorkDateUseCase
-import com.github.googelfist.workshedule.domain.usecases.SaveSchedulePatternUseCase
+import com.github.googelfist.workshedule.domain.usecases.SavePatternNameUseCase
 import javax.inject.Inject
 
 class ConfigViewModelFactory @Inject constructor(
     private val saveFirstWorkDateUseCase: SaveFirstWorkDateUseCase,
-    private val loadFirstWorkDateUseCase: LoadFirstWorkDateUseCase,
-    private val saveSchedulePatternUseCase: SaveSchedulePatternUseCase,
-    private val loadSchedulePatternUseCase: LoadSchedulePatternUseCase,
+    private val savePatternNameUseCase: SavePatternNameUseCase,
+    private val loadScheduleConfigUseCase: LoadScheduleConfigUseCase,
     private val createDayTypeUseCase: CreateDayTypeUseCase,
     private val editDayTypeUseCase: EditDayTypeUseCase,
     private val deleteDayTypeUseCase: DeleteDayTypeUseCase
@@ -26,9 +24,8 @@ class ConfigViewModelFactory @Inject constructor(
         if (modelClass.isAssignableFrom(ConfigViewModel::class.java)) {
             return ConfigViewModel(
                 saveFirstWorkDateUseCase = saveFirstWorkDateUseCase,
-                loadFirstWorkDateUseCase = loadFirstWorkDateUseCase,
-                saveSchedulePatternUseCase = saveSchedulePatternUseCase,
-                loadSchedulePatternUseCase = loadSchedulePatternUseCase,
+                savePatternNameUseCase = savePatternNameUseCase,
+                loadScheduleConfigUseCase = loadScheduleConfigUseCase,
                 createDayTypeUseCase = createDayTypeUseCase,
                 editDayTypeUseCase = editDayTypeUseCase,
                 deleteDayTypeUseCase = deleteDayTypeUseCase

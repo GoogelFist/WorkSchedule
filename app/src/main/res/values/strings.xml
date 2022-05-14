@@ -20,12 +20,14 @@
     <!--Config screen -->
     <string name="edit_title_tv">Edit title</string>
     <string name="example_day_item_value">1</string>
-    <string name="tv_chose_first_date_button">First work day</string>
+    <string name="tv_chose_first_date">First work day</string>
+    <string name="tv_edit_pattern_name">Pattern name</string>
 
     <string name="delete_day_type_button_content_description">Delete type button</string>
     <string name="edit_title_button_content_description">Edit title button</string>
     <string name="create_new_type_button_content_description">Create new type button</string>
     <string name="choose_first_work_date_button_content_description">Choose first work date button</string>
+    <string name="edit_pattern_name_button_content_description">Edit pattern name button</string>
 
     <!--Color picker dialog -->
     <string name="color_picker_title">Edit color</string>

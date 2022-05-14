@@ -18,8 +18,10 @@ class DaysGeneratorImpl @Inject constructor(
 ) : DaysGenerator {
 
     override suspend fun getDays(date: LocalDate): List<Day> {
-        val schedulePattern = repository.loadSchedulePattern()
-        val firstDate = repository.loadFirstWorkDate()
+        val generateConfig = repository.loadGenerateConfig()
+
+        val schedulePattern = generateConfig.schedulePattern
+        val firstDate = generateConfig.firstWorkDate
 
         return generateWorkDays(firstDate, schedulePattern, date)
     }

@@ -68,10 +68,8 @@
 
     <ImageButton
         android:id="@+id/button_edit_title"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        style="@style/ConfigButton"
         android:layout_marginTop="8dp"
-        android:background="@drawable/image_button_background"
         android:contentDescription="@string/edit_title_button_content_description"
         android:src="@drawable/ic_baseline_text_fields_24"
         android:text="edit title"
@@ -93,10 +91,8 @@
 
     <ImageButton
         android:id="@+id/button_edit_color"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        style="@style/ConfigButton"
         android:layout_marginTop="8dp"
-        android:background="@drawable/image_button_background"
         android:src="@drawable/ic_baseline_palette_24"
         android:text="edit color"
         app:layout_constraintEnd_toEndOf="@id/tv_edit_color"
@@ -117,10 +113,8 @@
 
     <ImageButton
         android:id="@+id/delete_button"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        style="@style/ConfigButton"
         android:layout_marginTop="8dp"
-        android:background="@drawable/image_button_background"
         android:contentDescription="@string/delete_day_type_button_content_description"
         android:src="@drawable/ic_baseline_delete_24"
         app:layout_constraintEnd_toEndOf="@id/tv_remove_day_type"

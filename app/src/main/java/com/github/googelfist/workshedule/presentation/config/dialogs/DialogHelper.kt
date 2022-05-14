@@ -29,7 +29,7 @@ object DialogHelper {
             .show()
     }
 
-    fun showChangeTitleDialog(currentText: String, context: Context, title: (String) -> Unit) {
+    fun showEditTextDialog(currentText: String, context: Context, title: (String) -> Unit) {
         val inputEditTextField = EditText(context)
         inputEditTextField.setText(currentText)
 

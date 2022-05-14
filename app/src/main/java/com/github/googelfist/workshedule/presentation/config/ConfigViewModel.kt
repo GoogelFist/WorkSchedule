@@ -8,23 +8,25 @@ import com.github.googelfist.workshedule.domain.models.DayType
 import com.github.googelfist.workshedule.domain.usecases.CreateDayTypeUseCase
 import com.github.googelfist.workshedule.domain.usecases.DeleteDayTypeUseCase
 import com.github.googelfist.workshedule.domain.usecases.EditDayTypeUseCase
-import com.github.googelfist.workshedule.domain.usecases.LoadFirstWorkDateUseCase
-import com.github.googelfist.workshedule.domain.usecases.LoadSchedulePatternUseCase
+import com.github.googelfist.workshedule.domain.usecases.LoadScheduleConfigUseCase
 import com.github.googelfist.workshedule.domain.usecases.SaveFirstWorkDateUseCase
-import com.github.googelfist.workshedule.domain.usecases.SaveSchedulePatternUseCase
+import com.github.googelfist.workshedule.domain.usecases.SavePatternNameUseCase
 import com.github.googelfist.workshedule.presentation.EventHandler
 import com.github.googelfist.workshedule.presentation.config.models.ConfigEvent
 import kotlinx.coroutines.launch
 
 class ConfigViewModel(
     private val saveFirstWorkDateUseCase: SaveFirstWorkDateUseCase,
-    private val loadFirstWorkDateUseCase: LoadFirstWorkDateUseCase,
-    private val saveSchedulePatternUseCase: SaveSchedulePatternUseCase,
-    private val loadSchedulePatternUseCase: LoadSchedulePatternUseCase,
-    private val editDayTypeUseCase: EditDayTypeUseCase,
+    private val savePatternNameUseCase: SavePatternNameUseCase,
+    private val loadScheduleConfigUseCase: LoadScheduleConfigUseCase,
     private val createDayTypeUseCase: CreateDayTypeUseCase,
+    private val editDayTypeUseCase: EditDayTypeUseCase,
     private val deleteDayTypeUseCase: DeleteDayTypeUseCase
 ) : ViewModel(), EventHandler<ConfigEvent> {
+
+    private var _patternName = MutableLiveData<String>()
+    val patternName: LiveData<String>
+        get() = _patternName
 
     private var _scheduleTypePattern = MutableLiveData<List<DayType>>()
     val scheduleTypePattern: LiveData<List<DayType>>
@@ -40,8 +42,10 @@ class ConfigViewModel(
 
     override fun obtainEvent(event: ConfigEvent) {
         when (event) {
-            is ConfigEvent.RefreshFirstWorkDate -> refreshedFirstWorkDate(event.firstWorkDate)
-            ConfigEvent.UpdateSchedulePattern -> updatedSchedulePattern()
+            ConfigEvent.UpdateConfigState -> updatedConfigState()
+
+            is ConfigEvent.SaveFirstWorkDate -> savedFirstWorkDate(event.firstWorkDate)
+            is ConfigEvent.SavePatternName -> savedPatternName(event.name)
 
             ConfigEvent.CreateDayType -> createdDayType()
             is ConfigEvent.EditDayType -> updatedDayType(event.position, event.dayType)
@@ -50,30 +54,33 @@ class ConfigViewModel(
     }
 
     private fun initConfig() {
-        viewModelScope.launch {
+        updatedConfigState()
+    }
 
-            val firstDate = loadFirstWorkDateUseCase()
+    private fun updatedConfigState() {
+        viewModelScope.launch {
+            val scheduleConfig = loadScheduleConfigUseCase()
+
+            val name = scheduleConfig.schedulePatternName
+            _patternName.value = name
+
+            val firstDate = scheduleConfig.firstWorkDate
             _firstWorkDate.value = firstDate
 
-            val patternSchedule = loadSchedulePatternUseCase()
+            val patternSchedule = scheduleConfig.schedulePattern
             _scheduleTypePattern.value = patternSchedule
         }
     }
 
-    private fun refreshedFirstWorkDate(firstWorkDate: String) {
+    private fun savedFirstWorkDate(firstWorkDate: String) {
         viewModelScope.launch {
             saveFirstWorkDateUseCase(firstWorkDate)
-
-            val firstDate = loadFirstWorkDateUseCase()
-            _firstWorkDate.value = firstDate
         }
     }
 
-    private fun updatedSchedulePattern() {
+    private fun savedPatternName(name: String) {
         viewModelScope.launch {
-
-            val scheduleTypePattern = loadSchedulePatternUseCase()
-            _scheduleTypePattern.value = scheduleTypePattern
+            savePatternNameUseCase.invoke(name)
         }
     }
 
