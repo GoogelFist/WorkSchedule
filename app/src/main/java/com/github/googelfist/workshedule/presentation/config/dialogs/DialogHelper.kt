@@ -29,7 +29,13 @@ object DialogHelper {
             .show()
     }
 
-    fun showEditTextDialog(currentText: String, context: Context, title: (String) -> Unit) {
+    fun showEditTextDialog(
+        context: Context,
+        currentText: String,
+        dialogTitle: String,
+        dialogMessage: String,
+        title: (String) -> Unit
+    ) {
         val inputEditTextField = EditText(context)
         inputEditTextField.setText(currentText)
 
@@ -45,8 +51,8 @@ object DialogHelper {
         val dialog = AlertDialog.Builder(
             context,
             R.style.ThemeOverlay_MaterialComponents_Dialog_Alert
-        ).setTitle(context.getString(R.string.edit_title_dialog_title))
-            .setMessage(context.getString(R.string.edit_title_dialog_massage))
+        ).setTitle(dialogTitle)
+            .setMessage(dialogMessage)
             .setView(layout)
             .setPositiveButton(android.R.string.ok) { _, _ ->
                 val editTextInput = inputEditTextField.text.toString()
@@ -61,7 +67,7 @@ object DialogHelper {
     private const val COLOR_PICKER_BOTTOM_SPACE = 12
 
     private const val DIALOG_LAYOUT_START_PADDING = 45
-    private const val DIALOG_LAYOUT_TOP_PADDING = 10
+    private const val DIALOG_LAYOUT_TOP_PADDING = 5
     private const val DIALOG_LAYOUT_END_PADDING = 45
     private const val DIALOG_LAYOUT_BOTTOM_PADDING = 45
 }

@@ -33,8 +33,12 @@
     <string name="color_picker_title">Edit color</string>
     <string name="color_picker_preference_name">MyColorPickerDialog</string>
 
-    <!--Edit title dialog -->
+    <!--Edit item title dialog -->
     <string name="edit_title_dialog_title">Edit title</string>
     <string name="edit_title_dialog_massage">Enter new title</string>
+
+    <!--Edit pattern name dialog -->
+    <string name="edit_pattern_name_dialog_title">Edit pattern name</string>
+    <string name="edit_pattern_name_dialog_massage">Enter new pattern name</string>
 
 </resources>

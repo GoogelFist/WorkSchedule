@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.github.googelfist.workshedule.R
 import com.github.googelfist.workshedule.component
 import com.github.googelfist.workshedule.databinding.ScheduleConfigFragmentBinding
 import com.github.googelfist.workshedule.presentation.config.dialogs.DatePickerFragment
@@ -106,7 +107,15 @@ class ScheduleConfigFragment : Fragment() {
         binding.buttonEditPatternName.setOnClickListener {
             val currentName = binding.tvPatternNameValue.text.toString()
 
-            DialogHelper.showEditTextDialog(currentName, requireActivity()) { name ->
+            val dialogTitle = getString(R.string.edit_pattern_name_dialog_title)
+            val dialogMessage = getString(R.string.edit_pattern_name_dialog_massage)
+
+            DialogHelper.showEditTextDialog(
+                context = requireActivity(),
+                currentText = currentName,
+                dialogTitle = dialogTitle,
+                dialogMessage = dialogMessage
+            ) { name ->
                 configViewModel.obtainEvent(ConfigEvent.SavePatternName(name))
                 configViewModel.obtainEvent(ConfigEvent.UpdateConfigState)
             }
@@ -159,7 +168,15 @@ class ScheduleConfigFragment : Fragment() {
         dayTypeListAdapter.onEditTitleButtonClickListener = { position ->
             val dayType = dayTypeListAdapter.currentList[position]
 
-            DialogHelper.showEditTextDialog(dayType.title, requireActivity()) { title ->
+            val dialogTitle = getString(R.string.edit_title_dialog_title)
+            val dialogMessage = getString(R.string.edit_title_dialog_massage)
+
+            DialogHelper.showEditTextDialog(
+                context = requireActivity(),
+                currentText = dayType.title,
+                dialogTitle = dialogTitle,
+                dialogMessage = dialogMessage
+            ) { title ->
                 val newDayType = dayType.copy(title = title)
                 configViewModel.obtainEvent(ConfigEvent.EditDayType(position, newDayType))
                 configViewModel.obtainEvent(ConfigEvent.UpdateConfigState)
