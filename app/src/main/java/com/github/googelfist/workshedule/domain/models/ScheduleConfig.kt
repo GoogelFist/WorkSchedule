@@ -1,7 +1,8 @@
 package com.github.googelfist.workshedule.domain.models
 
 data class ScheduleConfig(
-    val schedulePatternName: String,
+    val id: Int,
+    val configName: String,
     val firstWorkDate: String,
     val schedulePattern: List<DayType>
 )

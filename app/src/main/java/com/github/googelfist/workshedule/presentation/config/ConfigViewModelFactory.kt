@@ -6,11 +6,13 @@ import com.github.googelfist.workshedule.domain.usecases.CreateDayTypeUseCase
 import com.github.googelfist.workshedule.domain.usecases.DeleteDayTypeUseCase
 import com.github.googelfist.workshedule.domain.usecases.EditDayTypeUseCase
 import com.github.googelfist.workshedule.domain.usecases.LoadScheduleConfigUseCase
+import com.github.googelfist.workshedule.domain.usecases.SaveCurrentConfigIdUseCase
 import com.github.googelfist.workshedule.domain.usecases.SaveFirstWorkDateUseCase
 import com.github.googelfist.workshedule.domain.usecases.SavePatternNameUseCase
 import javax.inject.Inject
 
 class ConfigViewModelFactory @Inject constructor(
+    private val saveCurrentConfigIdUseCase: SaveCurrentConfigIdUseCase,
     private val saveFirstWorkDateUseCase: SaveFirstWorkDateUseCase,
     private val savePatternNameUseCase: SavePatternNameUseCase,
     private val loadScheduleConfigUseCase: LoadScheduleConfigUseCase,
@@ -23,6 +25,7 @@ class ConfigViewModelFactory @Inject constructor(
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(ConfigViewModel::class.java)) {
             return ConfigViewModel(
+                saveCurrentConfigIdUseCase = saveCurrentConfigIdUseCase,
                 saveFirstWorkDateUseCase = saveFirstWorkDateUseCase,
                 savePatternNameUseCase = savePatternNameUseCase,
                 loadScheduleConfigUseCase = loadScheduleConfigUseCase,

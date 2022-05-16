@@ -5,6 +5,6 @@ import javax.inject.Inject
 
 class SavePatternNameUseCase @Inject constructor(private val repository: Repository) {
     suspend operator fun invoke(name: String) {
-        repository.saveNameSchedulePattern(name)
+        repository.saveConfigName(name)
     }
 }

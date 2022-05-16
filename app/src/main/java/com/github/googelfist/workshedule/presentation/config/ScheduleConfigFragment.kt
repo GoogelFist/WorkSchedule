@@ -60,6 +60,9 @@ class ScheduleConfigFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // TODO: many schedule patterns
+//        configViewModel.obtainEvent(ConfigEvent.SaveCurrentConfigId(1))
+
         setupRecyclerView()
         observeViewModel()
         setupButtons()
@@ -69,7 +72,6 @@ class ScheduleConfigFragment : Fragment() {
         super.onDestroy()
         _binding = null
     }
-
 
     private fun setupRecyclerView() {
         val recyclerView = binding.recyclerViewEditDayTypes
@@ -83,14 +85,14 @@ class ScheduleConfigFragment : Fragment() {
     }
 
     private fun observeViewModel() {
-        configViewModel.patternName.observe(viewLifecycleOwner) { name ->
-            binding.tvPatternNameValue.text = name
+        configViewModel.scheduleConfig.observe(viewLifecycleOwner) { config ->
+            binding.tvPatternNameValue.text = config.configName
         }
-        configViewModel.firstWorkDate.observe(viewLifecycleOwner) { date ->
-            binding.tvFirstWorkDateValue.text = date.toString()
+        configViewModel.scheduleConfig.observe(viewLifecycleOwner) { config ->
+            binding.tvFirstWorkDateValue.text = config.firstWorkDate
         }
-        configViewModel.scheduleTypePattern.observe(viewLifecycleOwner) { pattern ->
-            dayTypeListAdapter.submitList(pattern)
+        configViewModel.scheduleConfig.observe(viewLifecycleOwner) { config ->
+            dayTypeListAdapter.submitList(config.schedulePattern)
         }
     }
 
@@ -117,7 +119,6 @@ class ScheduleConfigFragment : Fragment() {
                 dialogMessage = dialogMessage
             ) { name ->
                 configViewModel.obtainEvent(ConfigEvent.SavePatternName(name))
-                configViewModel.obtainEvent(ConfigEvent.UpdateConfigState)
             }
         }
     }
@@ -137,10 +138,6 @@ class ScheduleConfigFragment : Fragment() {
         binding.fButtonCreateType.setOnClickListener {
 
             configViewModel.obtainEvent(ConfigEvent.CreateDayType)
-            configViewModel.obtainEvent(ConfigEvent.UpdateConfigState)
-
-            val lastPosition = dayTypeListAdapter.currentList.lastIndex
-            dayTypeListAdapter.notifyItemInserted(lastPosition)
 
             scheduleViewModel.obtainEvent(ScheduleEvent.RefreshMonth)
         }
@@ -152,11 +149,9 @@ class ScheduleConfigFragment : Fragment() {
             val dayType = dayTypeListAdapter.currentList[position]
 
             DialogHelper.showPickedColorDialog(requireActivity()) { color ->
-                val newDayType = dayType.copy(backgroundColor = color)
-                configViewModel.obtainEvent(ConfigEvent.EditDayType(position, newDayType))
-                configViewModel.obtainEvent(ConfigEvent.UpdateConfigState)
 
-                dayTypeListAdapter.notifyItemChanged(position)
+            val newDayType = dayType.copy(backgroundColor = color)
+                configViewModel.obtainEvent(ConfigEvent.EditDayType(position, newDayType))
 
                 scheduleViewModel.obtainEvent(ScheduleEvent.RefreshMonth)
             }
@@ -177,11 +172,9 @@ class ScheduleConfigFragment : Fragment() {
                 dialogTitle = dialogTitle,
                 dialogMessage = dialogMessage
             ) { title ->
-                val newDayType = dayType.copy(title = title)
-                configViewModel.obtainEvent(ConfigEvent.EditDayType(position, newDayType))
-                configViewModel.obtainEvent(ConfigEvent.UpdateConfigState)
 
-                dayTypeListAdapter.notifyItemChanged(position)
+            val newDayType = dayType.copy(title = title)
+                configViewModel.obtainEvent(ConfigEvent.EditDayType(position, newDayType))
 
                 scheduleViewModel.obtainEvent(ScheduleEvent.RefreshMonth)
             }
@@ -190,10 +183,8 @@ class ScheduleConfigFragment : Fragment() {
 
     private fun setOnDeleteButtonClickListener() {
         dayTypeListAdapter.onDeleteButtonClickListener = { position ->
-            configViewModel.obtainEvent(ConfigEvent.DeleteDayType(position))
-            configViewModel.obtainEvent(ConfigEvent.UpdateConfigState)
 
-            dayTypeListAdapter.notifyItemRemoved(position)
+        configViewModel.obtainEvent(ConfigEvent.DeleteDayType(position))
 
             scheduleViewModel.obtainEvent(ScheduleEvent.RefreshMonth)
         }

@@ -2,7 +2,6 @@ package com.github.googelfist.workshedule.data
 
 import com.github.googelfist.workshedule.data.datasource.LocalDataSource
 import com.github.googelfist.workshedule.domain.Repository
-import com.github.googelfist.workshedule.domain.formatter.DateFormatter
 import com.github.googelfist.workshedule.domain.models.Day
 import com.github.googelfist.workshedule.domain.models.DayType
 import com.github.googelfist.workshedule.domain.models.GenerateConfig
@@ -11,78 +10,70 @@ import javax.inject.Inject
 
 class RepositoryImp @Inject constructor(
     private val localDataSource: LocalDataSource,
-    private val dateFormatter: DateFormatter
+    private val mapper: Mapper
 ) : Repository {
 
     private val cache = mutableMapOf<String, List<Day>>()
 
     private var schedulePattern = mutableListOf<DayType>()
 
-    private var schedulePatternName = "Schedule Pattern 1"
-
-    // TODO: temp
-    private val pattern = listOf<DayType>(
-        DayType("#FFEF5350", "Day"),
-        DayType("#FFEC407A", "Night"),
-        DayType("#FFFFCA28", "Sleep${System.lineSeparator()}Off"),
-        DayType("#FFD4E157", "Day${System.lineSeparator()}Off")
-    )
-
-    // TODO: temp
-    override suspend fun saveNameSchedulePattern(name: String) {
-        schedulePatternName = name
+    override suspend fun saveConfigName(name: String) {
+        val currentConfigId = localDataSource.loadCurrentConfigId()
+        localDataSource.saveConfigName(currentConfigId, name)
     }
 
     override suspend fun saveFirstWorkDate(firstWorkDate: String) {
         clearCache()
-        localDataSource.saveFirstWorkDate(firstWorkDate)
+        val currentConfigId = localDataSource.loadCurrentConfigId()
+        localDataSource.saveFirstWorkDate(currentConfigId, firstWorkDate)
     }
 
     override suspend fun loadScheduleConfig(): ScheduleConfig {
-        val firstWorkDate = localDataSource.loadFirstWorkDate()
-        // TODO: temp
-        if (schedulePattern.isEmpty()) {
-            schedulePattern.addAll(pattern)
-        }
-        return ScheduleConfig(
-            schedulePatternName = schedulePatternName,
-            firstWorkDate = dateFormatter.formatDateToConfig(firstWorkDate),
-            schedulePattern = schedulePattern
-        )
+        val currentConfigId = localDataSource.loadCurrentConfigId()
+        val configDao = localDataSource.loadConfigDao(currentConfigId)
+        val scheduleConfig = mapper.mapConfigDaoToScheduleConfig(configDao)
+
+        schedulePattern.clear()
+        schedulePattern.addAll(scheduleConfig.schedulePattern)
+
+        return scheduleConfig
     }
 
     override suspend fun loadGenerateConfig(): GenerateConfig {
-        val firstWorkDate = localDataSource.loadFirstWorkDate()
-        // TODO: temp
-        if (schedulePattern.isEmpty()) {
-            schedulePattern.addAll(pattern)
-        }
-        return GenerateConfig(
-            firstWorkDate = firstWorkDate,
-            schedulePattern = schedulePattern
-        )
+        val currentConfigId = localDataSource.loadCurrentConfigId()
+        val configDao = localDataSource.loadConfigDao(currentConfigId)
+        return mapper.mapConfigDaoToGenerateConfig(configDao)
     }
 
-    // TODO: temp
+    override suspend fun saveCurrentConfigId(id: Int) {
+        localDataSource.saveCurrentConfigId(id)
+    }
+
     override suspend fun createDayType() {
-        val dayType = DayType("#FFFFFFFF", "Default${System.lineSeparator()}Day")
+        clearCache()
+
+        val nextId = schedulePattern.maxOf { it.id } + ONE_VALUE
+        val dayType = DayType(id = nextId)
         schedulePattern.add(dayType)
 
-        clearCache()
+        savePattern(schedulePattern)
     }
 
-    // TODO: temp
     override suspend fun updateDayType(position: Int, dayType: DayType) {
+        clearCache()
+
         schedulePattern.removeAt(position)
         schedulePattern.add(position, dayType)
 
-        clearCache()
+        savePattern(schedulePattern)
     }
 
-    // TODO: temp
     override suspend fun deleteDayType(position: Int) {
-        schedulePattern.removeAt(position)
         clearCache()
+
+        schedulePattern.removeAt(position)
+
+        savePattern(schedulePattern)
     }
 
     override fun putToCache(formattedDate: String, dayList: List<Day>) {
@@ -95,5 +86,16 @@ class RepositoryImp @Inject constructor(
 
     private fun clearCache() {
         cache.clear()
+    }
+
+    private suspend fun savePattern(pattern: List<DayType>) {
+        clearCache()
+        val currentConfigId = localDataSource.loadCurrentConfigId()
+        val jsonPattern = mapper.mapListToJsonString(pattern)
+        localDataSource.savePattern(currentConfigId, jsonPattern)
+    }
+
+    companion object {
+        private const val ONE_VALUE = 1
     }
 }
