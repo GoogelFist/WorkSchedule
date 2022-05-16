@@ -80,6 +80,18 @@
         app:layout_constraintStart_toStartOf="@id/first_work_date_button"
         app:layout_constraintTop_toBottomOf="@+id/first_work_date_button" />
 
+    <TextView
+        android:id="@+id/tv_empty_pattern"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pattern is empty, create some type"
+        android:textSize="18sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider_line" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_edit_day_types"
         android:layout_width="0dp"

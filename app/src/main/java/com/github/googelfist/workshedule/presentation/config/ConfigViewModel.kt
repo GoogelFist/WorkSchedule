@@ -15,6 +15,7 @@ import com.github.googelfist.workshedule.domain.usecases.SaveFirstWorkDateUseCas
 import com.github.googelfist.workshedule.domain.usecases.SavePatternNameUseCase
 import com.github.googelfist.workshedule.presentation.EventHandler
 import com.github.googelfist.workshedule.presentation.config.models.ConfigEvent
+import com.github.googelfist.workshedule.presentation.config.models.PatternState
 import kotlinx.coroutines.launch
 
 class ConfigViewModel(
@@ -30,6 +31,10 @@ class ConfigViewModel(
     private var _scheduleConfig = MutableLiveData<ScheduleConfig>()
     val scheduleConfig: LiveData<ScheduleConfig>
         get() = _scheduleConfig
+
+    private var _patternState = MutableLiveData<PatternState>(PatternState.NormalState)
+    val patternState: LiveData<PatternState>
+        get() = _patternState
 
     init {
         initConfig()
@@ -52,9 +57,12 @@ class ConfigViewModel(
     }
 
     private fun updatedConfigState() {
+
         viewModelScope.launch {
             val scheduleConfig = loadScheduleConfigUseCase()
-
+            if (scheduleConfig.schedulePattern.isEmpty()) {
+                _patternState.value = PatternState.EmptyPattern
+            }
             _scheduleConfig.value = scheduleConfig
         }
     }
@@ -86,6 +94,7 @@ class ConfigViewModel(
             createDayTypeUseCase()
 
             updatedConfigState()
+            _patternState.value = PatternState.NormalState
         }
     }
 

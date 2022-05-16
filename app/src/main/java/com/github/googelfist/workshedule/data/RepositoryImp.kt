@@ -49,14 +49,21 @@ class RepositoryImp @Inject constructor(
         localDataSource.saveCurrentConfigId(id)
     }
 
+    // TODO: think it
     override suspend fun createDayType() {
         clearCache()
 
-        val nextId = schedulePattern.maxOf { it.id } + ONE_VALUE
+        val nextId = if (schedulePattern.isEmpty()) {
+            ONE_VALUE
+        } else {
+            schedulePattern.maxOf { it.id } + ONE_VALUE
+        }
+
         val dayType = DayType(id = nextId)
         schedulePattern.add(dayType)
 
         savePattern(schedulePattern)
+        loadScheduleConfig()
     }
 
     override suspend fun updateDayType(position: Int, dayType: DayType) {

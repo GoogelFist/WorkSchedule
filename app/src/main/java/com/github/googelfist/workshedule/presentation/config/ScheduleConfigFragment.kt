@@ -15,6 +15,7 @@ import com.github.googelfist.workshedule.databinding.ScheduleConfigFragmentBindi
 import com.github.googelfist.workshedule.presentation.config.dialogs.DatePickerFragment
 import com.github.googelfist.workshedule.presentation.config.dialogs.DialogHelper
 import com.github.googelfist.workshedule.presentation.config.models.ConfigEvent
+import com.github.googelfist.workshedule.presentation.config.models.PatternState
 import com.github.googelfist.workshedule.presentation.config.recycler.DayTypeListAdapter
 import com.github.googelfist.workshedule.presentation.schedule.ScheduleViewModel
 import com.github.googelfist.workshedule.presentation.schedule.ScheduleViewModelFactory
@@ -85,14 +86,27 @@ class ScheduleConfigFragment : Fragment() {
     }
 
     private fun observeViewModel() {
+        configViewModel.patternState.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is PatternState.EmptyPattern -> {
+                    binding.tvEmptyPattern.visibility = View.VISIBLE
+                    binding.recyclerViewEditDayTypes.visibility = View.GONE
+                }
+                is PatternState.NormalState -> {
+                    binding.tvEmptyPattern.visibility = View.GONE
+                    binding.recyclerViewEditDayTypes.visibility = View.VISIBLE
+                    configViewModel.scheduleConfig.observe(viewLifecycleOwner) { config ->
+                        dayTypeListAdapter.submitList(config.schedulePattern)
+                    }
+                }
+            }
+        }
+
         configViewModel.scheduleConfig.observe(viewLifecycleOwner) { config ->
             binding.tvPatternNameValue.text = config.configName
         }
         configViewModel.scheduleConfig.observe(viewLifecycleOwner) { config ->
             binding.tvFirstWorkDateValue.text = config.firstWorkDate
-        }
-        configViewModel.scheduleConfig.observe(viewLifecycleOwner) { config ->
-            dayTypeListAdapter.submitList(config.schedulePattern)
         }
     }
 
@@ -150,7 +164,7 @@ class ScheduleConfigFragment : Fragment() {
 
             DialogHelper.showPickedColorDialog(requireActivity()) { color ->
 
-            val newDayType = dayType.copy(backgroundColor = color)
+                val newDayType = dayType.copy(backgroundColor = color)
                 configViewModel.obtainEvent(ConfigEvent.EditDayType(position, newDayType))
 
                 scheduleViewModel.obtainEvent(ScheduleEvent.RefreshMonth)
@@ -173,7 +187,7 @@ class ScheduleConfigFragment : Fragment() {
                 dialogMessage = dialogMessage
             ) { title ->
 
-            val newDayType = dayType.copy(title = title)
+                val newDayType = dayType.copy(title = title)
                 configViewModel.obtainEvent(ConfigEvent.EditDayType(position, newDayType))
 
                 scheduleViewModel.obtainEvent(ScheduleEvent.RefreshMonth)
@@ -184,7 +198,7 @@ class ScheduleConfigFragment : Fragment() {
     private fun setOnDeleteButtonClickListener() {
         dayTypeListAdapter.onDeleteButtonClickListener = { position ->
 
-        configViewModel.obtainEvent(ConfigEvent.DeleteDayType(position))
+            configViewModel.obtainEvent(ConfigEvent.DeleteDayType(position))
 
             scheduleViewModel.obtainEvent(ScheduleEvent.RefreshMonth)
         }

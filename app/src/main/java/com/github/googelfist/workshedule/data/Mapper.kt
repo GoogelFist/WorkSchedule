@@ -33,6 +33,7 @@ class Mapper @Inject constructor(
         )
     }
 
+    //todo thick about another logic
     fun mapConfigDaoToGenerateConfig(configDao: ConfigDao?): GenerateConfig {
         if (configDao == null) {
             return GenerateConfig(
@@ -41,10 +42,14 @@ class Mapper @Inject constructor(
                 schedulePattern = createDefaultPattern()
             )
         }
+        var pattern = mapJsonStringToList(configDao.schedulePattern)
+        if (pattern.isEmpty()) {
+            pattern = listOf(DayType(id = DEFAULT_ID, title = DEFAULT_DAY_TITLE))
+        }
         return GenerateConfig(
             id = configDao.id,
             firstWorkDate = mapDateStringToLocalDate(configDao.firstWorkDate),
-            schedulePattern = mapJsonStringToList(configDao.schedulePattern)
+            schedulePattern = pattern
         )
     }
 
@@ -75,6 +80,8 @@ class Mapper @Inject constructor(
 
     companion object {
         private const val PATTERN = "yyyy-M-d"
+
+        private const val DEFAULT_DAY_TITLE = ""
 
         private const val DEFAULT_ID = 1
 
