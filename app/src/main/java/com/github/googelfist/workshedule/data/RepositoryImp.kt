@@ -54,7 +54,7 @@ class RepositoryImp @Inject constructor(
         clearCache()
 
         val nextId = if (schedulePattern.isEmpty()) {
-            ONE_VALUE
+            DEFAULT_ID
         } else {
             schedulePattern.maxOf { it.id } + ONE_VALUE
         }
@@ -104,5 +104,6 @@ class RepositoryImp @Inject constructor(
 
     companion object {
         private const val ONE_VALUE = 1
+        private const val DEFAULT_ID = 1
     }
 }

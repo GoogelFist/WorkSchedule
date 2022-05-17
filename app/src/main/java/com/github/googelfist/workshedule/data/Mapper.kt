@@ -44,7 +44,7 @@ class Mapper @Inject constructor(
         }
         var pattern = mapJsonStringToList(configDao.schedulePattern)
         if (pattern.isEmpty()) {
-            pattern = listOf(DayType(id = DEFAULT_ID, title = DEFAULT_DAY_TITLE))
+            pattern = listOf(DayType(id = NO_PATTERN_ID, title = DEFAULT_DAY_TITLE))
         }
         return GenerateConfig(
             id = configDao.id,
@@ -84,6 +84,7 @@ class Mapper @Inject constructor(
         private const val DEFAULT_DAY_TITLE = ""
 
         private const val DEFAULT_ID = 1
+        private const val NO_PATTERN_ID = 0
 
         private const val ONE_VALUE = 1
         private const val TWO_VALUE = 1
