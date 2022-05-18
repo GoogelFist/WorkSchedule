@@ -1,17 +1,8 @@
 <resources>
+    <!-- General -->
     <string name="app_name">Work Schedule</string>
-    <string name="schedule_type_default">Default</string>
-    <string name="schedule_type_two_in_two">2/2</string>
 
-
-    <string name="schedule_type_picker_dialog_title">Choose schedule type:</string>
-    <string name="schedule_type_picker_dialog_positive_button">OK</string>
-    <string name="schedule_type_picker_dialog_negative_button">Cancel</string>
-    <string name="schedule_type_menu_item_title">Schedule type</string>
-    <string name="first_work_date_menu_item_title">First work date</string>
-    <string name="first_work_date_menu_item_content_description">Choose first work date</string>
-    <string name="schedule_type_menu_item_content_description">Choose schedule type</string>
-
+    <!-- Schedule screen week days -->
     <string name="su_week_day">Su</string>
     <string name="sa_week_day">Sa</string>
     <string name="fr_week_day">Fr</string>
@@ -20,13 +11,34 @@
     <string name="tu_week_day">Tu</string>
     <string name="mo_week_day">Mo</string>
 
+    <!-- Schedule screen buttons -->
     <string name="previous_title_button">previous</string>
     <string name="current_title_button">current</string>
     <string name="next_title_button">next</string>
     <string name="show_control_panel_title_button">Show control panel</string>
 
-    <string name="control_panel_title">Control panel</string>
-    <string name="schedule_type_title_button">Schedule type</string>
-    <string name="first_work_date_title_button">First work date</string>
+    <!--Config screen -->
+    <string name="edit_title_tv">Edit title</string>
+    <string name="example_day_item_value">1</string>
+    <string name="tv_chose_first_date">First work day</string>
+    <string name="tv_edit_pattern_name">Pattern name</string>
+
+    <string name="delete_day_type_button_content_description">Delete type button</string>
+    <string name="edit_title_button_content_description">Edit title button</string>
+    <string name="create_new_type_button_content_description">Create new type button</string>
+    <string name="choose_first_work_date_button_content_description">Choose first work date button</string>
+    <string name="edit_pattern_name_button_content_description">Edit pattern name button</string>
+
+    <!--Color picker dialog -->
+    <string name="color_picker_title">Edit color</string>
+    <string name="color_picker_preference_name">MyColorPickerDialog</string>
+
+    <!--Edit item title dialog -->
+    <string name="edit_title_dialog_title">Edit title</string>
+    <string name="edit_title_dialog_massage">Enter new title</string>
+
+    <!--Edit pattern name dialog -->
+    <string name="edit_pattern_name_dialog_title">Edit pattern name</string>
+    <string name="edit_pattern_name_dialog_massage">Enter new pattern name</string>
 
 </resources>

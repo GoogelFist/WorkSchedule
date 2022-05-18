@@ -1,47 +1,43 @@
 package com.github.googelfist.workshedule.data.datasource.local
 
-import com.github.googelfist.workshedule.data.Mapper
 import com.github.googelfist.workshedule.data.datasource.LocalDataSource
-import com.github.googelfist.workshedule.data.datasource.local.model.FirstWorkDateDao
-import com.github.googelfist.workshedule.data.datasource.local.model.ScheduleTypeDao
-import com.github.googelfist.workshedule.domain.monthgenerator.DateNowContainer
-import java.time.LocalDate
+import com.github.googelfist.workshedule.data.datasource.local.model.ConfigDao
+import com.github.googelfist.workshedule.data.datasource.local.model.CurrentConfigIdDao
 import javax.inject.Inject
 
 class RoomDataSourceImpl @Inject constructor(
-    private val parametersDao: ParametersDao,
-    private val dateNowContainer: DateNowContainer,
-    private val mapper: Mapper
-) :
-    LocalDataSource {
-    override suspend fun loadFirstWorkDate(): LocalDate {
-        val firstWorkDate = parametersDao.loadFirstWorkDate(FIRST_WORK_DATE_ID)
-        firstWorkDate?.let {
-            return mapper.mapDateStringToLocalDate(it)
-        }
-        return dateNowContainer.getDate()
+    private val parametersDao: ParametersDao
+) : LocalDataSource {
+
+    override suspend fun loadConfigDao(id: Int): ConfigDao? {
+        return parametersDao.loadConfigDao(id)
     }
 
-    override suspend fun saveFirstWorkDate(firstWorkDate: String) {
-        parametersDao.saveFirstWorkDate(FirstWorkDateDao(FIRST_WORK_DATE_ID, firstWorkDate))
+    override suspend fun saveCurrentConfigId(currentConfigId: Int) {
+        parametersDao.saveCurrentConfigId(CurrentConfigIdDao(DEFAULT_ID, currentConfigId))
     }
 
-    override suspend fun loadScheduleType(): String {
-        val scheduleType = parametersDao.loadScheduleType(SCHEDULE_TYPE_ID)
-        scheduleType?.let {
+    override suspend fun loadCurrentConfigId(): Int {
+        parametersDao.loadCurrentConfigId(DEFAULT_ID)?.let {
             return it
         }
-        return DEFAULT_SCHEDULE_TYPE
+        return DEFAULT_CURRENT_ID
     }
 
-    override suspend fun saveScheduleType(scheduleType: String) {
-        parametersDao.saveScheduleType(ScheduleTypeDao(SCHEDULE_TYPE_ID, scheduleType))
+    override suspend fun saveFirstWorkDate(id: Int, firstWorkDate: String) {
+        parametersDao.saveFirstWorkDate(id, firstWorkDate)
+    }
+
+    override suspend fun saveConfigName(id: Int, configName: String) {
+        parametersDao.saveConfigName(id, configName)
+    }
+
+    override suspend fun savePattern(id: Int, pattern: String) {
+        parametersDao.savePattern(id, pattern)
     }
 
     companion object {
-        private const val FIRST_WORK_DATE_ID = 1
-        private const val SCHEDULE_TYPE_ID = 1
-
-        private const val DEFAULT_SCHEDULE_TYPE = "Default"
+        private const val DEFAULT_ID = 1
+        private const val DEFAULT_CURRENT_ID = 1
     }
 }

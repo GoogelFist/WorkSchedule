@@ -4,5 +4,7 @@ import java.time.LocalDate
 
 interface DateFormatter {
 
-    fun formatDate(date: LocalDate): String
+    fun formatDateToSchedule(date: LocalDate): String
+
+    fun formatDateToConfig(date: LocalDate): String
 }

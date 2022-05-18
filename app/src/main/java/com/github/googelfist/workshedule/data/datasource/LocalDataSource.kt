@@ -1,11 +1,15 @@
 package com.github.googelfist.workshedule.data.datasource
 
-import java.time.LocalDate
+import com.github.googelfist.workshedule.data.datasource.local.model.ConfigDao
 
 interface LocalDataSource {
-    suspend fun loadFirstWorkDate(): LocalDate
-    suspend fun saveFirstWorkDate(firstWorkDate: String)
+    suspend fun saveFirstWorkDate(id: Int, firstWorkDate: String)
+    suspend fun saveConfigName(id: Int, configName: String)
+    suspend fun savePattern(id: Int, pattern: String)
 
-    suspend fun loadScheduleType(): String
-    suspend fun saveScheduleType(scheduleType: String)
+    suspend fun loadConfigDao(id: Int): ConfigDao?
+
+    suspend fun saveCurrentConfigId(currentConfigId: Int)
+    suspend fun loadCurrentConfigId(): Int
+
 }

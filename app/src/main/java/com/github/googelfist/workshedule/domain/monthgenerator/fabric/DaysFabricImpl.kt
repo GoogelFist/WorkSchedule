@@ -1,9 +1,7 @@
 package com.github.googelfist.workshedule.domain.monthgenerator.fabric
 
-import com.github.googelfist.workshedule.domain.models.day.Day
-import com.github.googelfist.workshedule.domain.models.day.DefaultDay
-import com.github.googelfist.workshedule.domain.models.day.WeekendDay
-import com.github.googelfist.workshedule.domain.models.day.WorkDay
+import com.github.googelfist.workshedule.domain.models.Day
+import com.github.googelfist.workshedule.domain.models.DayType
 import com.github.googelfist.workshedule.domain.monthgenerator.DateNowContainer
 import java.time.LocalDate
 import javax.inject.Inject
@@ -12,100 +10,46 @@ class DaysFabricImpl @Inject constructor(
     private val dateNowContainer: DateNowContainer
 ) : DaysFabric {
 
-    override fun getDefaultDay(dateOfMonth: LocalDate, activeDate: LocalDate): Day {
-
-        return when {
-            !isCurrentMonthDay(dateOfMonth, activeDate) -> DefaultDay(
-                day = dateOfMonth.dayOfMonth,
-                month = dateOfMonth.monthValue,
-                year = dateOfMonth.year,
-                today = false,
-                currentMonth = false
-            )
-
-            isToday(dateOfMonth) -> DefaultDay(
-                day = dateOfMonth.dayOfMonth,
-                month = dateOfMonth.monthValue,
-                year = dateOfMonth.year,
-                today = true,
-                currentMonth = true
-            )
-
-            else -> DefaultDay(
-                day = dateOfMonth.dayOfMonth,
-                month = dateOfMonth.monthValue,
-                year = dateOfMonth.year,
-                today = false,
-                currentMonth = true
-            )
-        }
-    }
-
-    override suspend fun getWorkDay(
+    override fun getDay(
+        dayType: DayType,
         dateOfMonth: LocalDate,
-        activeDate: LocalDate,
-        workSchedule: Set<LocalDate>
+        activeDate: LocalDate
     ): Day {
 
+        val backgroundColor = dayType.backgroundColor
+        val title = dayType.title
+
         return when {
-            isWorkShiftDay(workSchedule, dateOfMonth) && !isCurrentMonthDay(
-                dateOfMonth,
-                activeDate
-            ) -> WorkDay(
-                day = dateOfMonth.dayOfMonth,
-                month = dateOfMonth.monthValue,
-                year = dateOfMonth.year,
-                today = false,
-                currentMonth = false
-            )
-
-            !isWorkShiftDay(workSchedule, dateOfMonth) && !isCurrentMonthDay(
-                dateOfMonth,
-                activeDate
-            ) -> WeekendDay(
-                day = dateOfMonth.dayOfMonth,
-                month = dateOfMonth.monthValue,
-                year = dateOfMonth.year,
-                today = false,
-                currentMonth = false
-            )
-
-            isWorkShiftDay(workSchedule, dateOfMonth) && isToday(dateOfMonth) ->
-                WorkDay(
-                    day = dateOfMonth.dayOfMonth,
-                    month = dateOfMonth.monthValue,
-                    year = dateOfMonth.year,
-                    today = true,
-                    currentMonth = true
-                )
-
-            !isWorkShiftDay(workSchedule, dateOfMonth) && isToday(dateOfMonth) ->
-                WeekendDay(
-                    day = dateOfMonth.dayOfMonth,
-                    month = dateOfMonth.monthValue,
-                    year = dateOfMonth.year,
-                    today = true,
-                    currentMonth = true
-                )
-
-            isWorkShiftDay(workSchedule, dateOfMonth) && isCurrentMonthDay(
-                dateOfMonth,
-                activeDate
-            ) ->
-                WorkDay(
+            !isCurrentMonthDay(dateOfMonth, activeDate) ->
+                Day(
                     day = dateOfMonth.dayOfMonth,
                     month = dateOfMonth.monthValue,
                     year = dateOfMonth.year,
                     today = false,
-                    currentMonth = true
+                    currentMonth = false,
+                    backgroundColor = backgroundColor,
+                    title = title
                 )
 
-            else -> WeekendDay(
+            isToday(dateOfMonth) ->
+                Day(
+                    day = dateOfMonth.dayOfMonth,
+                    month = dateOfMonth.monthValue,
+                    year = dateOfMonth.year,
+                    today = true,
+                    currentMonth = true,
+                    backgroundColor = backgroundColor,
+                    title = title
+                )
+
+            else -> Day(
                 day = dateOfMonth.dayOfMonth,
                 month = dateOfMonth.monthValue,
                 year = dateOfMonth.year,
                 today = false,
-                currentMonth = true
+                currentMonth = true,
+                backgroundColor = backgroundColor,
+                title = title
             )
         }
     }
@@ -117,9 +61,5 @@ class DaysFabricImpl @Inject constructor(
     private fun isToday(dateInMonth: LocalDate): Boolean {
         val today = dateNowContainer.getDate()
         return dateInMonth == today
-    }
-
-    private fun isWorkShiftDay(workDates: Set<LocalDate>, dateInMonth: LocalDate): Boolean {
-        return workDates.contains(dateInMonth)
     }
 }
