@@ -8,7 +8,6 @@ import com.github.googelfist.workshedule.domain.models.ScheduleConfig
 interface Repository {
     suspend fun saveConfigName(name: String)
     suspend fun saveFirstWorkDate(firstWorkDate: String)
-//    suspend fun savePattern(pattern: List<DayType>)
 
     suspend fun createDayType()
     suspend fun updateDayType(position: Int, dayType: DayType)
@@ -21,4 +20,5 @@ interface Repository {
 
     fun putToCache(formattedDate: String, dayList: List<Day>)
     fun getFromCache(formattedDate: String): List<Day>?
+    fun clearCache()
 }

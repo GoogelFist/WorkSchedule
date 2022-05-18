@@ -33,7 +33,7 @@ class Mapper @Inject constructor(
         )
     }
 
-    //todo thick about another logic
+    //todo think about another logic
     fun mapConfigDaoToGenerateConfig(configDao: ConfigDao?): GenerateConfig {
         if (configDao == null) {
             return GenerateConfig(
@@ -87,9 +87,9 @@ class Mapper @Inject constructor(
         private const val NO_PATTERN_ID = 0
 
         private const val ONE_VALUE = 1
-        private const val TWO_VALUE = 1
-        private const val TREE_VALUE = 1
-        private const val FOUR_VALUE = 1
+        private const val TWO_VALUE = 2
+        private const val TREE_VALUE = 3
+        private const val FOUR_VALUE = 4
 
         private const val DEFAULT_CONFIG_NAME = "Schedule Pattern 1"
 

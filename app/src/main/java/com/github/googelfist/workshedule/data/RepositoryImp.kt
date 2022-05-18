@@ -51,7 +51,6 @@ class RepositoryImp @Inject constructor(
 
     // TODO: think it
     override suspend fun createDayType() {
-        clearCache()
 
         val nextId = if (schedulePattern.isEmpty()) {
             DEFAULT_ID
@@ -63,11 +62,9 @@ class RepositoryImp @Inject constructor(
         schedulePattern.add(dayType)
 
         savePattern(schedulePattern)
-        loadScheduleConfig()
     }
 
     override suspend fun updateDayType(position: Int, dayType: DayType) {
-        clearCache()
 
         schedulePattern.removeAt(position)
         schedulePattern.add(position, dayType)
@@ -76,7 +73,6 @@ class RepositoryImp @Inject constructor(
     }
 
     override suspend fun deleteDayType(position: Int) {
-        clearCache()
 
         schedulePattern.removeAt(position)
 
@@ -91,12 +87,12 @@ class RepositoryImp @Inject constructor(
         return cache[formattedDate]
     }
 
-    private fun clearCache() {
+    override fun clearCache() {
         cache.clear()
     }
 
     private suspend fun savePattern(pattern: List<DayType>) {
-        clearCache()
+
         val currentConfigId = localDataSource.loadCurrentConfigId()
         val jsonPattern = mapper.mapListToJsonString(pattern)
         localDataSource.savePattern(currentConfigId, jsonPattern)

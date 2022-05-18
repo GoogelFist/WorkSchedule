@@ -10,9 +10,6 @@ class DaysFabricImpl @Inject constructor(
     private val dateNowContainer: DateNowContainer
 ) : DaysFabric {
 
-    private lateinit var backgroundColor: String
-    private lateinit var title: String
-
     override fun getDay(
         dayType: DayType,
         dateOfMonth: LocalDate,

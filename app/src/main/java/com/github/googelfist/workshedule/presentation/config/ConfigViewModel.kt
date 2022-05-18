@@ -6,13 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.googelfist.workshedule.domain.models.DayType
 import com.github.googelfist.workshedule.domain.models.ScheduleConfig
-import com.github.googelfist.workshedule.domain.usecases.CreateDayTypeUseCase
-import com.github.googelfist.workshedule.domain.usecases.DeleteDayTypeUseCase
-import com.github.googelfist.workshedule.domain.usecases.EditDayTypeUseCase
-import com.github.googelfist.workshedule.domain.usecases.LoadScheduleConfigUseCase
-import com.github.googelfist.workshedule.domain.usecases.SaveCurrentConfigIdUseCase
-import com.github.googelfist.workshedule.domain.usecases.SaveFirstWorkDateUseCase
-import com.github.googelfist.workshedule.domain.usecases.SavePatternNameUseCase
+import com.github.googelfist.workshedule.domain.usecases.*
 import com.github.googelfist.workshedule.presentation.EventHandler
 import com.github.googelfist.workshedule.presentation.config.models.ConfigEvent
 import com.github.googelfist.workshedule.presentation.config.models.PatternState
@@ -62,6 +56,8 @@ class ConfigViewModel(
             val scheduleConfig = loadScheduleConfigUseCase()
             if (scheduleConfig.schedulePattern.isEmpty()) {
                 _patternState.value = PatternState.EmptyPattern
+            } else {
+                _patternState.value = PatternState.NormalState
             }
             _scheduleConfig.value = scheduleConfig
         }
@@ -94,7 +90,6 @@ class ConfigViewModel(
             createDayTypeUseCase()
 
             updatedConfigState()
-            _patternState.value = PatternState.NormalState
         }
     }
 

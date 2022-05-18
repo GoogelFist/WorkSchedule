@@ -36,10 +36,8 @@ class ScheduleGeneratorImpl @Inject constructor(
 
     private suspend fun getCurrentScheduleState(date: LocalDate): ScheduleState {
         val formattedDate = formatter.formatDateToSchedule(date)
-        repository.getFromCache(formattedDate)?.let {
-            return ScheduleState.GeneratedState(formattedDate, it)
-        }
 
+        repository.clearCache()
         preloadCurrentMonthStates(date)
 
         val dayList = repository.getFromCache(formattedDate)
@@ -112,10 +110,10 @@ class ScheduleGeneratorImpl @Inject constructor(
     companion object {
         private const val ONE_VALUE = 1L
 
-        private const val REPEAT_PRELOAD_RANGE = 3L
-        private const val REPEAT_PRELOAD_TIMES = 4
+        private const val REPEAT_PRELOAD_RANGE = 4L
+        private const val REPEAT_PRELOAD_TIMES = 5
 
-        private const val REPEAT_PRELOAD_RANGE_DOWN_FROM_CURRENT = 3L
+        private const val REPEAT_PRELOAD_RANGE_DOWN_FROM_CURRENT = 2L
         private const val REPEAT_PRELOAD_TIMES_CURRENT = 6
     }
 }

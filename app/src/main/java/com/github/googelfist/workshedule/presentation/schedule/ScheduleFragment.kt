@@ -108,7 +108,7 @@ class ScheduleFragment : Fragment() {
                 scheduleViewModel.obtainEvent(ScheduleEvent.GeneratedNextMonth)
             }
             buttonShowBottomSheet.setOnClickListener {
-                requireActivity().supportFragmentManager
+                parentFragmentManager
                     .beginTransaction()
                     .replace(
                         R.id.fragment_recycler_view_container,

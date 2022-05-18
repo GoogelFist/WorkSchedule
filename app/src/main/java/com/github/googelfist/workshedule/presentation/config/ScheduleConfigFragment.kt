@@ -87,6 +87,9 @@ class ScheduleConfigFragment : Fragment() {
 
     private fun observeViewModel() {
         configViewModel.patternState.observe(viewLifecycleOwner) { state ->
+
+            scheduleViewModel.obtainEvent(ScheduleEvent.RefreshMonth)
+
             when (state) {
                 is PatternState.EmptyPattern -> {
                     binding.tvEmptyPattern.visibility = View.VISIBLE
@@ -132,7 +135,8 @@ class ScheduleConfigFragment : Fragment() {
                 dialogTitle = dialogTitle,
                 dialogMessage = dialogMessage
             ) { name ->
-                configViewModel.obtainEvent(ConfigEvent.SavePatternName(name))
+
+            configViewModel.obtainEvent(ConfigEvent.SavePatternName(name))
             }
         }
     }
@@ -142,8 +146,8 @@ class ScheduleConfigFragment : Fragment() {
             val datePickerFragment = DatePickerFragment.newInstance()
             datePickerFragment.show(parentFragmentManager, DatePickerFragment.TAG)
             datePickerFragment.onDateSetListener = { date ->
-                configViewModel.obtainEvent(ConfigEvent.SaveFirstWorkDate(date))
-                scheduleViewModel.obtainEvent(ScheduleEvent.RefreshMonth)
+
+            configViewModel.obtainEvent(ConfigEvent.SaveFirstWorkDate(date))
             }
         }
     }
@@ -152,8 +156,6 @@ class ScheduleConfigFragment : Fragment() {
         binding.fButtonCreateType.setOnClickListener {
 
             configViewModel.obtainEvent(ConfigEvent.CreateDayType)
-
-            scheduleViewModel.obtainEvent(ScheduleEvent.RefreshMonth)
         }
     }
 
@@ -166,8 +168,6 @@ class ScheduleConfigFragment : Fragment() {
 
                 val newDayType = dayType.copy(backgroundColor = color)
                 configViewModel.obtainEvent(ConfigEvent.EditDayType(position, newDayType))
-
-                scheduleViewModel.obtainEvent(ScheduleEvent.RefreshMonth)
             }
         }
     }
@@ -189,8 +189,6 @@ class ScheduleConfigFragment : Fragment() {
 
                 val newDayType = dayType.copy(title = title)
                 configViewModel.obtainEvent(ConfigEvent.EditDayType(position, newDayType))
-
-                scheduleViewModel.obtainEvent(ScheduleEvent.RefreshMonth)
             }
         }
     }
@@ -199,8 +197,6 @@ class ScheduleConfigFragment : Fragment() {
         dayTypeListAdapter.onDeleteButtonClickListener = { position ->
 
             configViewModel.obtainEvent(ConfigEvent.DeleteDayType(position))
-
-            scheduleViewModel.obtainEvent(ScheduleEvent.RefreshMonth)
         }
     }
 
