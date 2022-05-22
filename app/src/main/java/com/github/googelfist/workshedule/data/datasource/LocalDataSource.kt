@@ -7,9 +7,13 @@ interface LocalDataSource {
     suspend fun saveConfigName(id: Int, configName: String)
     suspend fun savePattern(id: Int, pattern: String)
 
-    suspend fun loadConfigDao(id: Int): ConfigDao?
+    suspend fun loadScheduleConfigDao(id: Int): ConfigDao?
+    suspend fun loadGenerateConfigDao(id: Int): ConfigDao?
 
     suspend fun saveCurrentConfigId(currentConfigId: Int)
     suspend fun loadCurrentConfigId(): Int
+
+    suspend fun loadConfigList(): List<ConfigDao>
+    suspend fun deleteConfig(id: Int)
 
 }

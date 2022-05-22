@@ -1,18 +1,23 @@
 package com.github.googelfist.workshedule.data.datasource.local
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
-import androidx.room.Transaction
+import androidx.room.*
 import com.github.googelfist.workshedule.data.datasource.local.model.ConfigDao
 import com.github.googelfist.workshedule.data.datasource.local.model.CurrentConfigIdDao
 
 @Dao
 interface ParametersDao {
 
-    @Query("SELECT * FROM config_dao WHERE id = :id ")
-    suspend fun loadConfigDao(id: Int): ConfigDao?
+    @Query("SELECT id, config_name FROM config_dao")
+    suspend fun loadConfigList(): List<ConfigDao>
+
+    @Query("DELETE FROM config_dao WHERE id = :id")
+    suspend fun deleteConfig(id: Int)
+
+    @Query("SELECT id, config_name, first_work_date, pattern FROM config_dao WHERE id = :id ")
+    suspend fun loadScheduleConfigDao(id: Int): ConfigDao?
+
+    @Query("SELECT id, first_work_date, pattern FROM config_dao WHERE id = :id ")
+    suspend fun loadGenerateConfigDao(id: Int): ConfigDao?
 
     @Transaction
     suspend fun saveConfigName(id: Int, configName: String) {

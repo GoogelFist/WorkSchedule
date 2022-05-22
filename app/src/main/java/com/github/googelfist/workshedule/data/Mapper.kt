@@ -2,6 +2,7 @@ package com.github.googelfist.workshedule.data
 
 import com.github.googelfist.workshedule.data.datasource.local.model.ConfigDao
 import com.github.googelfist.workshedule.domain.formatter.DateFormatter
+import com.github.googelfist.workshedule.domain.models.Config
 import com.github.googelfist.workshedule.domain.models.DayType
 import com.github.googelfist.workshedule.domain.models.GenerateConfig
 import com.github.googelfist.workshedule.domain.models.ScheduleConfig
@@ -20,14 +21,14 @@ class Mapper @Inject constructor(
         if (configDao == null) {
             return ScheduleConfig(
                 id = DEFAULT_ID,
-                configName = DEFAULT_CONFIG_NAME,
+                configName = DEFAULT_CONFIG_NAME.plus(DEFAULT_ID),
                 firstWorkDate = dateFormatter.formatDateToConfig(dateNowContainer.getDate()),
                 schedulePattern = createDefaultPattern()
             )
         }
         return ScheduleConfig(
             id = configDao.id,
-            configName = configDao.configName ?: DEFAULT_CONFIG_NAME,
+            configName = configDao.configName ?: DEFAULT_CONFIG_NAME.plus(configDao.id),
             firstWorkDate = dateFormatter.formatDateToConfig(mapDateStringToLocalDate(configDao.firstWorkDate)),
             schedulePattern = mapJsonStringToList(configDao.schedulePattern)
         )
@@ -53,6 +54,10 @@ class Mapper @Inject constructor(
         )
     }
 
+    fun mapListDaoToConfigList(currentId: Int, listDao: List<ConfigDao>): List<Config> {
+        return listDao.map { mapConfigDaoToConfig(currentId, it) }
+    }
+
     fun mapListToJsonString(value: List<DayType>?): String {
         return Gson().toJson(value)
     }
@@ -67,6 +72,12 @@ class Mapper @Inject constructor(
     private fun mapDateStringToLocalDate(string: String?): LocalDate {
         if (string == null) return dateNowContainer.getDate()
         return LocalDate.from(DateTimeFormatter.ofPattern(PATTERN).parse(string))
+    }
+
+    private fun mapConfigDaoToConfig(currentId: Int, configDao: ConfigDao): Config {
+        val name = configDao.configName ?: DEFAULT_CONFIG_NAME.plus(configDao.id)
+        val isCurrent = (configDao.id == currentId)
+        return Config(configDao.id, name, isCurrent)
     }
 
     private fun createDefaultPattern(): List<DayType> {
@@ -91,7 +102,7 @@ class Mapper @Inject constructor(
         private const val TREE_VALUE = 3
         private const val FOUR_VALUE = 4
 
-        private const val DEFAULT_CONFIG_NAME = "Schedule Pattern 1"
+        private const val DEFAULT_CONFIG_NAME = "Schedule Pattern"
 
         private const val DAY_BACKGROUND_COLOR = "#FFEF5350"
         private const val DAY_TITLE = "Day"

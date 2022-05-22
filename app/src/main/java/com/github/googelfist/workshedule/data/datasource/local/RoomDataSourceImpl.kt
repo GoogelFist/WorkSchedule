@@ -9,8 +9,12 @@ class RoomDataSourceImpl @Inject constructor(
     private val parametersDao: ParametersDao
 ) : LocalDataSource {
 
-    override suspend fun loadConfigDao(id: Int): ConfigDao? {
-        return parametersDao.loadConfigDao(id)
+    override suspend fun loadScheduleConfigDao(id: Int): ConfigDao? {
+        return parametersDao.loadScheduleConfigDao(id)
+    }
+
+    override suspend fun loadGenerateConfigDao(id: Int): ConfigDao? {
+        return parametersDao.loadGenerateConfigDao(id)
     }
 
     override suspend fun saveCurrentConfigId(currentConfigId: Int) {
@@ -22,6 +26,14 @@ class RoomDataSourceImpl @Inject constructor(
             return it
         }
         return DEFAULT_CURRENT_ID
+    }
+
+    override suspend fun loadConfigList(): List<ConfigDao> {
+        return parametersDao.loadConfigList()
+    }
+
+    override suspend fun deleteConfig(id: Int) {
+        parametersDao.deleteConfig(id)
     }
 
     override suspend fun saveFirstWorkDate(id: Int, firstWorkDate: String) {

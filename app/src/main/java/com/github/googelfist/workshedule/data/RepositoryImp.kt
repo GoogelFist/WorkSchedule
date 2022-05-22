@@ -2,10 +2,7 @@ package com.github.googelfist.workshedule.data
 
 import com.github.googelfist.workshedule.data.datasource.LocalDataSource
 import com.github.googelfist.workshedule.domain.Repository
-import com.github.googelfist.workshedule.domain.models.Day
-import com.github.googelfist.workshedule.domain.models.DayType
-import com.github.googelfist.workshedule.domain.models.GenerateConfig
-import com.github.googelfist.workshedule.domain.models.ScheduleConfig
+import com.github.googelfist.workshedule.domain.models.*
 import javax.inject.Inject
 
 class RepositoryImp @Inject constructor(
@@ -30,7 +27,7 @@ class RepositoryImp @Inject constructor(
 
     override suspend fun loadScheduleConfig(): ScheduleConfig {
         val currentConfigId = localDataSource.loadCurrentConfigId()
-        val configDao = localDataSource.loadConfigDao(currentConfigId)
+        val configDao = localDataSource.loadScheduleConfigDao(currentConfigId)
         val scheduleConfig = mapper.mapConfigDaoToScheduleConfig(configDao)
 
         schedulePattern.clear()
@@ -41,12 +38,41 @@ class RepositoryImp @Inject constructor(
 
     override suspend fun loadGenerateConfig(): GenerateConfig {
         val currentConfigId = localDataSource.loadCurrentConfigId()
-        val configDao = localDataSource.loadConfigDao(currentConfigId)
+        val configDao = localDataSource.loadGenerateConfigDao(currentConfigId)
         return mapper.mapConfigDaoToGenerateConfig(configDao)
     }
 
     override suspend fun saveCurrentConfigId(id: Int) {
         localDataSource.saveCurrentConfigId(id)
+    }
+
+    override suspend fun loadCurrentConfigId(): Int {
+        return localDataSource.loadCurrentConfigId()
+    }
+
+    override suspend fun loadConfigList(): List<Config> {
+        val configListDao = localDataSource.loadConfigList()
+        val currentConfigId = localDataSource.loadCurrentConfigId()
+        return mapper.mapListDaoToConfigList(currentConfigId, configListDao)
+    }
+
+    // TODO: think it
+    override suspend fun createConfig() {
+        val list = loadConfigList()
+        val nextId = if (list.isEmpty()) {
+            DEFAULT_CONFIG_ID
+        } else {
+            list.maxOf { it.id } + ONE_VALUE
+        }
+        localDataSource.saveConfigName(nextId, DEFAULT_CONFIG_NAME)
+    }
+
+    override suspend fun deleteConfig(id: Int) {
+        val currentConfigId = localDataSource.loadCurrentConfigId()
+        if (id == currentConfigId) {
+            saveCurrentConfigId(id - 1)
+        }
+        localDataSource.deleteConfig(id)
     }
 
     // TODO: think it
@@ -101,5 +127,8 @@ class RepositoryImp @Inject constructor(
     companion object {
         private const val ONE_VALUE = 1
         private const val DEFAULT_ID = 1
+
+        private const val DEFAULT_CONFIG_NAME = "Pattern Name"
+        private const val DEFAULT_CONFIG_ID = 1
     }
 }
