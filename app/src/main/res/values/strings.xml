@@ -17,8 +17,20 @@
     <string name="next_title_button">next</string>
     <string name="show_control_panel_title_button">Show control panel</string>
 
-    <!--Config screen -->
-    <string name="edit_title_tv">Edit title</string>
+    <!--Configs screen -->
+    <string name="edit_config_tv">Edit pattern</string>
+    <string name="remove_config_tv">Remove</string>
+    <string name="tv_empty_config_list_message">Config list is empty, create some config</string>
+
+
+    <string name="create_new_config_button_content_description">Create new pattern button</string>
+    <string name="delete_config_button_content_description">Delete pattern button</string>
+    <string name="edit_title_config_button_content_description">Edit title button</string>
+
+    <!--Config types screen -->
+    <string name="remove_type_tv">Remove</string>
+    <string name="edit_color_type_tv">Edit color</string>
+    <string name="edit_title_type_tv">Edit title</string>
     <string name="example_day_item_value">1</string>
     <string name="tv_chose_first_date">First work day</string>
     <string name="tv_edit_pattern_name">Pattern name</string>
