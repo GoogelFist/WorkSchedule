@@ -70,7 +70,7 @@ class RepositoryImp @Inject constructor(
     override suspend fun deleteConfig(id: Int) {
         val currentConfigId = localDataSource.loadCurrentConfigId()
         if (id == currentConfigId) {
-            saveCurrentConfigId(id - 1)
+            saveCurrentConfigId(id - ONE_VALUE)
         }
         localDataSource.deleteConfig(id)
     }

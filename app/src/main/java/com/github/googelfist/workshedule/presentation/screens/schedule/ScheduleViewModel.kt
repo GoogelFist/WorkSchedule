@@ -37,7 +37,7 @@ class ScheduleViewModel(
 
     private fun initMonth() {
         viewModelScope.launch {
-            _scheduleState.value = ScheduleState.LaunchingState
+            _scheduleState.value = ScheduleState.Launching
             generatedCurrentMonth()
         }
     }

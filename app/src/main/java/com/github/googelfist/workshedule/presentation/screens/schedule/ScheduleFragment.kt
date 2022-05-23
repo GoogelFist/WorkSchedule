@@ -67,7 +67,7 @@ class ScheduleFragment : Fragment() {
     private fun observeViewModel() {
         scheduleViewModel.scheduleState.observe(viewLifecycleOwner) { scheduleState ->
             when (scheduleState) {
-                ScheduleState.LaunchingState -> {
+                ScheduleState.Launching -> {
                     with(binding) {
                         progressBar.visibility = View.VISIBLE
                         weekDaysLayout.visibility = View.GONE
@@ -75,7 +75,7 @@ class ScheduleFragment : Fragment() {
                         buttonShowBottomSheet.visibility = View.GONE
                     }
                 }
-                is ScheduleState.GeneratedState -> {
+                is ScheduleState.Generated -> {
                     with(binding) {
                         progressBar.visibility = View.GONE
                         weekDaysLayout.visibility = View.VISIBLE

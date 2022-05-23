@@ -34,7 +34,7 @@ class DefaultConfigHelper @Inject constructor(
         return GenerateConfig(
             id = DEFAULT_ID,
             firstWorkDate = dateNowContainer.getDate(),
-            schedulePattern = createDefaultPattern()
+            schedulePattern = listOf(createDefaultDayType())
         )
     }
 

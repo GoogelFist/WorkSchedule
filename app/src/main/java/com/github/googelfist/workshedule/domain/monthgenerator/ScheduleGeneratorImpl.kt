@@ -42,7 +42,7 @@ class ScheduleGeneratorImpl @Inject constructor(
         val dayList = cache.getFromCache(formattedDate)
             ?: throw RuntimeException("Cache is not contains list")
 
-        return ScheduleState.GeneratedState(formattedDate, dayList)
+        return ScheduleState.Generated(formattedDate, dayList)
     }
 
     private suspend fun preloadCurrentMonthStates(currentDate: LocalDate) {
@@ -59,7 +59,7 @@ class ScheduleGeneratorImpl @Inject constructor(
     private suspend fun getPreviousScheduleState(date: LocalDate): ScheduleState {
         val formattedDate = formatter.formatDateToSchedule(date)
         cache.getFromCache(formattedDate)?.let {
-            return ScheduleState.GeneratedState(formattedDate, it)
+            return ScheduleState.Generated(formattedDate, it)
         }
 
         preloadPreviousMonthsStates(date)
@@ -67,7 +67,7 @@ class ScheduleGeneratorImpl @Inject constructor(
         val dayList = cache.getFromCache(formattedDate)
             ?: throw RuntimeException("Cache is not contains list")
 
-        return ScheduleState.GeneratedState(formattedDate, dayList)
+        return ScheduleState.Generated(formattedDate, dayList)
     }
 
     private suspend fun preloadPreviousMonthsStates(date: LocalDate) {
@@ -84,7 +84,7 @@ class ScheduleGeneratorImpl @Inject constructor(
     private suspend fun getNextScheduleState(date: LocalDate): ScheduleState {
         val formattedDate = formatter.formatDateToSchedule(date)
         cache.getFromCache(formattedDate)?.let {
-            return ScheduleState.GeneratedState(formattedDate, it)
+            return ScheduleState.Generated(formattedDate, it)
         }
 
         preloadNextMonthsStates(date)
@@ -92,7 +92,7 @@ class ScheduleGeneratorImpl @Inject constructor(
         val dayList = cache.getFromCache(formattedDate)
             ?: throw RuntimeException("Cache is not contains list")
 
-        return ScheduleState.GeneratedState(formattedDate, dayList)
+        return ScheduleState.Generated(formattedDate, dayList)
     }
 
     private suspend fun preloadNextMonthsStates(date: LocalDate) {
