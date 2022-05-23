@@ -1,5 +1,6 @@
 package com.github.googelfist.workshedule.domain.monthgenerator.daygenerator
 
+import com.github.googelfist.workshedule.data.DefaultConfigHelper
 import com.github.googelfist.workshedule.domain.Repository
 import com.github.googelfist.workshedule.domain.models.Day
 import com.github.googelfist.workshedule.domain.models.DayType
@@ -14,13 +15,17 @@ import kotlin.math.abs
 class DaysGeneratorImpl @Inject constructor(
     private val daysFabric: DaysFabric,
     private val repository: Repository,
-    private val dispatcher: CoroutineDispatcher
+    private val dispatcher: CoroutineDispatcher,
+    private val defaultConfigHelper: DefaultConfigHelper
 ) : DaysGenerator {
 
     override suspend fun getDays(date: LocalDate): List<Day> {
         val generateConfig = repository.loadGenerateConfig()
 
         val schedulePattern = generateConfig.schedulePattern
+        if (schedulePattern.isEmpty()) {
+            return generateDefaultDays(date)
+        }
         val firstDate = generateConfig.firstWorkDate
 
         return generateWorkDays(firstDate, schedulePattern, date)
@@ -52,6 +57,23 @@ class DaysGeneratorImpl @Inject constructor(
                 dayList.add(daysFabric.getDay(dayType, firstMondayDate, date))
 
                 typePointer++
+
+                firstMondayDate = firstMondayDate.plusDays(ONE_VALUE)
+            }
+            dayList
+        }
+    }
+
+    private suspend fun generateDefaultDays(date: LocalDate): List<Day> {
+        return withContext(dispatcher) {
+            val dayList = ArrayList<Day>(MAX_DAY_COUNT)
+            var firstMondayDate = getDateOfFirstMonday(date)
+
+            val defaultDayType = defaultConfigHelper.createDefaultDayType()
+
+            repeat(MAX_DAY_COUNT) {
+
+                dayList.add(daysFabric.getDay(defaultDayType, firstMondayDate, date))
 
                 firstMondayDate = firstMondayDate.plusDays(ONE_VALUE)
             }
