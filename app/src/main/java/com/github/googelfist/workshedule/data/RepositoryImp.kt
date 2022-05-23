@@ -2,15 +2,16 @@ package com.github.googelfist.workshedule.data
 
 import com.github.googelfist.workshedule.data.datasource.LocalDataSource
 import com.github.googelfist.workshedule.domain.Repository
-import com.github.googelfist.workshedule.domain.models.*
+import com.github.googelfist.workshedule.domain.models.Config
+import com.github.googelfist.workshedule.domain.models.DayType
+import com.github.googelfist.workshedule.domain.models.GenerateConfig
+import com.github.googelfist.workshedule.domain.models.ScheduleConfig
 import javax.inject.Inject
 
 class RepositoryImp @Inject constructor(
     private val localDataSource: LocalDataSource,
     private val mapper: Mapper
 ) : Repository {
-
-    private val cache = mutableMapOf<String, List<Day>>()
 
     private var schedulePattern = mutableListOf<DayType>()
 
@@ -20,7 +21,6 @@ class RepositoryImp @Inject constructor(
     }
 
     override suspend fun saveFirstWorkDate(firstWorkDate: String) {
-        clearCache()
         val currentConfigId = localDataSource.loadCurrentConfigId()
         localDataSource.saveFirstWorkDate(currentConfigId, firstWorkDate)
     }
@@ -103,18 +103,6 @@ class RepositoryImp @Inject constructor(
         schedulePattern.removeAt(position)
 
         savePattern(schedulePattern)
-    }
-
-    override fun putToCache(formattedDate: String, dayList: List<Day>) {
-        cache[formattedDate] = dayList
-    }
-
-    override fun getFromCache(formattedDate: String): List<Day>? {
-        return cache[formattedDate]
-    }
-
-    override fun clearCache() {
-        cache.clear()
     }
 
     private suspend fun savePattern(pattern: List<DayType>) {
