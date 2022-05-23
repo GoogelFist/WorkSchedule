@@ -53,6 +53,11 @@ class ScheduleFragment : Fragment() {
         setupButtons()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding.recyclerView.adapter = null
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
