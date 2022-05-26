@@ -11,7 +11,10 @@ import com.github.googelfist.workshedule.R
 import com.github.googelfist.workshedule.component
 import com.github.googelfist.workshedule.databinding.ScheduleFragmentBinding
 import com.github.googelfist.workshedule.domain.models.ScheduleState
+import com.github.googelfist.workshedule.presentation.screens.config.ConfigViewModel
+import com.github.googelfist.workshedule.presentation.screens.config.ConfigViewModelFactory
 import com.github.googelfist.workshedule.presentation.screens.configlist.ConfigsListFragment
+import com.github.googelfist.workshedule.presentation.screens.configlist.models.ConfigListState
 import com.github.googelfist.workshedule.presentation.screens.schedule.models.ScheduleEvent
 import com.github.googelfist.workshedule.presentation.screens.schedule.recycler.DayListAdapter
 import javax.inject.Inject
@@ -27,6 +30,13 @@ class ScheduleFragment : Fragment() {
 
     private val scheduleViewModel by activityViewModels<ScheduleViewModel> {
         scheduleViewModelFactory
+    }
+
+    @Inject
+    lateinit var configViewModelFactory: ConfigViewModelFactory
+
+    private val configViewModel by activityViewModels<ConfigViewModel> {
+        configViewModelFactory
     }
 
     lateinit var dayListAdapter: DayListAdapter
@@ -53,6 +63,11 @@ class ScheduleFragment : Fragment() {
         setupButtons()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding.recyclerView.adapter = null
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
@@ -62,23 +77,34 @@ class ScheduleFragment : Fragment() {
     private fun observeViewModel() {
         scheduleViewModel.scheduleState.observe(viewLifecycleOwner) { scheduleState ->
             when (scheduleState) {
-                ScheduleState.LaunchingState -> {
+                ScheduleState.Launching -> {
                     with(binding) {
                         progressBar.visibility = View.VISIBLE
-                        weekDaysLayout.visibility = View.GONE
+                        weekDaysInclude.clWeekDays.visibility = View.GONE
                         navigationButtons.visibility = View.GONE
-                        buttonShowBottomSheet.visibility = View.GONE
                     }
                 }
-                is ScheduleState.GeneratedState -> {
+                is ScheduleState.Generated -> {
                     with(binding) {
                         progressBar.visibility = View.GONE
-                        weekDaysLayout.visibility = View.VISIBLE
+                        weekDaysInclude.clWeekDays.visibility = View.VISIBLE
                         navigationButtons.visibility = View.VISIBLE
-                        buttonShowBottomSheet.visibility = View.VISIBLE
                     }
                     dayListAdapter.submitList(scheduleState.dayList)
                     binding.dateTextView.text = scheduleState.formattedDate
+                }
+            }
+        }
+
+        configViewModel.configListState.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is ConfigListState.EmptyList -> {
+                    binding.materialToolBar.title = null
+                }
+                is ConfigListState.NotEmptyList -> {
+                    configViewModel.scheduleConfig.observe(viewLifecycleOwner) { config ->
+                        binding.materialToolBar.title = config.configName
+                    }
                 }
             }
         }
@@ -107,18 +133,32 @@ class ScheduleFragment : Fragment() {
             nextButton.setOnClickListener {
                 scheduleViewModel.obtainEvent(ScheduleEvent.GeneratedNextMonth)
             }
-            buttonShowBottomSheet.setOnClickListener {
-                parentFragmentManager
-                    .beginTransaction()
-                    .replace(
-                        R.id.fragment_view_container,
-                        ConfigsListFragment.newInstance()
-                    )
-                    .addToBackStack(null)
-                    .setReorderingAllowed(true)
-                    .commit()
+
+            materialToolBar.setOnMenuItemClickListener { menuItem ->
+                when (menuItem.itemId) {
+                    R.id.settings -> {
+
+                        createConfigListFragmentTransaction()
+
+                        true
+                    }
+
+                    else -> false
+                }
             }
         }
+    }
+
+    private fun createConfigListFragmentTransaction() {
+        parentFragmentManager
+            .beginTransaction()
+            .replace(
+                R.id.fragment_view_container,
+                ConfigsListFragment.newInstance()
+            )
+            .addToBackStack(null)
+            .setReorderingAllowed(true)
+            .commit()
     }
 
     companion object {

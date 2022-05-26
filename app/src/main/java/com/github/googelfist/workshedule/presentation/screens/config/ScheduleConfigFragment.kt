@@ -69,6 +69,11 @@ class ScheduleConfigFragment : Fragment() {
         setupButtons()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding.recyclerViewEditDayTypes.adapter = null
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null

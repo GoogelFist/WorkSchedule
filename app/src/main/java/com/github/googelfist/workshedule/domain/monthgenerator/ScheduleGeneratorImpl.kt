@@ -1,6 +1,5 @@
 package com.github.googelfist.workshedule.domain.monthgenerator
 
-import com.github.googelfist.workshedule.domain.Repository
 import com.github.googelfist.workshedule.domain.formatter.DateFormatter
 import com.github.googelfist.workshedule.domain.models.ScheduleState
 import com.github.googelfist.workshedule.domain.monthgenerator.daygenerator.DaysGenerator
@@ -11,7 +10,7 @@ class ScheduleGeneratorImpl @Inject constructor(
     private val dateNowContainer: DateNowContainer,
     private val formatter: DateFormatter,
     private val daysGenerator: DaysGenerator,
-    private val repository: Repository
+    private val cache: ScheduleGeneratorCache
 ) : ScheduleGenerator {
 
     private var date = dateNowContainer.getDate()
@@ -37,13 +36,13 @@ class ScheduleGeneratorImpl @Inject constructor(
     private suspend fun getCurrentScheduleState(date: LocalDate): ScheduleState {
         val formattedDate = formatter.formatDateToSchedule(date)
 
-        repository.clearCache()
+        cache.clearCache()
         preloadCurrentMonthStates(date)
 
-        val dayList = repository.getFromCache(formattedDate)
+        val dayList = cache.getFromCache(formattedDate)
             ?: throw RuntimeException("Cache is not contains list")
 
-        return ScheduleState.GeneratedState(formattedDate, dayList)
+        return ScheduleState.Generated(formattedDate, dayList)
     }
 
     private suspend fun preloadCurrentMonthStates(currentDate: LocalDate) {
@@ -52,23 +51,23 @@ class ScheduleGeneratorImpl @Inject constructor(
         repeat(REPEAT_PRELOAD_TIMES_CURRENT) {
             val formattedDate = formatter.formatDateToSchedule(startDate)
             val dayList = daysGenerator.getDays(startDate)
-            repository.putToCache(formattedDate, dayList)
+            cache.putToCache(formattedDate, dayList)
             startDate = startDate.plusMonths(ONE_VALUE)
         }
     }
 
     private suspend fun getPreviousScheduleState(date: LocalDate): ScheduleState {
         val formattedDate = formatter.formatDateToSchedule(date)
-        repository.getFromCache(formattedDate)?.let {
-            return ScheduleState.GeneratedState(formattedDate, it)
+        cache.getFromCache(formattedDate)?.let {
+            return ScheduleState.Generated(formattedDate, it)
         }
 
         preloadPreviousMonthsStates(date)
 
-        val dayList = repository.getFromCache(formattedDate)
+        val dayList = cache.getFromCache(formattedDate)
             ?: throw RuntimeException("Cache is not contains list")
 
-        return ScheduleState.GeneratedState(formattedDate, dayList)
+        return ScheduleState.Generated(formattedDate, dayList)
     }
 
     private suspend fun preloadPreviousMonthsStates(date: LocalDate) {
@@ -77,23 +76,23 @@ class ScheduleGeneratorImpl @Inject constructor(
         repeat(REPEAT_PRELOAD_TIMES) {
             val formattedDate = formatter.formatDateToSchedule(startDate)
             val dayList = daysGenerator.getDays(startDate)
-            repository.putToCache(formattedDate, dayList)
+            cache.putToCache(formattedDate, dayList)
             startDate = startDate.plusMonths(ONE_VALUE)
         }
     }
 
     private suspend fun getNextScheduleState(date: LocalDate): ScheduleState {
         val formattedDate = formatter.formatDateToSchedule(date)
-        repository.getFromCache(formattedDate)?.let {
-            return ScheduleState.GeneratedState(formattedDate, it)
+        cache.getFromCache(formattedDate)?.let {
+            return ScheduleState.Generated(formattedDate, it)
         }
 
         preloadNextMonthsStates(date)
 
-        val dayList = repository.getFromCache(formattedDate)
+        val dayList = cache.getFromCache(formattedDate)
             ?: throw RuntimeException("Cache is not contains list")
 
-        return ScheduleState.GeneratedState(formattedDate, dayList)
+        return ScheduleState.Generated(formattedDate, dayList)
     }
 
     private suspend fun preloadNextMonthsStates(date: LocalDate) {
@@ -102,7 +101,7 @@ class ScheduleGeneratorImpl @Inject constructor(
         repeat(REPEAT_PRELOAD_TIMES) {
             val formattedDate = formatter.formatDateToSchedule(startDate)
             val dayList = daysGenerator.getDays(startDate)
-            repository.putToCache(formattedDate, dayList)
+            cache.putToCache(formattedDate, dayList)
             startDate = startDate.plusMonths(ONE_VALUE)
         }
     }

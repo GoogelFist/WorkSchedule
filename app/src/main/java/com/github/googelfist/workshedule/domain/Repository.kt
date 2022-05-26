@@ -1,6 +1,9 @@
 package com.github.googelfist.workshedule.domain
 
-import com.github.googelfist.workshedule.domain.models.*
+import com.github.googelfist.workshedule.domain.models.Config
+import com.github.googelfist.workshedule.domain.models.DayType
+import com.github.googelfist.workshedule.domain.models.GenerateConfig
+import com.github.googelfist.workshedule.domain.models.ScheduleConfig
 
 interface Repository {
     suspend fun saveConfigName(name: String)
@@ -19,8 +22,4 @@ interface Repository {
     suspend fun loadConfigList(): List<Config>
     suspend fun createConfig()
     suspend fun deleteConfig(id: Int)
-
-    fun putToCache(formattedDate: String, dayList: List<Day>)
-    fun getFromCache(formattedDate: String): List<Day>?
-    fun clearCache()
 }
