@@ -15,13 +15,15 @@
     <string name="previous_title_button">previous</string>
     <string name="current_title_button">current</string>
     <string name="next_title_button">next</string>
-    <string name="show_control_panel_title_button">Show control panel</string>
+
+    <!-- Top app bar menu -->
+    <string name="settings_item_title">Settings</string>
+    <string name="settings_item_title_content_description">Settings menu</string>
 
     <!--Configs screen -->
     <string name="edit_config_tv">Edit pattern</string>
     <string name="remove_config_tv">Remove</string>
     <string name="tv_empty_config_list_message">Config list is empty, create some config</string>
-
 
     <string name="create_new_config_button_content_description">Create new pattern button</string>
     <string name="delete_config_button_content_description">Delete pattern button</string>

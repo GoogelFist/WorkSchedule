@@ -5,10 +5,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/top_app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/material_tool_bar"
+            style="@style/Widget.MaterialComponents.Toolbar.Primary"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:menu="@menu/top_app_bar_menu"
+            app:titleCentered="true"
+            tools:title="Title" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
     <ProgressBar
         android:id="@+id/progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,7 +45,7 @@
         android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/top_app_bar"
         tools:text="April 2022" />
 
     <!-- move it to separate layout -->
@@ -148,9 +167,12 @@
         android:id="@+id/navigation_buttons"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/date_text_view"
         app:layout_constraintStart_toStartOf="@+id/date_text_view"
-        app:layout_constraintTop_toBottomOf="@+id/recycler_view">
+        app:layout_constraintTop_toBottomOf="@+id/recycler_view"
+        app:layout_constraintVertical_bias="1">
 
         <Button
             android:id="@+id/previous_button"
@@ -167,8 +189,8 @@
             android:id="@+id/current_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/current_title_button"
             android:layout_marginStart="4dp"
+            android:text="@string/current_title_button"
             app:layout_constraintBottom_toBottomOf="@+id/previous_button"
             app:layout_constraintEnd_toStartOf="@+id/next_button"
             app:layout_constraintHorizontal_bias="0.5"
@@ -180,8 +202,8 @@
             android:id="@+id/next_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/next_title_button"
             android:layout_marginStart="4dp"
+            android:text="@string/next_title_button"
             app:layout_constraintBottom_toBottomOf="@+id/previous_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -189,16 +211,5 @@
             app:layout_constraintTop_toTopOf="@+id/previous_button" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <Button
-        android:id="@+id/button_show_bottom_sheet"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:text="@string/show_control_panel_title_button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/navigation_buttons" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
