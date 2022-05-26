@@ -80,14 +80,14 @@ class ScheduleFragment : Fragment() {
                 ScheduleState.Launching -> {
                     with(binding) {
                         progressBar.visibility = View.VISIBLE
-                        weekDaysLayout.visibility = View.GONE
+                        weekDaysInclude.clWeekDays.visibility = View.GONE
                         navigationButtons.visibility = View.GONE
                     }
                 }
                 is ScheduleState.Generated -> {
                     with(binding) {
                         progressBar.visibility = View.GONE
-                        weekDaysLayout.visibility = View.VISIBLE
+                        weekDaysInclude.clWeekDays.visibility = View.VISIBLE
                         navigationButtons.visibility = View.VISIBLE
                     }
                     dayListAdapter.submitList(scheduleState.dayList)
