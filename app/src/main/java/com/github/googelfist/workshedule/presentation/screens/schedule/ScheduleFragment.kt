@@ -91,7 +91,8 @@ class ScheduleFragment : Fragment() {
                             scheduleState,
                             rootScheduleState,
                             dateTextView,
-                            dayListAdapter
+                            dayListAdapter,
+                            navigationButtons
                         )
                     }
                 }
@@ -106,7 +107,8 @@ class ScheduleFragment : Fragment() {
                             rootScheduleState,
                             dateTextView,
                             dayListAdapter,
-                            progressBar
+                            progressBar,
+                            navigationButtons
                         )
                     }
                 }
@@ -118,7 +120,8 @@ class ScheduleFragment : Fragment() {
                             scheduleState,
                             rootScheduleState,
                             dateTextView,
-                            dayListAdapter
+                            dayListAdapter,
+                            navigationButtons
                         )
                     }
                 }
