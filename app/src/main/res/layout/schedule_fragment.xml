@@ -33,44 +33,53 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/date_text_view"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/root_schedule_state"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:gravity="center"
-        android:textColor="@color/black"
-        android:textSize="28sp"
+        android:layout_height="0dp"
+        android:layout_margin="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/navigation_buttons"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/top_app_bar"
-        tools:text="April 2022" />
+        app:layout_constraintTop_toBottomOf="@id/top_app_bar">
 
-    <include
-        android:id="@+id/week_days_include"
-        layout="@layout/week_days"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@id/date_text_view"
-        app:layout_constraintStart_toStartOf="@id/date_text_view"
-        app:layout_constraintTop_toBottomOf="@id/date_text_view">
+        <TextView
+            android:id="@+id/date_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="28sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="April 2022" />
 
-    </include>
+        <include
+            android:id="@+id/week_days_include"
+            layout="@layout/week_days"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@id/date_text_view"
+            app:layout_constraintStart_toStartOf="@id/date_text_view"
+            app:layout_constraintTop_toBottomOf="@id/date_text_view">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:layout_constraintEnd_toEndOf="@+id/date_text_view"
-        app:layout_constraintStart_toStartOf="@+id/date_text_view"
-        app:layout_constraintTop_toBottomOf="@+id/week_days_include"
-        app:spanCount="7"
-        tools:itemCount="42"
-        tools:listitem="@layout/day_item" />
+        </include>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/week_days_include"
+            app:spanCount="7"
+            tools:itemCount="42"
+            tools:listitem="@layout/day_item" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/navigation_buttons"
@@ -78,9 +87,9 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/date_text_view"
-        app:layout_constraintStart_toStartOf="@+id/date_text_view"
-        app:layout_constraintTop_toBottomOf="@+id/recycler_view"
+        app:layout_constraintEnd_toEndOf="@+id/root_schedule_state"
+        app:layout_constraintStart_toStartOf="@+id/root_schedule_state"
+        app:layout_constraintTop_toBottomOf="@+id/root_schedule_state"
         app:layout_constraintVertical_bias="1">
 
         <ImageButton
@@ -89,6 +98,7 @@
             android:layout_height="48dp"
             android:background="@drawable/image_button_background"
             android:contentDescription="@string/previous_button_content_description"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_baseline_arrow_back_24"
             app:layout_constraintEnd_toStartOf="@+id/current_button"
             app:layout_constraintHorizontal_bias="0.5"
@@ -103,6 +113,7 @@
             android:layout_marginStart="4dp"
             android:background="@drawable/image_button_background"
             android:contentDescription="@string/current_button_content_description"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_baseline_today_24"
             app:layout_constraintBottom_toBottomOf="@+id/previous_button"
             app:layout_constraintEnd_toStartOf="@+id/next_button"
@@ -118,6 +129,7 @@
             android:layout_marginStart="4dp"
             android:background="@drawable/image_button_background"
             android:contentDescription="@string/next_button_content_description"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_baseline_arrow_forward_24"
             app:layout_constraintBottom_toBottomOf="@+id/previous_button"
             app:layout_constraintEnd_toEndOf="parent"
