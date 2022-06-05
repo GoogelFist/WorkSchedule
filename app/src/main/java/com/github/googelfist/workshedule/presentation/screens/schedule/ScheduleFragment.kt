@@ -73,25 +73,57 @@ class ScheduleFragment : Fragment() {
         _binding = null
     }
 
-    // TODO:  splash screen
     private fun observeViewModel() {
         scheduleViewModel.scheduleState.observe(viewLifecycleOwner) { scheduleState ->
             when (scheduleState) {
                 ScheduleState.Launching -> {
                     with(binding) {
                         progressBar.visibility = View.VISIBLE
-                        weekDaysInclude.clWeekDays.visibility = View.GONE
-                        navigationButtons.visibility = View.GONE
+                        binding.rootScheduleState.visibility = View.INVISIBLE
+                        navigationButtons.visibility = View.INVISIBLE
                     }
                 }
-                is ScheduleState.Generated -> {
+
+                is ScheduleState.GeneratedPrevious -> {
                     with(binding) {
-                        progressBar.visibility = View.GONE
-                        weekDaysInclude.clWeekDays.visibility = View.VISIBLE
-                        navigationButtons.visibility = View.VISIBLE
+
+                        ScheduleAnimationHelper.setAnimatingPreviousScheduleState(
+                            scheduleState,
+                            rootScheduleState,
+                            dateTextView,
+                            dayListAdapter,
+                            navigationButtons
+                        )
                     }
-                    dayListAdapter.submitList(scheduleState.dayList)
-                    binding.dateTextView.text = scheduleState.formattedDate
+                }
+
+                is ScheduleState.GeneratedCurrent -> {
+                    with(binding) {
+
+                        navigationButtons.visibility = View.VISIBLE
+
+                        ScheduleAnimationHelper.setAnimatingCurrentScheduleState(
+                            scheduleState,
+                            rootScheduleState,
+                            dateTextView,
+                            dayListAdapter,
+                            progressBar,
+                            navigationButtons
+                        )
+                    }
+                }
+
+                is ScheduleState.GeneratedNext -> {
+                    with(binding) {
+
+                        ScheduleAnimationHelper.setAnimatingNextScheduleState(
+                            scheduleState,
+                            rootScheduleState,
+                            dateTextView,
+                            dayListAdapter,
+                            navigationButtons
+                        )
+                    }
                 }
             }
         }
