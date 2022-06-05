@@ -49,7 +49,10 @@ object ScheduleAnimationHelper {
     ) {
 
         rootLayout.animate()
-            .withStartAction { disableButtonsClickable(navigationButtons) }
+            .withStartAction {
+                rootLayout.visibility = View.INVISIBLE
+                disableButtonsClickable(navigationButtons)
+            }
             .alpha(NONE_ALPHA_PROPERTY)
             .setDuration(CURRENT_SCHEDULE_DURATION)
             .withEndAction {

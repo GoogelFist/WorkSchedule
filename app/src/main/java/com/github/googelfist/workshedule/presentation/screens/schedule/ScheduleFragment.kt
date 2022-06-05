@@ -100,6 +100,7 @@ class ScheduleFragment : Fragment() {
                 is ScheduleState.GeneratedCurrent -> {
                     with(binding) {
 
+                        progressBar.visibility = View.VISIBLE
                         navigationButtons.visibility = View.VISIBLE
 
                         ScheduleAnimationHelper.setAnimatingCurrentScheduleState(
