@@ -13,8 +13,8 @@ import com.github.googelfist.workshedule.R
 import com.github.googelfist.workshedule.component
 import com.github.googelfist.workshedule.databinding.ScheduleConfigFragmentBinding
 import com.github.googelfist.workshedule.domain.models.DayType
-import com.github.googelfist.workshedule.presentation.screens.config.dialogs.DatePickerFragment
-import com.github.googelfist.workshedule.presentation.screens.config.dialogs.DialogHelper
+import com.github.googelfist.workshedule.presentation.screens.config.dialogs.ColorPickerDialogFragment
+import com.github.googelfist.workshedule.presentation.screens.config.dialogs.DatePickerDialogFragment
 import com.github.googelfist.workshedule.presentation.screens.config.dialogs.EditTextDialogFragment
 import com.github.googelfist.workshedule.presentation.screens.config.models.ConfigEvent
 import com.github.googelfist.workshedule.presentation.screens.config.models.ConfigState
@@ -122,9 +122,9 @@ class ScheduleConfigFragment : Fragment() {
 
     private fun setupButtons() {
         setupEditPatternNameButton()
-        setOnChooseFirstWorkDateClickListener()
+        setupChooseFirstWorkDateButton()
         setOnCreateDefaultTypeClickListener()
-        setOnEditColorButtonClickListener()
+        setupEditColorButton()
         setupEditDayTypeTitleButton()
         setOnDeleteButtonClickListener()
     }
@@ -156,14 +156,13 @@ class ScheduleConfigFragment : Fragment() {
         }
     }
 
-    private fun setOnChooseFirstWorkDateClickListener() {
+    private fun setupChooseFirstWorkDateButton() {
         binding.firstWorkDateButton.setOnClickListener {
-            val datePickerFragment = DatePickerFragment.newInstance()
-            datePickerFragment.show(parentFragmentManager, DatePickerFragment.TAG)
-            datePickerFragment.onDateSetListener = { date ->
+            DatePickerDialogFragment.show(parentFragmentManager)
+        }
 
-                configViewModel.obtainEvent(ConfigEvent.SaveFirstWorkDate(date))
-            }
+        DatePickerDialogFragment.setupListener(parentFragmentManager, viewLifecycleOwner) { date ->
+            configViewModel.obtainEvent(ConfigEvent.SaveFirstWorkDate(date))
         }
     }
 
@@ -174,16 +173,24 @@ class ScheduleConfigFragment : Fragment() {
         }
     }
 
-    private fun setOnEditColorButtonClickListener() {
+    private fun setupEditColorButton() {
+        lateinit var dayType: DayType
+        var dayTypePosition by Delegates.notNull<Int>()
+
         dayTypeListAdapter.onEditColorButtonClickListener = { position ->
 
-            val dayType = dayTypeListAdapter.currentList[position]
+            dayType = dayTypeListAdapter.currentList[position]
+            dayTypePosition = position
 
-            DialogHelper.showPickedColorDialog(requireActivity()) { color ->
+            ColorPickerDialogFragment.show(parentFragmentManager)
+        }
 
-                val newDayType = dayType.copy(backgroundColor = color)
-                configViewModel.obtainEvent(ConfigEvent.EditDayType(position, newDayType))
-            }
+        ColorPickerDialogFragment.setupListener(
+            parentFragmentManager,
+            viewLifecycleOwner
+        ) { color ->
+            dayType = dayType.copy(backgroundColor = color)
+            configViewModel.obtainEvent(ConfigEvent.EditDayType(dayTypePosition, dayType))
         }
     }
 

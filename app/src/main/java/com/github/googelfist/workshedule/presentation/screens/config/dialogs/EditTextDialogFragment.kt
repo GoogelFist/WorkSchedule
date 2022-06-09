@@ -13,12 +13,10 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleOwner
 import com.github.googelfist.workshedule.databinding.EditTextDialogFragmentBinding
 
-typealias CustomInputDialogListener = (requestKey: String, currentText: String) -> Unit
-
 class EditTextDialogFragment : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val requestKey = requireArguments().getString(ARG_REQUEST_KEY).toString()
+        val requestKey = requireArguments().getString(DEFAULT_REQUEST_KEY).toString()
 
         val currentText = requireArguments().getString(KEY_CURRENT_TEXT).toString()
         val dialogTitle = requireArguments().getString(KEY_DIALOG_TITLE).toString()
@@ -82,9 +80,6 @@ class EditTextDialogFragment : DialogFragment() {
         private const val KEY_DIALOG_TITLE = "KEY_DIALOG_TITLE"
         private const val KEY_EDIT_TEXT_HINT = "KEY_EDIT_TEXT_HINT"
 
-        private const val ARG_REQUEST_KEY = "ARG_REQUEST_KEY"
-
-
         private val DEFAULT_REQUEST_KEY = "$TAG:defaultRequestKey"
 
         fun show(
@@ -99,7 +94,7 @@ class EditTextDialogFragment : DialogFragment() {
                 KEY_CURRENT_TEXT to currentText,
                 KEY_DIALOG_TITLE to dialogTitle,
                 KEY_EDIT_TEXT_HINT to hint,
-                ARG_REQUEST_KEY to requestKey
+                DEFAULT_REQUEST_KEY to requestKey
             )
             dialogFragment.show(manager, TAG)
         }
@@ -108,7 +103,7 @@ class EditTextDialogFragment : DialogFragment() {
             manager: FragmentManager,
             lifecycleOwner: LifecycleOwner,
             requestKey: String,
-            listener: CustomInputDialogListener
+            listener: (requestKey: String, currentText: String) -> Unit
         ) {
             manager.setFragmentResultListener(requestKey, lifecycleOwner) { key, result ->
                 listener.invoke(key, result.getString(KEY_ENTERED_TEXT_RESPONSE).toString())
