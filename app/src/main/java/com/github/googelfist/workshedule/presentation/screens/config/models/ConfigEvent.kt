@@ -13,4 +13,6 @@ sealed class ConfigEvent {
     object CreateDayType : ConfigEvent()
     data class EditDayType(val position: Int, val dayType: DayType) : ConfigEvent()
     data class DeleteDayType(val position: Int) : ConfigEvent()
+
+    data class SaveDatTypeState(val dayType: DayType, val position: Int) : ConfigEvent()
 }

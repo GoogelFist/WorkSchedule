@@ -47,6 +47,9 @@ class ScheduleConfigFragment : Fragment() {
 
     lateinit var dayTypeListAdapter: DayTypeListAdapter
 
+    lateinit var dayType: DayType
+    var dayTypePosition by Delegates.notNull<Int>()
+
     override fun onAttach(context: Context) {
         context.component.inject(this)
         super.onAttach(context)
@@ -118,6 +121,11 @@ class ScheduleConfigFragment : Fragment() {
                 }
             }
         }
+
+        configViewModel.dayTypeState.observe(viewLifecycleOwner) { state ->
+            dayType = state.first
+            dayTypePosition = state.second
+        }
     }
 
     private fun setupButtons() {
@@ -174,13 +182,12 @@ class ScheduleConfigFragment : Fragment() {
     }
 
     private fun setupEditColorButton() {
-        lateinit var dayType: DayType
-        var dayTypePosition by Delegates.notNull<Int>()
 
         dayTypeListAdapter.onEditColorButtonClickListener = { position ->
 
-            dayType = dayTypeListAdapter.currentList[position]
-            dayTypePosition = position
+            val dayType = dayTypeListAdapter.currentList[position]
+
+            configViewModel.obtainEvent(ConfigEvent.SaveDatTypeState(dayType, position))
 
             ColorPickerDialogFragment.show(parentFragmentManager)
         }
@@ -196,12 +203,10 @@ class ScheduleConfigFragment : Fragment() {
 
     private fun setupEditDayTypeTitleButton() {
 
-        lateinit var dayType: DayType
-        var dayTypePosition by Delegates.notNull<Int>()
-
         dayTypeListAdapter.onEditTitleButtonClickListener = { position ->
-            dayType = dayTypeListAdapter.currentList[position]
-            dayTypePosition = position
+            val dayType = dayTypeListAdapter.currentList[position]
+
+            configViewModel.obtainEvent(ConfigEvent.SaveDatTypeState(dayType, position))
 
             val dialogTitle = getString(R.string.edit_title_dialog_title)
             val hint = getString(R.string.edit_title_dialog_hint)
