@@ -43,6 +43,10 @@ class ConfigViewModel(
     val configList: LiveData<List<Config>>
         get() = _configList
 
+    private var _dayTypeState = MutableLiveData<Pair<DayType, Int>>()
+    val dayTypeState: LiveData<Pair<DayType, Int>>
+        get() = _dayTypeState
+
     init {
         initConfig()
     }
@@ -59,6 +63,8 @@ class ConfigViewModel(
             ConfigEvent.CreateDayType -> createdDayType()
             is ConfigEvent.EditDayType -> editDayType(event.position, event.dayType)
             is ConfigEvent.DeleteDayType -> deletedDayType(event.position)
+
+            is ConfigEvent.SaveDatTypeState -> savedDayTypeState(event.dayType, event.position)
         }
     }
 
@@ -160,5 +166,9 @@ class ConfigViewModel(
 
             updatedConfigState()
         }
+    }
+
+    private fun savedDayTypeState(dayType: DayType, position: Int) {
+        _dayTypeState.value = Pair(dayType, position)
     }
 }

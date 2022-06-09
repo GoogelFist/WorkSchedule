@@ -12,8 +12,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.github.googelfist.workshedule.R
 import com.github.googelfist.workshedule.component
 import com.github.googelfist.workshedule.databinding.ScheduleConfigFragmentBinding
-import com.github.googelfist.workshedule.presentation.screens.config.dialogs.DatePickerFragment
-import com.github.googelfist.workshedule.presentation.screens.config.dialogs.DialogHelper
+import com.github.googelfist.workshedule.domain.models.DayType
+import com.github.googelfist.workshedule.presentation.screens.config.dialogs.ColorPickerDialogFragment
+import com.github.googelfist.workshedule.presentation.screens.config.dialogs.DatePickerDialogFragment
+import com.github.googelfist.workshedule.presentation.screens.config.dialogs.EditTextDialogFragment
 import com.github.googelfist.workshedule.presentation.screens.config.models.ConfigEvent
 import com.github.googelfist.workshedule.presentation.screens.config.models.ConfigState
 import com.github.googelfist.workshedule.presentation.screens.config.recycler.DayTypeListAdapter
@@ -21,6 +23,7 @@ import com.github.googelfist.workshedule.presentation.screens.schedule.ScheduleV
 import com.github.googelfist.workshedule.presentation.screens.schedule.ScheduleViewModelFactory
 import com.github.googelfist.workshedule.presentation.screens.schedule.models.ScheduleEvent
 import javax.inject.Inject
+import kotlin.properties.Delegates
 
 class ScheduleConfigFragment : Fragment() {
 
@@ -44,6 +47,9 @@ class ScheduleConfigFragment : Fragment() {
 
     lateinit var dayTypeListAdapter: DayTypeListAdapter
 
+    lateinit var dayType: DayType
+    var dayTypePosition by Delegates.notNull<Int>()
+
     override fun onAttach(context: Context) {
         context.component.inject(this)
         super.onAttach(context)
@@ -60,9 +66,6 @@ class ScheduleConfigFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        // TODO: many schedule patterns
-//        configViewModel.obtainEvent(ConfigEvent.SaveCurrentConfigId(1))
 
         setupRecyclerView()
         observeViewModel()
@@ -118,44 +121,56 @@ class ScheduleConfigFragment : Fragment() {
                 }
             }
         }
+
+        configViewModel.dayTypeState.observe(viewLifecycleOwner) { state ->
+            dayType = state.first
+            dayTypePosition = state.second
+        }
     }
 
     private fun setupButtons() {
-        setOnEditPatternNameClickListener()
-        setOnChooseFirstWorkDateClickListener()
+        setupEditPatternNameButton()
+        setupChooseFirstWorkDateButton()
         setOnCreateDefaultTypeClickListener()
-        setOnEditColorButtonClickListener()
-        setOnEditTitleButtonClickListener()
+        setupEditColorButton()
+        setupEditDayTypeTitleButton()
         setOnDeleteButtonClickListener()
     }
 
-    private fun setOnEditPatternNameClickListener() {
+    private fun setupEditPatternNameButton() {
         binding.buttonEditPatternName.setOnClickListener {
             val currentName = binding.tvPatternNameValue.text.toString()
 
             val dialogTitle = getString(R.string.edit_pattern_name_dialog_title)
-            val dialogMessage = getString(R.string.edit_pattern_name_dialog_massage)
+            val hint = getString(R.string.edit_pattern_name_dialog_hint)
 
-            DialogHelper.showEditTextDialog(
-                context = requireActivity(),
-                currentText = currentName,
-                dialogTitle = dialogTitle,
-                dialogMessage = dialogMessage
-            ) { name ->
+            EditTextDialogFragment.show(
+                parentFragmentManager,
+                currentName,
+                dialogTitle,
+                hint,
+                EDIT_PATTERN_NAME_REQUEST_KEY
+            )
+        }
 
-                configViewModel.obtainEvent(ConfigEvent.SavePatternName(name))
+        EditTextDialogFragment.setupListener(
+            parentFragmentManager,
+            viewLifecycleOwner,
+            EDIT_PATTERN_NAME_REQUEST_KEY
+        ) { key, text ->
+            if (key == EDIT_PATTERN_NAME_REQUEST_KEY) {
+                configViewModel.obtainEvent(ConfigEvent.SavePatternName(text))
             }
         }
     }
 
-    private fun setOnChooseFirstWorkDateClickListener() {
+    private fun setupChooseFirstWorkDateButton() {
         binding.firstWorkDateButton.setOnClickListener {
-            val datePickerFragment = DatePickerFragment.newInstance()
-            datePickerFragment.show(parentFragmentManager, DatePickerFragment.TAG)
-            datePickerFragment.onDateSetListener = { date ->
+            DatePickerDialogFragment.show(parentFragmentManager)
+        }
 
-                configViewModel.obtainEvent(ConfigEvent.SaveFirstWorkDate(date))
-            }
+        DatePickerDialogFragment.setupListener(parentFragmentManager, viewLifecycleOwner) { date ->
+            configViewModel.obtainEvent(ConfigEvent.SaveFirstWorkDate(date))
         }
     }
 
@@ -166,36 +181,53 @@ class ScheduleConfigFragment : Fragment() {
         }
     }
 
-    private fun setOnEditColorButtonClickListener() {
+    private fun setupEditColorButton() {
+
         dayTypeListAdapter.onEditColorButtonClickListener = { position ->
 
             val dayType = dayTypeListAdapter.currentList[position]
 
-            DialogHelper.showPickedColorDialog(requireActivity()) { color ->
+            configViewModel.obtainEvent(ConfigEvent.SaveDatTypeState(dayType, position))
 
-                val newDayType = dayType.copy(backgroundColor = color)
-                configViewModel.obtainEvent(ConfigEvent.EditDayType(position, newDayType))
-            }
+            ColorPickerDialogFragment.show(parentFragmentManager)
+        }
+
+        ColorPickerDialogFragment.setupListener(
+            parentFragmentManager,
+            viewLifecycleOwner
+        ) { color ->
+            dayType = dayType.copy(backgroundColor = color)
+            configViewModel.obtainEvent(ConfigEvent.EditDayType(dayTypePosition, dayType))
         }
     }
 
-    private fun setOnEditTitleButtonClickListener() {
+    private fun setupEditDayTypeTitleButton() {
 
         dayTypeListAdapter.onEditTitleButtonClickListener = { position ->
             val dayType = dayTypeListAdapter.currentList[position]
 
+            configViewModel.obtainEvent(ConfigEvent.SaveDatTypeState(dayType, position))
+
             val dialogTitle = getString(R.string.edit_title_dialog_title)
-            val dialogMessage = getString(R.string.edit_title_dialog_massage)
+            val hint = getString(R.string.edit_title_dialog_hint)
 
-            DialogHelper.showEditTextDialog(
-                context = requireActivity(),
-                currentText = dayType.title,
-                dialogTitle = dialogTitle,
-                dialogMessage = dialogMessage
-            ) { title ->
+            EditTextDialogFragment.show(
+                parentFragmentManager,
+                dayType.title,
+                dialogTitle,
+                hint,
+                EDIT_DAY_TYPE_TITLE_REQUEST_KEY
+            )
+        }
 
-                val newDayType = dayType.copy(title = title)
-                configViewModel.obtainEvent(ConfigEvent.EditDayType(position, newDayType))
+        EditTextDialogFragment.setupListener(
+            parentFragmentManager,
+            viewLifecycleOwner,
+            EDIT_DAY_TYPE_TITLE_REQUEST_KEY
+        ) { key, text ->
+            if (key == EDIT_DAY_TYPE_TITLE_REQUEST_KEY) {
+                dayType = dayType.copy(title = text)
+                configViewModel.obtainEvent(ConfigEvent.EditDayType(dayTypePosition, dayType))
             }
         }
     }
@@ -208,6 +240,9 @@ class ScheduleConfigFragment : Fragment() {
     }
 
     companion object {
+        private const val EDIT_PATTERN_NAME_REQUEST_KEY = "EDIT_PATTERN_NAME_REQUEST_KEY"
+        private const val EDIT_DAY_TYPE_TITLE_REQUEST_KEY = "EDIT_DAY_TYPE_TITLE_REQUEST_KEY"
+
         fun newInstance(): ScheduleConfigFragment {
             return ScheduleConfigFragment()
         }
