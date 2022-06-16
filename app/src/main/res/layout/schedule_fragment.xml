@@ -46,6 +46,7 @@
         <TextView
             android:id="@+id/date_text_view"
             android:layout_width="0dp"
+            android:layout_marginTop="8dp"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textColor="@color/black"
@@ -57,6 +58,7 @@
 
         <include
             android:id="@+id/week_days_include"
+            android:layout_marginTop="8dp"
             layout="@layout/week_days"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -68,8 +70,8 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
